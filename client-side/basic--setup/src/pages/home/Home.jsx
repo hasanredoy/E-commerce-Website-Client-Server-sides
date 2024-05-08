@@ -22,33 +22,33 @@ const Home = () => {
         >
           <div className=" lg:rounded-l-2xl flex min-h-svh w-full lg:w-1/2 items-center justify-center text-white bg-black bg-opacity-50 text-center lg:text-start">
             <div className="max-w-md">
-              <h1 className="mb-5 text-5xl font-bold">
+              <h1 className="mb-5 text-2xl lg:text-5xl font-bold">
                 WellCome To Our Gadget Shop
               </h1>
               <p className="mb-5">
                 We&apos;re Selling Tech Gadgets Like Smartphones , Laptop ,
                 Headset And etc.
               </p>
-              <button className="btn border-none text-white hover:text-black bg-[#ab3434]">
+              <button className="btn  text-gray-900 hover:text-black  btn-error">
                 Shop Now!
               </button>
             </div>
           </div>
           <div className="  lg:rounded-r-2xl bg-black bg-opacity-60 flex min-h-svh w-full lg:w-1/2 items-center justify-center  text-white flex-col gap-10 overflow-hidden">
             {(slide == 1 && (
-              <div className=" pl-5 lg:pl-0 flex overflow-hidden gap-5  w-[500px]">
+              <div className=" pl-10 lg:pl-0 flex overflow-hidden gap-5  w-[500px]">
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
-                  src="https://cdn.pixabay.com/photo/2018/03/06/08/31/drone-3202860_640.jpg"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
+                  src="https://contents.smsupermalls.com/data/uploads/2023/08/SM_Finds_Catch_the_most_epic_deals_at_the_Great_Gadget_Sale.jpg"
                   alt=""
                 />
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
-                  src="https://cdn.pixabay.com/photo/2016/03/26/13/09/laptop-1280536_640.jpg"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
+                  src="https://i.pinimg.com/originals/7b/3f/e1/7b3fe1e66e263b7e0c0e1f1cfb4086c7.png"
                   alt=""
                 />
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
                   src="https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt=""
                 />
@@ -56,39 +56,39 @@ const Home = () => {
             )) ||
               ""}
             {slide == 2 && (
-              <div className=" pl-5 lg:pl-0 flex overflow-hidden gap-5  w-[500px]">
+              <div className=" pl-10 lg:pl-0 flex overflow-hidden gap-5  w-[500px]">
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
-                  src="https://cdn.pixabay.com/photo/2016/03/26/13/09/laptop-1280536_640.jpg"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
+                  src="https://i.pinimg.com/originals/7b/3f/e1/7b3fe1e66e263b7e0c0e1f1cfb4086c7.png"
                   alt=""
                 />
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
                   src="https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt=""
                 />
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
-                  src="https://cdn.pixabay.com/photo/2018/03/06/08/31/drone-3202860_640.jpg"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
+                  src="https://contents.smsupermalls.com/data/uploads/2023/08/SM_Finds_Catch_the_most_epic_deals_at_the_Great_Gadget_Sale.jpg"
                   alt=""
                 />
               </div>
             )}
             {slide == 3 && (
-              <div className=" pl-5 lg:pl-0 flex overflow-hidden gap-5 w-[500px]">
+              <div className=" pl-10 lg:pl-0 flex overflow-hidden gap-5 w-[500px]">
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
                   src="https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt=""
                 />
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
-                  src="https://cdn.pixabay.com/photo/2018/03/06/08/31/drone-3202860_640.jpg"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
+                  src="https://contents.smsupermalls.com/data/uploads/2023/08/SM_Finds_Catch_the_most_epic_deals_at_the_Great_Gadget_Sale.jpg"
                   alt=""
                 />
                 <img
-                  className=" h-[300px] w-[300px] rounded-lg border-2 border-yellow-500"
-                  src="https://cdn.pixabay.com/photo/2016/03/26/13/09/laptop-1280536_640.jpg"
+                  className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
+                  src="https://i.pinimg.com/originals/7b/3f/e1/7b3fe1e66e263b7e0c0e1f1cfb4086c7.png"
                   alt=""
                 />
               </div>

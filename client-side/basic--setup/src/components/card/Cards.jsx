@@ -6,7 +6,7 @@ import { FaStar } from "react-icons/fa6";
 const Cards = () => {
   const [gadgets, setGadgets] = useState([]);
   const [filterGadgets, setFilterGadgets] = useState([]);
-
+  const [themeFromLs , setThemeForLs] = useState()
   useEffect(() => {
     fetch("/data.json")
       .then((res) => res.json())
@@ -14,8 +14,12 @@ const Cards = () => {
       
       setFilterGadgets(gadgets)
   }, []);
-
-  console.log(filterGadgets);
+  useEffect(()=>{
+   const theme = localStorage.getItem('theme')
+   setThemeForLs(theme)
+  },[])
+console.log(themeFromLs);
+  // console.log(filterGadgets);
   const handleFilter=(data)=>{
    if(data=="all"){
      setFilterGadgets(gadgets)
@@ -38,8 +42,10 @@ const Cards = () => {
    }
 
   }
+if(!themeFromLs){
 
-  console.log(filterGadgets);
+  console.log('filterGadgets');
+}
   return (
     <div>
        <div className="dropdown dropdown-hover mb-5">
@@ -71,7 +77,8 @@ const Cards = () => {
       {filterGadgets.length>1?filterGadgets.map((data) => (
         <div
           key={data.id}
-          className="card  bg-[#deeae1] bg-opacity-70 shadow-lg px-2 hover:scale-105 hover:border-2 hover:border-orange-400"
+          className={"card w-[98%] mx-auto lg:w-auto   to-base-300  shadow-lg px-2   hover:scale-0 lg:hover:scale-105 bg-base-200  hover:border-0 lg:hover:border-2  hover:border-orange-400"
+          }
         >
           <h2 className="font-bold text-center text-xl mt-2">
             {data.product_name}
@@ -109,7 +116,7 @@ const Cards = () => {
       gadgets.map((data) => (
         <div
           key={data.id}
-          className="card  bg-[#deeae1] bg-opacity-70 shadow-lg px-2 hover:scale-105 hover:border-2 hover:border-orange-400"
+          className="card w-[98%] mx-auto lg:w-auto   to-base-300  shadow-lg px-2 bg-base-200  hover:scale-0 lg:hover:scale-105   hover:border-0 lg:hover:border-2  hover:border-orange-400"
         >
           <h2 className="font-bold text-center text-xl mt-2">
             {data.product_name}

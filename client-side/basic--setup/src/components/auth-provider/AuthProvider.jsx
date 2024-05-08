@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 export const MainContext = createContext(null)
 const AuthProvider = ({children}) => {
   const [user , setUser]= useState(null)
+  const [theme , setTheme]= useState()
 
   // show modal 
   const [ modal , setModal] = useState(false)
@@ -39,8 +40,11 @@ const AuthProvider = ({children}) => {
     setModal,
     modal,
     user,
-    logOut
+    logOut,
+    theme,
+    setTheme
   }
+  console.log(theme);
   return (
     <div>
       <MainContext.Provider value={authInfo}>

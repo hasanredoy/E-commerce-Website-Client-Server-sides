@@ -7,7 +7,7 @@ import { MdLightMode } from "react-icons/md";
 
 
 const Navbar = () => {
-  const { user, logOut } = useContext(MainContext);
+  const { user, logOut , setTheme } = useContext(MainContext);
   // const [toggle , setToggle ]= useState(localStorage.getItem('theme'))
   const [toggle , setToggle ]= useState(localStorage.getItem('theme'))
   localStorage.setItem('theme', toggle)
@@ -19,7 +19,7 @@ const Navbar = () => {
     document.querySelector("html").setAttribute("data-theme","dark")
     }
   // console.log(user);
-  console.log(themeFromLs);
+  // console.log(themeFromLs);
   const handleLogOut = () => {
     logOut().then().catch();
   };
@@ -87,7 +87,7 @@ const Navbar = () => {
           <label className="swap swap-rotate  ">
             {/* this hidden checkbox controls the state */}
             <input
-            onClick={()=>setToggle(!toggle)}
+            onClick={()=>{setToggle(!toggle);setTheme(toggle)}}
               type="checkbox"
               className="theme-controller"
             />

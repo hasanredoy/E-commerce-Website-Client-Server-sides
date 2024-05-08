@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { MainContext } from "../../components/auth-provider/AuthProvider";
+import Navbar from "../../components/nav/Navbar";
 
 const Login = () => {
-  const {loginUser}= useContext(MainContext)
+  const {loginUser, theme}= useContext(MainContext)
  console.log(name);
   const handleLogin= (e)=>{
     e.preventDefault()
@@ -18,9 +19,13 @@ const Login = () => {
     .then(res=>console.log(res.user))
     .catch(err=>console.log(err))
    }
-
+  // const ls = localStorage.getItem('theme')
+  // console.log(ls);
   return (
-    <div className="min-h-[calc(100vh-116px)] bg-[#472b2f] container mx-auto flex items-center ">
+    <div className="">
+        <Navbar></Navbar>
+       <div className={theme?"min-h-screen bg-[#472b2f]  flex items-center ":"min-h-screen bg-base-200  flex items-center "}>
+     
       <div className="card shrink-0 w-full lg:w-1/2 shadow-2xl text-white bg-[#2a171b] mx-auto">
         <h1 className=" text-3xl text-center font-bold pt-3">Please Login!</h1>
       <form onSubmit={handleLogin} className="card-body">
@@ -63,6 +68,8 @@ const Login = () => {
       <p className=" text-center mb-2 ">New Here ! <Link className=" font-bold hover:underline text-blue-700" to={"/register"}>Register</Link></p>
     </div>
     </div>
+    </div>
+
   );
 };
 
