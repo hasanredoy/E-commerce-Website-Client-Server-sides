@@ -16,7 +16,7 @@ const Login = () => {
 
     loginUser(email, password)
     .then(res=>console.log(res.user))
-    .catch(err=>console.log(err.user))
+    .catch(err=>console.log(err))
    }
 
   return (
