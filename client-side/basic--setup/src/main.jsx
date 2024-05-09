@@ -11,6 +11,7 @@ import Login from './pages/login/Login.jsx';
 import Register from './pages/register/Register.jsx';
 import AuthProvider from './components/auth-provider/AuthProvider.jsx';
 import Details from './components/details/Details.jsx';
+import MyCart from './components/MyCart/MyCart.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
         path:"/item/:id",
         element:<Details></Details> ,
         loader:()=> fetch('/data.json')      
+      },
+      {
+        path:"/myCart",
+        element:<MyCart></MyCart> ,
       },
     ]
   },

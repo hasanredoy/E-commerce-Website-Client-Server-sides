@@ -24,7 +24,7 @@ const Login = () => {
   return (
     <div className="">
         <Navbar></Navbar>
-       <div className={theme?"min-h-screen bg-[#472b2f]  flex items-center ":"min-h-screen bg-base-200  flex items-center "}>
+       <div className={theme?"min-h-screen bg-[#472b2f]  flex items-center ":"min-h bg-base-200  flex items-center "}>
      
       <div className="card shrink-0 w-full lg:w-1/2 shadow-2xl text-white bg-[#2a171b] mx-auto">
         <h1 className=" text-3xl text-center font-bold pt-3">Please Login!</h1>

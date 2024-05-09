@@ -21,7 +21,9 @@ const Navbar = () => {
   // console.log(user);
   // console.log(themeFromLs);
   const handleLogOut = () => {
-    logOut().then().catch();
+    logOut()
+    .then()
+    .catch();
   };
 
 
@@ -32,7 +34,7 @@ const Navbar = () => {
         <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={"/cart"}>Cart</NavLink>
+        <NavLink to={"/myCart"}>My Cart</NavLink>
       </li>
       <li>
         <NavLink to={"/contact"}>Contact</NavLink>
@@ -41,7 +43,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className={themeFromLs==="true"? "navbar bg-base-200     mx-auto": "navbar bg-gray-700     mx-auto"}
+    <div className={themeFromLs==="true"? "navbar bg-base-300     mx-auto": "navbar bg-gray-700     mx-auto"}
    >
       <div className="navbar-start ">
         <div className="dropdown">

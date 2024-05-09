@@ -1,14 +1,15 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa6";
 
-const Cards = () => {
+const Cards = ({handleCart}) => {
   const [gadgets, setGadgets] = useState([]);
   const [filterGadgets, setFilterGadgets] = useState([]);
   const [themeFromLs , setThemeForLs] = useState()
   useEffect(() => {
-    fetch("/data.json")
+    fetch("http://localhost:5000/gadgets")
       .then((res) => res.json())
       .then((data) => setGadgets(data));
       
@@ -104,7 +105,7 @@ if(!themeFromLs){
             <h4 className=" flex gap-5 text-xl items-center py-5 ">Price : <span className=" font-bold">{data.price} $</span> </h4>
             <div className="card-actions justify-between my-5">
               
-              <button className=" btn btn-error">Add to Cart</button>
+              <button className=" btn btn-error" onClick={()=>handleCart(data)}>Add to Cart</button>
              <Link to={`/item/${data.id||''}`}>
              <button className=" btn btn-info">View Details</button>
              </Link>
@@ -142,7 +143,7 @@ if(!themeFromLs){
             <h4 className=" flex gap-5 text-xl items-center py-5 ">Price : <span className=" font-bold">{data.price} $</span> </h4>
             <div className="card-actions justify-between my-5">
               
-              <button className=" btn btn-error">Add to Cart</button>
+              <button className=" btn btn-error" onClick={()=>handleCart(data)}>Add to Cart</button>
               <Link to={`/item/${data.id||''}`}>
              <button className=" btn btn-info">View Details</button>
              </Link>

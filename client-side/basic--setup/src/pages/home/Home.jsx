@@ -1,15 +1,39 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaGreaterThan } from "react-icons/fa6";
 import { FaLessThan } from "react-icons/fa6";
 import Cards from "../../components/card/Cards";
+import { MainContext } from "../../components/auth-provider/AuthProvider";
+import useFetch from "../../hooks/useFetch";
 const Home = () => {
   let [slide, setSlide] = useState(1);
+  const {user} =useContext(MainContext)
+  const axiosHook = useFetch()
+  const url = '/carts'
+  const userEmail = user?.email;
+
+  const handleCart=(cart)=>{
+    const userCart = {
+      cart,
+      userEmail
+    }
+    if(user){
+    axiosHook.post(url , userCart)
+    .then(res=>{
+      console.log(res.data);
+    })
+    .catch(err => console.log(err)
+    )
+  }
+    // posting data on url
+    console.log(cart); 
+  } 
 
   if (slide == 0) {
     setSlide(3);
   } else if (slide == 4) {
     setSlide(1);
   } else
+
     return (
       <div className=" container mx-auto ">
         {/* banner */}
@@ -125,7 +149,9 @@ const Home = () => {
           </div>
 
           <div>
-            <Cards></Cards>
+            <Cards
+            handleCart={handleCart}
+            ></Cards>
           </div>
         </section>
       </div>
