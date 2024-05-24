@@ -12,9 +12,7 @@ app.use(express.json())
 app.use(  cors({
   origin: [
     "http://localhost:5173",
-    //  "*",
-    "https://car-doctor-project-d4515.web.app",
-    "https://car-doctor-project-d4515.firebaseapp.com",
+   
   ],
   credentials: true,
 }))

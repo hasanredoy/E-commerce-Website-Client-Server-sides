@@ -14,7 +14,7 @@ const Cards = ({handleCart}) => {
       .then((data) => setGadgets(data));
       
       setFilterGadgets(gadgets)
-  }, []);
+  }, [gadgets]);
   useEffect(()=>{
    const theme = localStorage.getItem('theme')
    setThemeForLs(theme)

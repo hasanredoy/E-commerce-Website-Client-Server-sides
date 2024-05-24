@@ -7,8 +7,8 @@ const MyCart = () => {
   const axiosHook = useFetch()
 const [myCartData , setMyCartData] = useState([])
 useEffect(()=>{
-  axiosHook.get(`/carts?email=${user?.email}`)
-  // axiosHook.get(`/carts?email=heloo@gmail.com`)
+  // axiosHook.get(`/carts?email=${user?.email}`)
+  axiosHook.get(`/carts?email=heloo@gmail.com`)
   .then(res=>{
     setMyCartData(res.data)
   })

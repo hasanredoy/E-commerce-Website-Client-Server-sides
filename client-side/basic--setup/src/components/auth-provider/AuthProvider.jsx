@@ -1,10 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../../firebase/firebase.config"
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import useFetch from "../../hooks/useFetch";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import axios from "axios";
 
 export const MainContext = createContext(null)
+
+const googleProvider = new GoogleAuthProvider()
+
+// eslint-disable-next-line react/prop-types
 const AuthProvider = ({children}) => {
   const [user , setUser]= useState(null)
   const [theme , setTheme]= useState()
@@ -23,6 +26,11 @@ const AuthProvider = ({children}) => {
   const loginUser=(email , password)=>{
     setLoading(true)
     return signInWithEmailAndPassword(auth,email,password)
+  }
+
+  // login with google 
+  const googleLogin=()=>{
+    return signInWithPopup(auth,googleProvider)
   }
 
   const logOut =()=>{
@@ -52,7 +60,7 @@ const AuthProvider = ({children}) => {
     return ()=>{
       unsubscribe
     }
-  },[])
+  },[user])
   
   console.log(user);
   const authInfo = {
@@ -63,6 +71,7 @@ const AuthProvider = ({children}) => {
     user,
     logOut,
     theme,
+    googleLogin,
     setTheme,
     loading
   }
