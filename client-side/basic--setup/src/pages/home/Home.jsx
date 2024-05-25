@@ -3,6 +3,7 @@ import { FaGreaterThan } from "react-icons/fa6";
 import { FaLessThan } from "react-icons/fa6";
 import Cards from "../../components/card/Cards";
 import { MainContext } from "../../components/auth-provider/AuthProvider";
+import FaQ from "../../components/FAQ/FaQ";
 
 const Home = () => {
   let [slide, setSlide] = useState(1);
@@ -134,6 +135,12 @@ const Home = () => {
             ></Cards>
           </div>
         </section>
+
+
+        {/* FaQ */}
+        <div>
+          <FaQ></FaQ>
+        </div>
       </div>
     );
 };

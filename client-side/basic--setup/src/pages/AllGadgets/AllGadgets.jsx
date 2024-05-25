@@ -19,6 +19,7 @@ const AllGadgets = () => {
   }, [axiosCommon]);
   const itemsPerPage = 6;
   const totalPage = Math.ceil(count / itemsPerPage);
+  console.log(totalPage);
   let numberOfPages = [];
   for (let i = 0; i < totalPage; i++) {
     // console.log(i);
@@ -41,6 +42,7 @@ const AllGadgets = () => {
     e.preventDefault()
     refetch()
     setSearch(e.target.search.value)
+    setCount(gadgets.length)
   }
   const handlePrev = () => {
     if (currentPage > 0) {

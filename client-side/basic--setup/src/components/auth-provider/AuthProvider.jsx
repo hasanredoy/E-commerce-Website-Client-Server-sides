@@ -3,7 +3,7 @@ import auth from "../../firebase/firebase.config"
 import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 export const MainContext = createContext(null)
@@ -88,7 +88,7 @@ const resetPass = (email)=>{
       setLoading(false)
       if(currentUser){
           axios.post('http://localhost:5000/jwt',loggedUser,{withCredentials:true})
-          .then(res => {
+          .then(()=> {
             // console.log(res.data);
           })
       }else{

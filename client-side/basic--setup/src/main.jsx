@@ -16,8 +16,8 @@ import AllGadgets from './pages/AllGadgets/AllGadgets.jsx';
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
+import ReviewsPage from './pages/Reviews/ReviewsPage.jsx';
 
 const queryClient = new QueryClient()
 
@@ -43,6 +43,10 @@ const router = createBrowserRouter([
       {
         path:"/allGadgets",
         element:<AllGadgets></AllGadgets> ,
+      },
+      {
+        path:"/reviews",
+        element:<ReviewsPage></ReviewsPage> ,
       },
     ]
   },

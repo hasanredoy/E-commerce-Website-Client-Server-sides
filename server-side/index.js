@@ -68,20 +68,22 @@ async function run() {
 
     // getting all gadgets 
     app.get('/gadgets', async(req,res)=>{
-      let query ={}
+      let filter ={}
+      const {search} =req?.query
+      
       if(req.query?.search){
-        const {search} =req?.query
-        query ={
+        filter ={
           $or:[
             {title:{$regex:search , $options:'i'}},
             {category:{$regex:search , $options:'i'}},
+            {product_name:{$regex:search , $options:'i'}},
           ]
         }
       }
-     console.log(query);
+     console.log(filter);
       const size = parseInt(req?.query?.size)
       const page = parseInt(req?.query?.page)
-      const result =await gadgetsCollection.find(query).limit(size).skip(page*size).toArray()
+      const result =await gadgetsCollection.find(filter).limit(size).skip(page*size).toArray()
       res.send(result)
     })
 
