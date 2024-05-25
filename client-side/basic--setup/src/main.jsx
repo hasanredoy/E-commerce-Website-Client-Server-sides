@@ -12,6 +12,14 @@ import Register from './pages/register/Register.jsx';
 import AuthProvider from './components/auth-provider/AuthProvider.jsx';
 import Details from './components/details/Details.jsx';
 import MyCart from './components/MyCart/MyCart.jsx';
+import AllGadgets from './pages/AllGadgets/AllGadgets.jsx';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -26,11 +34,15 @@ const router = createBrowserRouter([
       {
         path:"/item/:id",
         element:<Details></Details> ,
-        loader:()=> fetch('/data.json')      
+        loader:({params})=> fetch(`http://localhost:5000/gadgets/${params.id}`)      
       },
       {
         path:"/myCart",
         element:<MyCart></MyCart> ,
+      },
+      {
+        path:"/allGadgets",
+        element:<AllGadgets></AllGadgets> ,
       },
     ]
   },
@@ -46,8 +58,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
     <RouterProvider router={router} />
     </AuthProvider>
+    </QueryClientProvider>
+    
   </React.StrictMode>,
 )

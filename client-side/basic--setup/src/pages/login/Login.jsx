@@ -1,14 +1,21 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MainContext } from "../../components/auth-provider/AuthProvider";
 import { FcGoogle } from "react-icons/fc";
+import Swal from 'sweetalert2'
 
 import Navbar from "../../components/nav/Navbar";
 import loginImage from "../../assets/laptop-with-login-password-form-screen.png";
 
 const Login = () => {
-  const { loginUser, theme, googleLogin } = useContext(MainContext);
-  console.log(name);
+  const { loginUser,resetPass,  googleLogin } = useContext(MainContext);
+  const location =useLocation()
+  const navigate =useNavigate()
+  const [modal , setModal]=useState(false)
+
+
+  const path = location.state || '/';
+  console.log(location);
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -18,18 +25,41 @@ const Login = () => {
     console.log(email, password);
 
     loginUser(email, password)
-      .then((res) => console.log(res.user))
+      .then((res) => {
+        navigate(path)
+        console.log(res.user)})
       .catch((err) => console.log(err));
   };
   const handleGoogleLogin = async () => {
-    await googleLogin();
+   const res = await googleLogin();
+   if(res){
+    navigate(path)
+   }
   };
-  // const ls = localStorage.getItem('theme')
-  // console.log(ls);
+
+  const handleResetPass =(e)=>{
+    e.preventDefault()
+    const email = e.target.modalEmail.value;
+     resetPass(email)
+    .then(()=>{
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Please Check Your Email.`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+    }
+
   return (
     <div className=" min-h-screen">
       <Navbar></Navbar>
-      <div className={"  flex items-center mt-20 w-[95%] mx-auto "}>
+      {
+        modal||<div className={"  flex flex-col-reverse lg:flex-row  items-center mt-3 lg:mt-20 w-[95%] mx-auto "}>
         <div className="card shrink-0 w-full lg:w-1/2 shadow-2xl  mx-auto bg-base-100 ">
           <h1 className=" text-2xl text-center font-bold pt-3">
             {" "}
@@ -57,7 +87,7 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="email"
-                className="input input-bordered text-black outline focus:outline-sky-200"
+                className="input input-bordered text-black bg-white  focus:outline-sky-200"
                 required
                 name="email"
               />
@@ -69,11 +99,11 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="password"
-                className="input input-bordered text-black focus:outline-sky-200"
+                className="input input-bordered text-black bg-white focus:outline-sky-200"
                 required
                 name="password"
               />
-              <h1 className=" text-lg font-semibold mt-3 cursor-pointer hover:underline">
+              <h1 onClick={()=>setModal(true)} className=" text-lg font-semibold mt-3 cursor-pointer hover:underline">
                 Forget Password ?
               </h1>
             </div>
@@ -98,17 +128,26 @@ const Login = () => {
           <img src={loginImage} alt="" />
         </div>
       </div>
+      }
       {/* modal for reset pass  */}
-      <div>
-        <form >
+      {
+        modal&&  <div className=" absolute left-2 md:left-[25%] top-[15%] lg:top-[25%] w-[95%] md:w-1/2 mx-auto bg-neutral-300 rounded-xl  p-5 lg:p-10  shadow-lg text-black">
+        <div className=" flex justify-end">
+
+        <h5 onClick={()=>setModal(false)} className=" btn btn-circle text-xl btn-ghost">X</h5>
+        </div>
+        <h1 className=" text-lg md:text-2xl font-bold text-center mb-5">Forget Your Password? Please Enter Your Email Blew.</h1>
+
+
+        <form onSubmit={handleResetPass} >
         <div className="form-control">
               <label className="label">
-                <span className=" text-2xl ">Please Enter Your Email</span>
+                <span className=" text-base md:text-lg ">Please Enter Your Email</span>
               </label>
               <input
                 type="email"
                 placeholder="email"
-                className="input input-bordered text-black focus:outline-sky-200"
+                className="input input-bordered bg-white focus:outline-sky-200"
                 required
                 name="modalEmail"
               />
@@ -123,6 +162,8 @@ const Login = () => {
 
         </form>
       </div>
+      }
+    
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 // import { MainContext } from "../components/auth-provider/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 
@@ -11,10 +11,8 @@ const axiosHook = axios.create({
 })
 
 const useFetch = () => {
-// const {loading} = useContext(MainContext)
-const {logOut}= useAuth()
-  console.log(logOut);
-  const navigate = useNavigate()
+const logOut= useAuth()
+  // console.log(logOut);
  useEffect(()=>{
   axiosHook.interceptors.response.use(res=>{
     return res
@@ -22,12 +20,12 @@ const {logOut}= useAuth()
     if(err.response.status===401 || err.response.status===403){
      logOut()
      .then(()=>{
-      navigate('/login')
-     })
+       <Navigate to={'/login'}></Navigate>
+    })
      .catch()
     }
   })
- },[])
+ },[logOut])
 
   return axiosHook
 };

@@ -1,7 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../../firebase/firebase.config"
-import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import axios from "axios";
+import useFetch from "../../hooks/useFetch";
+import { Navigate, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const MainContext = createContext(null)
 
@@ -15,6 +18,38 @@ const AuthProvider = ({children}) => {
   const [loading , setLoading] = useState(true)
   // show modal 
   const [ modal , setModal] = useState(false)
+
+
+  const axiosHook = useFetch()
+  const url = '/carts'
+  const userEmail = user?.email;
+
+  const handleCart=(cart)=>{
+    const userCart = {
+      cart,
+      userEmail
+    }
+    if(!user){
+      return <Navigate to={'/login'}></Navigate> 
+    }
+    if(user){
+    axiosHook.post(url , userCart)
+    .then(res=>{
+      console.log(res.data);
+      if(res.data.insertedId){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${cart.product_name} added in Cart Successfully`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    })
+    .catch(err => console.log(err)
+    )
+  }
+ } 
 
   // creating user 
   const createUser=(email , password)=>{
@@ -30,8 +65,14 @@ const AuthProvider = ({children}) => {
 
   // login with google 
   const googleLogin=()=>{
+    setLoading(true)
     return signInWithPopup(auth,googleProvider)
   }
+  
+const resetPass = (email)=>{
+  // console.log(email);
+  return sendPasswordResetEmail(auth ,email)
+}
 
   const logOut =()=>{
     setLoading(true)
@@ -48,7 +89,7 @@ const AuthProvider = ({children}) => {
       if(currentUser){
           axios.post('http://localhost:5000/jwt',loggedUser,{withCredentials:true})
           .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
           })
       }else{
         axios.post('http://localhost:5000/logout', loggedUser ,{withCredentials:true})
@@ -62,7 +103,7 @@ const AuthProvider = ({children}) => {
     }
   },[user])
   
-  console.log(user);
+  // console.log(user);
   const authInfo = {
     createUser,
     loginUser,
@@ -70,12 +111,14 @@ const AuthProvider = ({children}) => {
     modal,
     user,
     logOut,
+    resetPass,
+    handleCart,
     theme,
     googleLogin,
     setTheme,
     loading
   }
-  console.log(theme);
+  // console.log(theme);
   return (
     <div>
       <MainContext.Provider value={authInfo}>

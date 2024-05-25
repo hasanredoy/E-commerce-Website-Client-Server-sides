@@ -1,10 +1,8 @@
 import { FaStar } from "react-icons/fa6";
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const Details = () => {
-  const {id} = useParams()
-  const dataWasFetched =useLoaderData()
-  const data = dataWasFetched.find(singleData => singleData.id == id)
+  const data =useLoaderData()
   console.log(data);
   return (
     <div>

@@ -3,30 +3,11 @@ import { FaGreaterThan } from "react-icons/fa6";
 import { FaLessThan } from "react-icons/fa6";
 import Cards from "../../components/card/Cards";
 import { MainContext } from "../../components/auth-provider/AuthProvider";
-import useFetch from "../../hooks/useFetch";
+
 const Home = () => {
   let [slide, setSlide] = useState(1);
   const {user} =useContext(MainContext)
-  const axiosHook = useFetch()
-  const url = '/carts'
-  const userEmail = user?.email;
-
-  const handleCart=(cart)=>{
-    const userCart = {
-      cart,
-      userEmail
-    }
-    if(user){
-    axiosHook.post(url , userCart)
-    .then(res=>{
-      console.log(res.data);
-    })
-    .catch(err => console.log(err)
-    )
-  }
-    // posting data on url
-    console.log(cart); 
-  } 
+  
 
   if (slide == 0) {
     setSlide(3);
@@ -35,16 +16,16 @@ const Home = () => {
   } else
 
     return (
-      <div className=" container mx-auto ">
+      <div className=" mx-auto ">
         {/* banner */}
         <div
-          className="min-h-screen bg-contain lg:bg-cover flex flex-col lg:flex-row justify-between lg:rounded-2xl my-5 "
+          className="min-h-screen bg-contain lg:bg-cover flex flex-col lg:flex-row justify-between  mb-5 "
           style={{
             backgroundImage:
               "url(https://cdn.pixabay.com/photo/2019/03/21/15/18/shop-4071232_1280.png)",
           }}
         >
-          <div className=" lg:rounded-l-2xl flex min-h-svh w-full lg:w-1/2 items-center justify-center text-white bg-black bg-opacity-50 text-center lg:text-start">
+          <div className="  flex min-h-svh w-full lg:w-1/2 items-center justify-center text-white bg-black bg-opacity-50 text-center lg:text-start">
             <div className="max-w-md">
               <h1 className="mb-5 text-2xl lg:text-5xl font-bold">
                 WellCome To Our Gadget Shop
@@ -53,17 +34,17 @@ const Home = () => {
                 We&apos;re Selling Tech Gadgets Like Smartphones , Laptop ,
                 Headset And etc.
               </p>
-              <button className="btn  text-gray-900 hover:text-black  btn-error">
-                Shop Now!
+              <button   className="btn   btn-outline text-white outline-orange-200 font-black text-xl  ">
+               <a href="#cards"> Shop Now!</a>
               </button>
             </div>
           </div>
-          <div className="  lg:rounded-r-2xl bg-black bg-opacity-60 flex min-h-svh w-full lg:w-1/2 items-center justify-center  text-white flex-col gap-10 overflow-hidden">
+          <div className="   bg-black bg-opacity-60 flex min-h-svh w-full lg:w-1/2 items-center justify-center  text-white flex-col gap-10 overflow-hidden">
             {(slide == 1 && (
               <div className=" pl-10 lg:pl-0 flex overflow-hidden gap-5  w-[500px]">
                 <img
                   className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
-                  src="https://contents.smsupermalls.com/data/uploads/2023/08/SM_Finds_Catch_the_most_epic_deals_at_the_Great_Gadget_Sale.jpg"
+                  src="https://img.freepik.com/free-photo/modern-stationary-collection-arrangement_23-2149309643.jpg?t=st=1716564382~exp=1716567982~hmac=7e0cc938ceb79c1636c4da9713087f32bd313136ceee6c9342c63949f8141bc6&w=740"
                   alt=""
                 />
                 <img
@@ -93,7 +74,7 @@ const Home = () => {
                 />
                 <img
                   className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
-                  src="https://contents.smsupermalls.com/data/uploads/2023/08/SM_Finds_Catch_the_most_epic_deals_at_the_Great_Gadget_Sale.jpg"
+                  src="https://img.freepik.com/free-photo/modern-stationary-collection-arrangement_23-2149309643.jpg?t=st=1716564382~exp=1716567982~hmac=7e0cc938ceb79c1636c4da9713087f32bd313136ceee6c9342c63949f8141bc6&w=740"
                   alt=""
                 />
               </div>
@@ -107,7 +88,7 @@ const Home = () => {
                 />
                 <img
                   className=" h-[300px] lg:h-[400px] w-[300px] lg:w-[400px] rounded-lg border-2 border-yellow-500"
-                  src="https://contents.smsupermalls.com/data/uploads/2023/08/SM_Finds_Catch_the_most_epic_deals_at_the_Great_Gadget_Sale.jpg"
+                  src="https://img.freepik.com/free-photo/modern-stationary-collection-arrangement_23-2149309643.jpg?t=st=1716564382~exp=1716567982~hmac=7e0cc938ceb79c1636c4da9713087f32bd313136ceee6c9342c63949f8141bc6&w=740"
                   alt=""
                 />
                 <img
@@ -139,7 +120,7 @@ const Home = () => {
 
         {/* card  */}
 
-        <section className=" my-5">
+        <section className=" container mx-auto my-5">
           <div className=" my-8 space-y-5">
             <h1 className=" text-2xl lg:text-5xl text-center font-bold">
               {" "}
@@ -148,9 +129,8 @@ const Home = () => {
            
           </div>
 
-          <div>
+          <div id="cards">
             <Cards
-            handleCart={handleCart}
             ></Cards>
           </div>
         </section>

@@ -3,7 +3,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
 
 const port = process.env.PORT || 5000
@@ -68,8 +68,35 @@ async function run() {
 
     // getting all gadgets 
     app.get('/gadgets', async(req,res)=>{
-      const gadget=gadgetsCollection.find()
-      const result =await gadget.toArray()
+      let query ={}
+      if(req.query?.search){
+        const {search} =req?.query
+        query ={
+          $or:[
+            {title:{$regex:search , $options:'i'}},
+            {category:{$regex:search , $options:'i'}},
+          ]
+        }
+      }
+     console.log(query);
+      const size = parseInt(req?.query?.size)
+      const page = parseInt(req?.query?.page)
+      const result =await gadgetsCollection.find(query).limit(size).skip(page*size).toArray()
+      res.send(result)
+    })
+
+  //  get all gadgets length 
+  app.get('/gadgets/count',async(req,res)=>{
+    const gadget =await gadgetsCollection.estimatedDocumentCount()
+    res.send({count:gadget})
+  })
+
+    // getting single gadgets 
+    app.get('/gadgets/:id', async(req,res)=>{
+      const id = req.params.id
+      const query ={_id : new ObjectId(id)}
+      
+      const result =await gadgetsCollection.findOne(query)
       res.send(result)
     })
 
