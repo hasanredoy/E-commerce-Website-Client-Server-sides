@@ -1,26 +1,25 @@
 import { FaStar } from "react-icons/fa6";
 import { Link, useLoaderData } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Details = () => {
   const data =useLoaderData()
-  console.log(data);
+  const {handleCart}=useAuth()
   return (
     <div>
-      <div
-          key={data.id}
-          className="card  bg-[#37373752] bg-opacity-70 shadow-lg px-2 text-black my-8 container mx-auto pt-5"
+      <div className="card  border-none lg:border border-[#03fcce] bg-base-200  shadow-xl px-2  my-8 container mx-auto pt-5 flex flex-col lg:flex-row gap-5"
         >
-          <figure className=" bg-white px-2 w-1/2 mx-auto">
-            <img className=" h-[400px] mx-auto" src={data.image} alt="Shoes" />
+          <div className="w-full lg:w-[30%]">
+          <figure className=" bg-white  mx-auto">
+            <img className=" mx-auto" src={data.image} alt="Shoes" />
           </figure>
           <h2 className="font-bold text-center text-xl mt-4">
             {data.product_name}
-            {data.new === "true" && (
-              <div className="badge badge-accent ml-1">NEW</div>
-            )}
+           
           </h2>
-            <div className="divider"></div>
-          <div className="card-body">
+          </div>
+          <div className="card-body w-full lg:w-[50%]
+          ">
             <h3 className="text-2xl font-bold">{data.title}</h3>
             <p className=" font-bold text-lg">{data.company}</p>
             <p>
@@ -33,10 +32,13 @@ const Details = () => {
 
             <div className="card-actions justify-between my-5">
               
-              <button className=" btn btn-error">Add to Cart</button>
-              <Link to={`/`}>
-             <button className=" btn btn-info">Buy Now !</button>
-             </Link>
+            <button
+                  className=" btn border-t-4 border-r-4 border-neutral-600"
+                  onClick={() => handleCart(data)}
+                >
+                  Add to Cart
+                </button>
+              
             </div>
           </div>
         </div>

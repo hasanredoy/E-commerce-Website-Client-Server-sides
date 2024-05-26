@@ -65,6 +65,7 @@ async function run() {
 
     const gadgetsCollection = client.db('Gadget-ShopDB').collection('gadgets')
     const userCraftCollection = client.db('CraftsDB').collection('crafts')
+    const userReviewCollection = client.db('CraftsDB').collection('reviews')
 
     // getting all gadgets 
     app.get('/gadgets', async(req,res)=>{
@@ -127,6 +128,18 @@ async function run() {
 
   }) 
 
+// user review apis 
+app.get('/reviews',async(req,res)=>{
+  const result = await userReviewCollection.find().toArray()
+  res.send(result)
+})
+
+app.post('/reviews',async(req,res)=>{
+  const reviewData= req.body
+  const result =await userReviewCollection.insertOne(reviewData)
+  res.send(result)
+
+})
 
   // verification related apis 
   app.post('/jwt', async(req, res)=>{

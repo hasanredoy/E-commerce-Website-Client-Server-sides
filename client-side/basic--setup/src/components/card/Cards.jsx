@@ -16,7 +16,7 @@ const Cards = () => {
 
   return (
     <div>
-      <div className=" grid grid-cols-1 lg:grid-cols-3 gap-5  ">
+      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  ">
         {gadgets?.slice(6, 12).map((data) => (
           <div
             key={data.id}
@@ -24,9 +24,7 @@ const Cards = () => {
           >
             <h2 className="font-bold text-center text-xl mt-2">
               {data.product_name}
-              {data.new === "true" && (
-                <div className="badge badge-accent ml-1">NEW</div>
-              )}
+            
             </h2>
             <div className="divider"></div>
             <figure className=" bg-white px-2 w-full">
@@ -57,7 +55,7 @@ const Cards = () => {
                   Add to Cart
                 </button>
                 <Link to={`/item/${data._id || ""}`}>
-                  <button className=" btn btn-info border-b-4 border-neutral-800">View Details</button>
+                  <button className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">View Details</button>
                 </Link>
               </div>
             </div>

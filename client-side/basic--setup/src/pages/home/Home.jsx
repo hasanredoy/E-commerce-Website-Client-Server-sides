@@ -1,42 +1,45 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { FaGreaterThan } from "react-icons/fa6";
 import { FaLessThan } from "react-icons/fa6";
 import Cards from "../../components/card/Cards";
-import { MainContext } from "../../components/auth-provider/AuthProvider";
 import FaQ from "../../components/FAQ/FaQ";
+import Discount from "../../components/Discount/Discount";
+import discount50 from "../../assets/50-percent.png";
+import Testemonial from "../../components/Testemonial/Testemonial";
 
 const Home = () => {
   let [slide, setSlide] = useState(1);
-  const {user} =useContext(MainContext)
-  
 
   if (slide == 0) {
     setSlide(3);
   } else if (slide == 4) {
     setSlide(1);
   } else
-
     return (
       <div className=" mx-auto ">
         {/* banner */}
         <div
-          className="min-h-screen bg-contain lg:bg-cover flex flex-col lg:flex-row justify-between  mb-5 "
+          className=" relative min-h-[500px] lg:min-h-screen bg-contain md:bg-cover flex flex-col md:flex-row justify-between mb-5 "
           style={{
             backgroundImage:
               "url(https://cdn.pixabay.com/photo/2019/03/21/15/18/shop-4071232_1280.png)",
           }}
         >
-          <div className="  flex min-h-svh w-full lg:w-1/2 items-center justify-center text-white bg-black bg-opacity-50 text-center lg:text-start">
-            <div className="max-w-md">
-              <h1 className="mb-5 text-2xl lg:text-5xl font-bold">
-                WellCome To Our Gadget Shop
+          <div className=" absolute left-0 top-10">
+            <img className=" w-20 h-20" src={discount50} alt="" />
+          </div>
+          <div className="  flex pt-5 md:pt-10 md:h-auto lg:min-h-svh w-full lg:w-1/2  items-start lg:items-center justify-center text-white bg-black bg-opacity-60 text-center lg:text-start">
+            <div className="  max-w-sm md:max-w-lg px-3">
+              <h1 className="mb-5 text-3xl md:text-4xl lg:text-6xl font-bold">
+                WellCome To Our{" "}
+                <span className=" text-[#f4d641] ">Gadgets</span> Shop
               </h1>
               <p className="mb-5">
                 We&apos;re Selling Tech Gadgets Like Smartphones , Laptop ,
                 Headset And etc.
               </p>
-              <button   className="btn   btn-outline text-white outline-orange-200 font-black text-xl  ">
-               <a href="#cards"> Shop Now!</a>
+              <button className="btn  bg-[#2afdd6] text-black border-0 font-black text-xl  ">
+                <a href="#cards"> Shop Now!</a>
               </button>
             </div>
           </div>
@@ -118,29 +121,28 @@ const Home = () => {
             </div>
           </div>
         </div>
-
+        {/* discount */}
+        <div>
+          <Discount discount={50}></Discount>
+        </div>
         {/* card  */}
 
-        <section className=" container mx-auto my-5">
-          <div className=" my-8 space-y-5">
-            <h1 className=" text-2xl lg:text-5xl text-center font-bold">
-              {" "}
-              Check Out Our Gadgets{" "}
-            </h1>
-           
-          </div>
-
+        <div className=" container mx-auto my-5">
           <div id="cards">
-            <Cards
-            ></Cards>
+            <Cards></Cards>
           </div>
-        </section>
-
+        </div>
 
         {/* FaQ */}
         <div>
           <FaQ></FaQ>
         </div>
+
+         {/* Testimonial */}
+         <div className=" mt-20 w-[80%] mx-auto">
+           <Testemonial></Testemonial>
+         </div>
+
       </div>
     );
 };

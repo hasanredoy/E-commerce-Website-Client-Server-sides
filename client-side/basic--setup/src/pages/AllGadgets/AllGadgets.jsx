@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { FaGreaterThan, FaLessThan, FaStar } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
+import banner from '../../assets/banner2.png'
+import Discount from "../../components/Discount/Discount";
 const AllGadgets = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const axiosCommon = useFetchCommon();
@@ -56,27 +58,27 @@ const AllGadgets = () => {
   };
   // console.log(currentPage);
   return (
-    <div className="mb-10">
-      {/* bannr  */}
+    <div className="mb-10 overflow-hidden">
+      {/* banner  */}
       <div
-        className="hero min-h-[500px] mb-20"
+        className="hero bg-cover min-h-[500px] mb-20"
         style={{
           backgroundImage:
-            "url(https://img.freepik.com/free-vector/shopping-icon-collection_1084-9.jpg?t=st=1716625152~exp=1716628752~hmac=dce0f2a3bf3942aef15280d00451ad88bb3723d6a4f29cce50ea84adb207defa&w=740)",
+            `url(${banner})`,
         }}
       >
-        <div className="hero-overlay bg-opacity-70"></div>
+        <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-white ">
           <div className="max-w-xl">
-            <h1 className=" mb-5 text-2xl md:text-5xl font-bold">
+            <h1 className=" mb-5 text-3xl md:text-5xl font-bold">
               {" "}
               Hi{" "}
-              <span className=" bg-gradient-to-r  bg-clip-text text-transparent from-yellow-400 via-yellow-600 to-orange-300">
+              <span className=" bg-gradient-to-r  bg-clip-text text-transparent from-[#03caa6]  to-[#5df7db]">
                 {user?.displayName}
               </span>
               !! Wanna Buy Something..
             </h1>
-            <p className="mb-5 text-lg font-semibold">
+            <p className="mb-5  ">
               Check Our Latest Gadgets , We Guarantee You will Be Satisfied
               after buying our SmartPhones , Laptops , Tablets , Watches ,
               Headset and etc., you will Find best quality and quantity in our
@@ -86,7 +88,7 @@ const AllGadgets = () => {
               <label className=" text-black bg-white input flex items-center justify-between relative">
                 <input name="search" type="text" className="grow " placeholder="Search" />
                <div className=" absolute left-auto -right-0.5">
-               <button className=" rounded-l-none btn border-0 text-white bg-fuchsia-800">
+               <button className=" rounded-l-none btn border-0 text-white bg-[#046351]">
                   Search
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +110,12 @@ const AllGadgets = () => {
         </div>
       </div>
 
+    {/* discount  */}
+    <div>
+      <Discount discount={50}></Discount>
+    </div>
+
+  {/* cards */}
       <div className="  container mx-auto  grid grid-cols-1 lg:grid-cols-3 gap-5   ">
         {gadgets?.map((data) => (
           <div
@@ -116,9 +124,7 @@ const AllGadgets = () => {
           >
             <h2 className="font-bold text-center text-xl mt-2">
               {data.product_name}
-              {data.new === "true" && (
-                <div className="badge badge-accent ml-1">NEW</div>
-              )}
+              
             </h2>
             <div className="divider"></div>
             <figure className=" bg-white px-2 w-full">
