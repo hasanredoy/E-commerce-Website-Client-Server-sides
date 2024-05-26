@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useFetchCommon from "../../hooks/useFetchCommon";
 import { useQuery } from "@tanstack/react-query";
 import { FaGreaterThan, FaLessThan, FaStar } from "react-icons/fa6";
@@ -6,12 +6,47 @@ import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import banner from '../../assets/banner2.png'
 import Discount from "../../components/Discount/Discount";
+import useFetch from "../../hooks/useFetch";
+import useCart from "../../useCart/useCart";
+import Swal from "sweetalert2";
 const AllGadgets = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const axiosCommon = useFetchCommon();
-  const { handleCart, user } = useAuth();
+  const { user } = useAuth();
   const [count, setCount] = useState();
   const [search, setSearch] = useState('');
+  const axiosHook = useFetch()
+  const url = '/carts'
+  const userEmail = user?.email;
+  const [, feds]=useCart()
+  const handleCart=(cart)=>{
+    const userCart = {
+      cart,
+      userEmail
+    }
+    if(!user){
+      return <Navigate to={'/login'}></Navigate> 
+    }
+    if(user){
+    axiosHook.post(url , userCart)
+    .then(res=>{
+      // console.log(refetch);
+      if(res.data.insertedId){
+        feds()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${cart.product_name} added in Cart Successfully`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    })
+    .catch(err => console.log(err)
+    )
+  }
+ } 
+
 
   useEffect(() => {
     axiosCommon.get("/gadgets/count").then((res) => {

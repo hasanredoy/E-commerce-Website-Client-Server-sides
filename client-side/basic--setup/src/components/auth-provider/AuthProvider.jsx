@@ -2,9 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import auth from "../../firebase/firebase.config"
 import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import axios from "axios";
-import useFetch from "../../hooks/useFetch";
-import { Navigate} from "react-router-dom";
-import Swal from "sweetalert2";
 
 export const MainContext = createContext(null)
 
@@ -20,36 +17,7 @@ const AuthProvider = ({children}) => {
   const [ modal , setModal] = useState(false)
 
 
-  const axiosHook = useFetch()
-  const url = '/carts'
-  const userEmail = user?.email;
 
-  const handleCart=(cart)=>{
-    const userCart = {
-      cart,
-      userEmail
-    }
-    if(!user){
-      return <Navigate to={'/login'}></Navigate> 
-    }
-    if(user){
-    axiosHook.post(url , userCart)
-    .then(res=>{
-      console.log(res.data);
-      if(res.data.insertedId){
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${cart.product_name} added in Cart Successfully`,
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    })
-    .catch(err => console.log(err)
-    )
-  }
- } 
 
   // creating user 
   const createUser=(email , password)=>{
@@ -112,7 +80,6 @@ const resetPass = (email)=>{
     user,
     logOut,
     resetPass,
-    handleCart,
     theme,
     googleLogin,
     setTheme,

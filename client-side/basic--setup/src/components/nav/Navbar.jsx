@@ -7,6 +7,8 @@ import { FaMoon, } from "react-icons/fa6";
 import { IoSunnySharp } from "react-icons/io5";
 import { MdDashboardCustomize } from "react-icons/md";
 import gadgetLogo  from '../../assets/gadgets.png'
+import useTanStackQuery from "../../hooks/useTanStackQuery";
+import useCart from "../../useCart/useCart";
 
 const Navbar = () => {
   const { user, logOut } = useContext(MainContext);
@@ -34,6 +36,8 @@ const Navbar = () => {
     logOut().then().catch();
   };
 
+
+   const [data]=useCart()
   const links = (
     <>
       <NavLink className={"  text-lg font-bold lg:mr-5 "} to={"/"}>
@@ -58,7 +62,7 @@ const Navbar = () => {
         }
         to={"/myCart"}
       >
-        <FaShoppingCart className=" text-neutral-300"></FaShoppingCart> 0
+        <FaShoppingCart className=" text-neutral-300"></FaShoppingCart> {data?.length}
       </NavLink>
     </>
   );

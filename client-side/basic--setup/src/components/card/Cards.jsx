@@ -1,13 +1,48 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa6";
 import useFetchCommon from "../../hooks/useFetchCommon";
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import useCart from "../../useCart/useCart";
+import useFetch from "../../hooks/useFetch";
 
 const Cards = () => {
-  const handleCart =useAuth()
+  const {user} =useAuth()
+
+  const axiosHook = useFetch()
+  const url = '/carts'
+  const userEmail = user?.email;
+   const [, refetch]=useCart()
+  const handleCart=(cart)=>{
+    const userCart = {
+      cart,
+      userEmail
+    }
+    if(!user){
+      return <Navigate to={'/login'}></Navigate> 
+    }
+    if(user){
+    axiosHook.post(url , userCart)
+    .then(res=>{
+      // console.log(refetch);
+      if(res.data.insertedId){
+        refetch()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${cart.product_name} added in Cart Successfully`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    })
+    .catch(err => console.log(err)
+    )
+  }
+ } 
   const [gadgets, setGadgets] = useState([]);
   const axiosCommon = useFetchCommon();
   useEffect(() => {

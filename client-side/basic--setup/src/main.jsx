@@ -18,6 +18,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import ReviewsPage from './pages/Reviews/ReviewsPage.jsx';
+import ContactUs from './pages/ContactUs/ContactUs.jsx';
 
 const queryClient = new QueryClient()
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path:"/reviews",
         element:<ReviewsPage></ReviewsPage> ,
+      },
+      {
+        path:"/contact",
+        element:<ContactUs></ContactUs> ,
       },
     ]
   },
