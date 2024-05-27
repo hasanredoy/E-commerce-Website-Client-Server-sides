@@ -7,7 +7,6 @@ import { FaMoon, } from "react-icons/fa6";
 import { IoSunnySharp } from "react-icons/io5";
 import { MdDashboardCustomize } from "react-icons/md";
 import gadgetLogo  from '../../assets/gadgets.png'
-import useTanStackQuery from "../../hooks/useTanStackQuery";
 import useCart from "../../useCart/useCart";
 
 const Navbar = () => {

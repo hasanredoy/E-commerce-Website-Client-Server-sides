@@ -127,6 +127,14 @@ async function run() {
     res.send(result)
 
   }) 
+  //  deleting user cart
+  app.delete('/cart/:id',async(req,res)=>{
+   const id =req.params.id
+   const filter ={_id:new ObjectId(id)}
+    const result= await userCraftCollection.deleteOne(filter)
+    res.send(result)
+
+  }) 
 
 // user review apis 
 app.get('/reviews',async(req,res)=>{
