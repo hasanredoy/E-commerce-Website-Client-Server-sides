@@ -60,7 +60,7 @@ const Navbar = () => {
         className={
           "  flex gap-1 justify-center items-center bg-[#046351] w-14 h-8 rounded-full hover:bg-slate-100 text-xl lg:mr-4 text-[#22f8d0]  font-bold  "
         }
-        to={"/myCart"}
+        to={"/dashboard/myCart"}
       >
         <FaShoppingCart className=" text-neutral-300"></FaShoppingCart> {data?.length}
       </NavLink>
@@ -177,7 +177,7 @@ const Navbar = () => {
                 className="dropdown-content z-[50] menu p-2 shadow  rounded-box bg-slate-200 text-black py-5 space-y-4 -left-28 w-36"
               >
                 <Link
-                  
+                  to={'/dashboard'}
                   className="flex w-32 rounded-md border-b-4 border-l-4 p-2 border border-[#01a587] gap-2 justify-center items-center "
                 >
                   <MdDashboardCustomize className=" text-xl"></MdDashboardCustomize>

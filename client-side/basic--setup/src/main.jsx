@@ -11,7 +11,6 @@ import Login from './pages/login/Login.jsx';
 import Register from './pages/register/Register.jsx';
 import AuthProvider from './components/auth-provider/AuthProvider.jsx';
 import Details from './components/details/Details.jsx';
-import MyCart from './components/MyCart/MyCart.jsx';
 import AllGadgets from './pages/AllGadgets/AllGadgets.jsx';
 import {
   QueryClient,
@@ -19,6 +18,8 @@ import {
 } from '@tanstack/react-query'
 import ReviewsPage from './pages/Reviews/ReviewsPage.jsx';
 import ContactUs from './pages/ContactUs/ContactUs.jsx';
+import Dashboard from './Layout/Dashboard.jsx';
+import MyCart from './pages/Dashboard/User/MyCart/MyCart.jsx';
 
 const queryClient = new QueryClient()
 
@@ -62,6 +63,16 @@ const router = createBrowserRouter([
   {
     path:"/register",
     element:<Register></Register>       
+  },
+  {
+    path:"/dashboard",
+    element:<Dashboard></Dashboard>,
+    children:[
+      {
+        path:'myCart',
+        element:<MyCart></MyCart>
+      },
+    ]       
   },
 ]);
 
