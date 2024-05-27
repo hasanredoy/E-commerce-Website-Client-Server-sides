@@ -1,4 +1,4 @@
-import {FaHistory, FaHome, FaMoon, FaShoppingCart, FaSignOutAlt, FaStar, FaUser } from "react-icons/fa";
+import {FaHistory, FaHome, FaList, FaMoon, FaShoppingCart, FaSignOutAlt, FaStar, FaUser, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import './dashboard.css'
 import useCart from "../useCart/useCart";
@@ -9,6 +9,8 @@ import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { IoSunnySharp } from "react-icons/io5";
+import { MdAddShoppingCart } from "react-icons/md";
+
 
 const Dashboard = () => {
   const {logOut}=useAuth()
@@ -56,7 +58,7 @@ const Dashboard = () => {
       .querySelector("html")
       .setAttribute("data-theme", localStorage.getItem("theme"));
   }, []);
-
+const isAdmin =true
   return (
     <div className=" flex gap-10 container mx-auto">
 
@@ -89,11 +91,22 @@ const Dashboard = () => {
                 <option value="dark">Dark </option>
               </select>
             </div>
+            {
+          isAdmin?<>
+          {/* admin links */}
+          <NavLink to={'/dashboard/adminHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >Admin Home</NavLink>
+          <NavLink to={'/dashboard/adminProfile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
+          <NavLink to={'/dashboard/allUsers'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaUsers></FaUsers >All Users </NavLink>
+          <NavLink to={'/dashboard/allItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaList></FaList>All Items</NavLink>
+          <NavLink to={'/dashboard/addItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <MdAddShoppingCart></MdAddShoppingCart>Add Items</NavLink>
+          </>:<>
           {/* user links */}
           <NavLink to={'/dashboard/userHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >User Home</NavLink>
           <NavLink to={'/dashboard/userProfile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
           <NavLink to={'/dashboard/myCart'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaShoppingCart></FaShoppingCart >My Cart <span>{userCart?.length}</span></NavLink>
           <NavLink to={'/dashboard/paymentHistory'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaHistory></FaHistory>Payment History</NavLink>
+          </>
+        }
          
         </div>
         {/* static links  */}
@@ -109,6 +122,7 @@ const Dashboard = () => {
         </div>
        </div>
       </div>
+      {/* links for lg  */}
       <div className={` hidden lg:block w-[20%] min-h-screen  px-5 pt-4  bg-[#039396] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
@@ -136,13 +150,25 @@ const Dashboard = () => {
                 <option value="dark">Dark </option>
               </select>
             </div>
+        {
+          isAdmin?<>
+          {/* admin links */}
+          <NavLink to={'/dashboard/adminHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >Admin Home</NavLink>
+          <NavLink to={'/dashboard/adminProfile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
+          <NavLink to={'/dashboard/allUsers'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaUsers></FaUsers >All Users </NavLink>
+          <NavLink to={'/dashboard/allItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaList></FaList>All Items</NavLink>
+          <NavLink to={'/dashboard/addItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <MdAddShoppingCart></MdAddShoppingCart>Add Items</NavLink>
+          </>:<>
           {/* user links */}
           <NavLink to={'/dashboard/userHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >User Home</NavLink>
           <NavLink to={'/dashboard/userProfile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
           <NavLink to={'/dashboard/myCart'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaShoppingCart></FaShoppingCart >My Cart <span>{userCart?.length}</span></NavLink>
           <NavLink to={'/dashboard/paymentHistory'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaHistory></FaHistory>Payment History</NavLink>
+          </>
+        }
          
         </div>
+        <div className="divider"></div>
         {/* static links  */}
         <div>
         

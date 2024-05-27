@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { MainContext } from "../../components/auth-provider/AuthProvider";
 import RegisterModal from "../../components/modals/RegisterModal";
 import { updateProfile } from "firebase/auth";
+import axios from "axios";
+import GoogleLogin from "../../socialLogin/GoogleLogin";
 
 const Register = () => {
 
@@ -27,6 +29,20 @@ const Register = () => {
       photoURL:photo,
       phoneNumber:number   
     })
+    const usersData ={
+      email,
+      name ,
+      photo ,
+    }
+    
+      axios.post('http://localhost:5000/users',usersData)
+      .then(res=>{
+        console.log(res.data);
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+    
   })
   .catch(err=>console.log(err))
 
@@ -107,7 +123,11 @@ const Register = () => {
       <div className="form-control mt-6 w-1/3 mx-auto">
         <button className="btn bg-[#e7eca3]">Register</button>
       </div>
+      
     </form>
+    <div>
+      <GoogleLogin></GoogleLogin>
+    </div>
     <p className=" text-center mb-2 ">Already Have an Account ! <Link className=" font-bold hover:underline text-blue-700" to={"/register"}>Login</Link></p>
   </div>
   {

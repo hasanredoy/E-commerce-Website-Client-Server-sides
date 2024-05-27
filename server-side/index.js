@@ -36,7 +36,7 @@ const client = new MongoClient(uri, {
 // middle wears 
 const verifyUser = (req,res , next)=>{
   const verifyToken = req?.cookies?.token
-  console.log( 'token',verifyToken);
+  // console.log( 'token',verifyToken);
   if(!verifyToken){
     return res.status(401).send({message:'unauthorized'})
   }
@@ -66,6 +66,7 @@ async function run() {
     const gadgetsCollection = client.db('Gadget-ShopDB').collection('gadgets')
     const userCraftCollection = client.db('CraftsDB').collection('crafts')
     const userReviewCollection = client.db('CraftsDB').collection('reviews')
+    const usersCollection = client.db('CraftsDB').collection('users')
 
     // getting all gadgets 
     app.get('/gadgets', async(req,res)=>{
@@ -81,7 +82,7 @@ async function run() {
           ]
         }
       }
-     console.log(filter);
+    //  console.log(filter);
       const size = parseInt(req?.query?.size)
       const page = parseInt(req?.query?.page)
       const result =await gadgetsCollection.find(filter).limit(size).skip(page*size).toArray()
@@ -106,7 +107,7 @@ async function run() {
     // posting user carts 
    app.post('/carts', async(req,res)=>{
     const cartFromBody = req.body 
-    console.log(cartFromBody);
+    // console.log(cartFromBody);
     const result = await userCraftCollection.insertOne(cartFromBody)
     res.send(result)
    })
@@ -114,7 +115,7 @@ async function run() {
   //  getting users all cart and finding single users carts by email
   app.get('/carts', verifyUser,async(req,res)=>{
     let query = {}
-    console.log(req?.query?.email, req?.user?.email );
+    // console.log(req?.query?.email, req?.user?.email );
   if(req?.query?.email !== req?.user?.email ){
     return res.status(403).send({message:'forbidden'})
   }
@@ -139,7 +140,7 @@ async function run() {
 // user review apis 
 app.get('/reviews',async(req,res)=>{
   let query = {}
-    console.log("review",req?.query?.email);
+    // console.log("review",req?.query?.email);
  
     if(req.query?.email){
       query={email : req?.query?.email}
@@ -155,11 +156,68 @@ app.post('/reviews',async(req,res)=>{
 
 })
 
+
+
+// users apis 
+app.get('/userss',verifyUser, async(req,res)=>{
+  const result = await usersCollection.find().toArray()
+  res.send(result)
+})
+app.get('/users/admin/:email',verifyUser, async(req,res)=>{
+  const email = req.params.email
+  console.log(email);
+  const filter = {email : email}
+  const findAdmin = await usersCollection.findOne(filter)
+
+  let admin =false
+  if(findAdmin){
+    admin = findAdmin?.role==="admin"
+  }
+
+  res.send({admin})
+})
+app.post('/users', async(req,res)=>{
+  const userData = req.body
+
+  const filter = {email : userData.email}
+  const findUser = await usersCollection.findOne(filter)
+  if(findUser){
+    return res.send({message:'user Already Exist',insertedId:null})
+  }
+
+  const result = await usersCollection.insertOne(userData)
+  res.send(result)
+})
+app.patch('/users/admin/:id', async(req,res)=>{
+  const id = req.params.id
+
+  const filter = {_id :new ObjectId(id)}
+  const update = {
+    $set:{
+      role:'admin'
+    }
+  }
+
+  const result = await usersCollection.updateOne(filter,update)
+  res.send(result)
+})
+app.delete('/users/:id', async(req,res)=>{
+  const id = req.params.id
+
+  const filter = {_id :new ObjectId(id)}
+   const result = await usersCollection.deleteOne(filter)
+  res.send(result)
+})
+
+
+
+
+
   // verification related apis 
   app.post('/jwt', async(req, res)=>{
    const user = req.body
    const token = jwt.sign(user , process.env.VERIFICATION_TOKEN , {expiresIn:"1h"})
-   console.log('user=', user, 'and token =' , token);
+  //  console.log('user=', user, 'and token =' , token);
    res.cookie('token' , token , cookieOptions).send({success:'true'})
   })
   // clearing cookie with logout

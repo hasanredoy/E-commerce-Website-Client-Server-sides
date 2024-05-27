@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MainContext } from "../../components/auth-provider/AuthProvider";
-import { FcGoogle } from "react-icons/fc";
 import Swal from 'sweetalert2'
 
 import Navbar from "../../components/nav/Navbar";
 import loginImage from "../../assets/laptop-with-login-password-form-screen.png";
+import GoogleLogin from "../../socialLogin/GoogleLogin";
 
 const Login = () => {
-  const { loginUser,resetPass,  googleLogin } = useContext(MainContext);
+  const { loginUser,resetPass} = useContext(MainContext);
   const location =useLocation()
   const navigate =useNavigate()
   const [modal , setModal]=useState(false)
@@ -30,12 +30,7 @@ const Login = () => {
         console.log(res.user)})
       .catch((err) => console.log(err));
   };
-  const handleGoogleLogin = async () => {
-   const res = await googleLogin();
-   if(res){
-    navigate(path)
-   }
-  };
+ 
 
   const handleResetPass =(e)=>{
     e.preventDefault()
@@ -70,12 +65,7 @@ const Login = () => {
             className=" flex justify-center mt-10
         "
           >
-            <button
-              onClick={handleGoogleLogin}
-              className=" btn btn-outline btn-success "
-            >
-              <FcGoogle></FcGoogle> Login With Google
-            </button>
+             <GoogleLogin></GoogleLogin>
           </div>
           <div className="divider">or</div>
 

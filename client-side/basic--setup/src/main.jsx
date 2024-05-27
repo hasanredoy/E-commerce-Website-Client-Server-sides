@@ -22,6 +22,9 @@ import Dashboard from './Layout/Dashboard.jsx';
 import MyCart from './pages/Dashboard/User/MyCart/MyCart.jsx';
 import MyProfile from './pages/Dashboard/User/MyProfile/MyProfile.jsx';
 import UserHome from './pages/Dashboard/User/UserHome/UserHome.jsx';
+import AllUsers from './pages/Dashboard/Admin/AllUsers/AllUsers.jsx';
+import PrivetRout from './Routs/PrivetRout.jsx';
+import AdminRoute from './Routs/AdminRoute.jsx';
 
 const queryClient = new QueryClient()
 
@@ -37,12 +40,12 @@ const router = createBrowserRouter([
     
       {
         path:"/item/:id",
-        element:<Details></Details> ,
+        element:<PrivetRout><Details></Details></PrivetRout> ,
         loader:({params})=> fetch(`http://localhost:5000/gadgets/${params.id}`)      
       },
       {
         path:"/myCart",
-        element:<MyCart></MyCart> ,
+        element:<PrivetRout><MyCart></MyCart></PrivetRout> ,
       },
       {
         path:"/allGadgets",
@@ -50,11 +53,11 @@ const router = createBrowserRouter([
       },
       {
         path:"/reviews",
-        element:<ReviewsPage></ReviewsPage> ,
+        element:<PrivetRout><ReviewsPage></ReviewsPage> </PrivetRout>,
       },
       {
         path:"/contact",
-        element:<ContactUs></ContactUs> ,
+        element:<PrivetRout><ContactUs></ContactUs></PrivetRout> ,
       },
     ]
   },
@@ -68,7 +71,7 @@ const router = createBrowserRouter([
   },
   {
     path:"/dashboard",
-    element:<Dashboard></Dashboard>,
+    element:<PrivetRout><Dashboard></Dashboard></PrivetRout>,
     children:[
       {
         path:'userHome',
@@ -81,6 +84,10 @@ const router = createBrowserRouter([
       {
         path:'userProfile',
         element:<MyProfile></MyProfile>
+      },
+      {
+        path:'allUsers',
+        element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
       },
     ]       
   },

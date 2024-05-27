@@ -22,7 +22,7 @@ const Testemonial = () => {
       <div className=" grid grid-cols-1 md:grid-cols-2  gap-5 ">
         {reviews?.slice(4 - 8).map((review) => (
           <div
-            key={review}
+            key={review._id}
             className=" bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full  p-6 mx-auto divide-y rounded-md divide-gray-700 "
           >
             <div className="flex justify-between p-4">
