@@ -1,9 +1,9 @@
-import { FaHistory, FaHome, FaMoon, FaShoppingCart, FaSignOutAlt, FaStar } from "react-icons/fa";
+import {FaHistory, FaHome, FaMoon, FaShoppingCart, FaSignOutAlt, FaStar, FaUser } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import './dashboard.css'
 import useCart from "../useCart/useCart";
 import { MdOutlineContactSupport } from "react-icons/md";
-
+import { TiThMenu } from "react-icons/ti";
 import { LuMonitorSmartphone } from "react-icons/lu";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
@@ -13,6 +13,7 @@ import { IoSunnySharp } from "react-icons/io5";
 const Dashboard = () => {
   const {logOut}=useAuth()
   const [userCart,]=useCart()
+  const [menu , setMenu]=useState(false)
   const handleLogOut=()=>{
     Swal.fire({
       title: "Are you sure?",
@@ -60,7 +61,8 @@ const Dashboard = () => {
     <div className=" flex gap-10 container mx-auto">
 
       {/* sidebar */}
-      <div className=" w-[20%] min-h-screen  px-5 pt-4  bg-[#039396] ">
+       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl  absolute`}><TiThMenu></TiThMenu></button>
+      <div className={` ${menu?"block":'hidden'} absolute z-40 w-[50%] min-h-screen  px-5 pt-4  bg-[#039396] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
 
@@ -89,7 +91,54 @@ const Dashboard = () => {
             </div>
           {/* user links */}
           <NavLink to={'/dashboard/userHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >User Home</NavLink>
-          <NavLink to={'/dashboard/userProfile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaHome></FaHome > My Profile</NavLink>
+          <NavLink to={'/dashboard/userProfile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
+          <NavLink to={'/dashboard/myCart'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaShoppingCart></FaShoppingCart >My Cart <span>{userCart?.length}</span></NavLink>
+          <NavLink to={'/dashboard/paymentHistory'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaHistory></FaHistory>Payment History</NavLink>
+         
+        </div>
+        {/* static links  */}
+        <div className="divider"></div>
+        <div>
+        
+          
+          <NavLink to={'/'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome > Home</NavLink>
+          <NavLink to={'/allGadgets'} className={'flex items-center font-bold gap-2 text-white my-3'}><LuMonitorSmartphone></LuMonitorSmartphone>All Gadgets</NavLink>
+          <NavLink to={'/contact'} className={'flex items-center font-bold gap-2 my-3 text-white'}><MdOutlineContactSupport></MdOutlineContactSupport >Contact</NavLink>
+          <NavLink to={'/reviews'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaStar></FaStar>Reviews</NavLink>
+          <h3 onClick={handleLogOut}  className={' cursor-pointer flex items-center font-bold gap-2 my-3 text-white'}> <FaSignOutAlt></FaSignOutAlt>Logout</h3>
+        </div>
+       </div>
+      </div>
+      <div className={` hidden lg:block w-[20%] min-h-screen  px-5 pt-4  bg-[#039396] `}>
+       <div className=" h-full flex max-h-screen flex-col justify-evenly">
+       <div className=" flex-1">
+
+       <div
+              className={` text-white flex gap-2  items-center   p-2 border-b-2 border-[#15f7ce] mb-3 `}
+            >
+              <span className="  text-base lg:text-xl ">
+                {theme === "light" && (
+                  <IoSunnySharp className=""></IoSunnySharp>
+                )}
+                {theme === "dark" && <FaMoon></FaMoon>}
+              </span>
+              <select
+                className=" bg-[#039396] text-white font-bold outline-none border-0"
+                defaultValue={
+                  localStorage.getItem("theme")
+                    ? localStorage.getItem("theme")
+                    : "Theme"
+                }
+                onChange={handleTheme}
+                name="themeController"
+              >
+                <option value="light"> Light </option>
+                <option value="dark">Dark </option>
+              </select>
+            </div>
+          {/* user links */}
+          <NavLink to={'/dashboard/userHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >User Home</NavLink>
+          <NavLink to={'/dashboard/userProfile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
           <NavLink to={'/dashboard/myCart'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaShoppingCart></FaShoppingCart >My Cart <span>{userCart?.length}</span></NavLink>
           <NavLink to={'/dashboard/paymentHistory'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaHistory></FaHistory>Payment History</NavLink>
          
@@ -106,7 +155,7 @@ const Dashboard = () => {
         </div>
        </div>
       </div>
-      <div className=" w-[70%] ">
+      <div className=" w-full lg:w-[70%] ">
         <Outlet></Outlet>
       </div>
     </div>

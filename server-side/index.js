@@ -138,7 +138,13 @@ async function run() {
 
 // user review apis 
 app.get('/reviews',async(req,res)=>{
-  const result = await userReviewCollection.find().toArray()
+  let query = {}
+    console.log("review",req?.query?.email);
+ 
+    if(req.query?.email){
+      query={email : req?.query?.email}
+    }
+  const result = await userReviewCollection.find(query).toArray()
   res.send(result)
 })
 

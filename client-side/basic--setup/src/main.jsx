@@ -20,6 +20,8 @@ import ReviewsPage from './pages/Reviews/ReviewsPage.jsx';
 import ContactUs from './pages/ContactUs/ContactUs.jsx';
 import Dashboard from './Layout/Dashboard.jsx';
 import MyCart from './pages/Dashboard/User/MyCart/MyCart.jsx';
+import MyProfile from './pages/Dashboard/User/MyProfile/MyProfile.jsx';
+import UserHome from './pages/Dashboard/User/UserHome/UserHome.jsx';
 
 const queryClient = new QueryClient()
 
@@ -69,8 +71,16 @@ const router = createBrowserRouter([
     element:<Dashboard></Dashboard>,
     children:[
       {
+        path:'userHome',
+        element:<UserHome></UserHome>
+      },
+      {
         path:'myCart',
         element:<MyCart></MyCart>
+      },
+      {
+        path:'userProfile',
+        element:<MyProfile></MyProfile>
       },
     ]       
   },
