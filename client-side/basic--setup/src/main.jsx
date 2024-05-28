@@ -25,6 +25,7 @@ import UserHome from './pages/Dashboard/User/UserHome/UserHome.jsx';
 import AllUsers from './pages/Dashboard/Admin/AllUsers/AllUsers.jsx';
 import PrivetRout from './Routs/PrivetRout.jsx';
 import AdminRoute from './Routs/AdminRoute.jsx';
+import AllItems from './pages/Dashboard/Admin/AllItems.jsx/AllItems.jsx';
 
 const queryClient = new QueryClient()
 
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path:'allUsers',
         element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
+      },
+      {
+        path:'allItems',
+        element:<AdminRoute><AllItems></AllItems></AdminRoute>
       },
     ]       
   },

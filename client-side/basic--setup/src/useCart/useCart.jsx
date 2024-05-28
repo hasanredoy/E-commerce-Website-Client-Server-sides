@@ -7,14 +7,14 @@ const useCart = () => {
   const {user} =useAuth()
 
   
-  const {refetch, data } = useQuery({
+  const {refetch, data,isPending } = useQuery({
     queryKey: ['carts'],
     queryFn: async () => {
       const res = await axiosHook.get(`/carts?email=${user?.email}`);
       return res.data;
     },
   });
-  return  [data,refetch]
+  return  [data,refetch,isPending]
 };
 
 export default useCart;

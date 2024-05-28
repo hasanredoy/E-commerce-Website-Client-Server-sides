@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { IoSunnySharp } from "react-icons/io5";
 import { MdAddShoppingCart } from "react-icons/md";
+import useAdmin from "../hooks/useAdmin";
+import useUsers from "../hooks/useUsers";
 
 
 const Dashboard = () => {
@@ -58,7 +60,9 @@ const Dashboard = () => {
       .querySelector("html")
       .setAttribute("data-theme", localStorage.getItem("theme"));
   }, []);
-const isAdmin =true
+const [isAdmin] =useAdmin()
+const [data , refetch]=useUsers()
+console.log(data);
   return (
     <div className=" flex gap-10 container mx-auto">
 

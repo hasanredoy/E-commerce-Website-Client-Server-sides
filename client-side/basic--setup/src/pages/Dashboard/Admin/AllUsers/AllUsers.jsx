@@ -1,22 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import useFetch from "../../../../hooks/useFetch";
 import { FaTrash } from "react-icons/fa";
-import { Link, useActionData } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAdmin from "../../../../hooks/useAdmin";
-import axios from "axios";
+
+import useUsers from "../../../../hooks/useUsers";
 
 const AllUsers = () => {
   const axiosHook = useFetch()
-  // const [isAdmin,]=useAdmin()
-  const {data:users=[] ,refetch,isPending} =useQuery({
-    queryKey:['users'],
-    
-    queryFn:async ()=>{
-      const res = await axios.get(`/userss`)
-      return res.data
-    }
-  })
+ 
+  const [users,refetch,isPending]=useUsers()
 console.log(users);
   
   const handleAdmin=(id,name)=>{
@@ -84,11 +76,12 @@ console.log(users);
   }
   const [isAdmin,]=useAdmin()
   console.log(isAdmin);
-  if(isPending)return <span>Loading</span>
   return (
     <div>
       {
-        isPending && <span>loading</span>
+        isPending && <div className='flex justify-center items-center h-full'>
+        <span className="loading loading-infinity loading-lg "></span>
+      </div>
       }
         <div>
         <h4 className=" my-5 text-lg text-center font-bold text-[#11c6c9]">
@@ -117,7 +110,7 @@ console.log(users);
               <th className=" text-base lg:text-xl font-medium lg:font-bold">Image</th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">User Name</th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold"></th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Make Admin</th>
+              <th className=" text-base lg:text-xl font-medium lg:font-bold">Role</th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">Action</th>
             </tr>
           </thead>
@@ -144,7 +137,7 @@ console.log(users);
                 </td>
                 <th>
                  {
-                  user?.role==='admin'?'admin':<button onClick={()=>handleAdmin(user?._id,user?.name)} className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
+                  user?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(user?._id,user?.name)} className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
                       Make Admin
                     </button>
                  }

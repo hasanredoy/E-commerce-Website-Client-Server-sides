@@ -7,7 +7,9 @@ const AdminRoute = ({children}) => {
   const {user,loading}=useAuth()
   const location =useLocation()
   const [Admin,isAdminPending]=useAdmin()
-if(loading||isAdminPending)return <span className="loading loading-infinity loading-lg"></span>
+if(loading||isAdminPending)return <div className='flex justify-center items-center h-full'>
+  <span className="loading loading-infinity loading-lg "></span>
+</div>
 
   if(user&&Admin)return children;
 

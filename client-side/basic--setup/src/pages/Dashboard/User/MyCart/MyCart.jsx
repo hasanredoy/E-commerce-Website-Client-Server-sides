@@ -5,7 +5,7 @@ import useFetchCommon from "../../../../hooks/useFetchCommon";
 import Swal from "sweetalert2";
 
 const MyCart = () => {
-  const [data,refetch] = useCart();
+  const [data,refetch,isPending] = useCart();
   // console.log(data);
   const totalPrice = data?.reduce((a, b) => a + b?.cart?.price, 0);
   const axiosCommon =useFetchCommon()
@@ -39,6 +39,12 @@ const handleDelete =(id,name)=>{
     }
   });
  
+
+}
+if(isPending){
+  return<div className='flex justify-center items-center h-full'>
+  <span className="loading loading-infinity loading-lg "></span>
+</div>
 }
   return (
     <div>
