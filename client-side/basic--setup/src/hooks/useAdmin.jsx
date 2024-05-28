@@ -7,7 +7,7 @@ const {user} =useAuth()
 console.log(user?.email);
 const axiosHook = useFetch()
 const {data:Admin=[] , isPending:isAdminPending} =useQuery({
-  queryKey:['users'],
+  queryKey:['admin',axiosHook],
   queryFn:async ()=>{
     const res = await axiosHook.get(`/users/admin/${user?.email}`)
     return res.data.admin

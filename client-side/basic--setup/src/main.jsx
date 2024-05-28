@@ -26,6 +26,7 @@ import AllUsers from './pages/Dashboard/Admin/AllUsers/AllUsers.jsx';
 import PrivetRout from './Routs/PrivetRout.jsx';
 import AdminRoute from './Routs/AdminRoute.jsx';
 import AllItems from './pages/Dashboard/Admin/AllItems.jsx/AllItems.jsx';
+import UpdateItem from './pages/Dashboard/Admin/UpdateItem/UpdateItem.jsx';
 
 const queryClient = new QueryClient()
 
@@ -93,6 +94,11 @@ const router = createBrowserRouter([
       {
         path:'allItems',
         element:<AdminRoute><AllItems></AllItems></AdminRoute>
+      },
+      {
+        path:'update/:id',
+        element:<AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
+        loader:({params})=>fetch(`http://localhost:5000/gadgets/${params.id}`)
       },
     ]       
   },

@@ -1,24 +1,22 @@
-const express = require('express');
-const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
-require('dotenv').config()
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const app = express()
+const express = require("express");
+const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const app = express();
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 
-app.use(express.json())
-app.use(  cors({
-  origin: [
-    "http://localhost:5173",
-   
-  ],
-  credentials: true,
-}))
+app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 
-app.use(cookieParser())
-
+app.use(cookieParser());
 
 // codes of monogdb
 
@@ -30,26 +28,26 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
-// middle wears 
-const verifyUser = (req,res , next)=>{
-  const verifyToken = req?.cookies?.token
+// middle wears
+const verifyUser = (req, res, next) => {
+  const verifyToken = req?.cookies?.token;
   // console.log( 'token',verifyToken);
-  if(!verifyToken){
-    return res.status(401).send({message:'unauthorized'})
+  if (!verifyToken) {
+    return res.status(401).send({ message: "unauthorized" });
   }
-  jwt.verify(verifyToken , process.env.VERIFICATION_TOKEN,(err,decoded)=>{
-    if(err){
-      return res.status(401).send({message:'unauthorized'})
+  jwt.verify(verifyToken, process.env.VERIFICATION_TOKEN, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "unauthorized" });
     }
-    
-    req.user = decoded
-    next()
-  })
+
+    req.user = decoded;
+    next();
+  });
   // next()
-}
+};
 
 const cookieOptions = {
   httpOnly: true,
@@ -57,190 +55,208 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === "production" ? true : false,
 };
 
-
-
 async function run() {
   try {
-  
+    const gadgetsCollection = client.db("Gadget-ShopDB").collection("gadgets");
+    const userCraftCollection = client.db("CraftsDB").collection("crafts");
+    const userReviewCollection = client.db("CraftsDB").collection("reviews");
+    const usersCollection = client.db("CraftsDB").collection("users");
 
-    const gadgetsCollection = client.db('Gadget-ShopDB').collection('gadgets')
-    const userCraftCollection = client.db('CraftsDB').collection('crafts')
-    const userReviewCollection = client.db('CraftsDB').collection('reviews')
-    const usersCollection = client.db('CraftsDB').collection('users')
+    // getting all gadgets
+    app.get("/gadgets", async (req, res) => {
+      let filter = {};
+      const { search } = req?.query;
 
-    // getting all gadgets 
-    app.get('/gadgets', async(req,res)=>{
-      let filter ={}
-      const {search} =req?.query
-      
-      if(req.query?.search){
-        filter ={
-          $or:[
-            {title:{$regex:search , $options:'i'}},
-            {category:{$regex:search , $options:'i'}},
-            {product_name:{$regex:search , $options:'i'}},
-          ]
-        }
+      if (req.query?.search) {
+        filter = {
+          $or: [
+            { title: { $regex: search, $options: "i" } },
+            { category: { $regex: search, $options: "i" } },
+            { product_name: { $regex: search, $options: "i" } },
+          ],
+        };
       }
-    //  console.log(filter);
-      const size = parseInt(req?.query?.size)
-      const page = parseInt(req?.query?.page)
-      const result =await gadgetsCollection.find(filter).limit(size).skip(page*size).toArray()
-      res.send(result)
-    })
+      //  console.log(filter);
+      const size = parseInt(req?.query?.size);
+      const page = parseInt(req?.query?.page);
+      const result = await gadgetsCollection
+        .find(filter)
+        .limit(size)
+        .skip(page * size)
+        .toArray();
+      res.send(result);
+    });
 
-  //  get all gadgets length 
-  app.get('/gadgets/count',async(req,res)=>{
-    const gadget =await gadgetsCollection.estimatedDocumentCount()
-    res.send({count:gadget})
-  })
+    //  get all gadgets length
+    app.get("/gadgets/count", async (req, res) => {
+      const gadget = await gadgetsCollection.estimatedDocumentCount();
+      res.send({ count: gadget });
+    });
 
-    // getting single gadgets 
-    app.get('/gadgets/:id', async(req,res)=>{
-      const id = req.params.id
-      const query ={_id : new ObjectId(id)}
-      
-      const result =await gadgetsCollection.findOne(query)
-      res.send(result)
-    })
+    // getting single gadgets
+    app.get("/gadgets/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
 
-    // posting user carts 
-   app.post('/carts', async(req,res)=>{
-    const cartFromBody = req.body 
-    // console.log(cartFromBody);
-    const result = await userCraftCollection.insertOne(cartFromBody)
-    res.send(result)
-   })
+      const result = await gadgetsCollection.findOne(query);
+      res.send(result);
+    });
+    //updating single gadgets
+    app.put("/gadgets/:id", async (req, res) => {
+      const id = req.params.id;
 
-  //  getting users all cart and finding single users carts by email
-  app.get('/carts', verifyUser,async(req,res)=>{
-    let query = {}
-    // console.log(req?.query?.email, req?.user?.email );
-  if(req?.query?.email !== req?.user?.email ){
-    return res.status(403).send({message:'forbidden'})
-  }
-    if(req.query?.email){
-      query={userEmail : req.query.email}
-    }
+      const data = req.body;
 
-    const userCart = userCraftCollection.find(query)
-    const result= await userCart.toArray()
-    res.send(result)
+      const query = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateData = {
+        $set: {
+          category: data.category,
+          company: data.company,
+          description: data.description,
+          image: data.image,
+          price: data.price,
+          product_name: data.product_name,
+          rating: data.rating,
+          title: data.title,
+        },
+      };
+      const result = await gadgetsCollection.updateOne(query,updateData,options);
+      res.send(result);
+    });
+    //deleting single gadgets
+    app.delete("/gadgets/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
 
-  }) 
-  //  deleting user cart
-  app.delete('/cart/:id',async(req,res)=>{
-   const id =req.params.id
-   const filter ={_id:new ObjectId(id)}
-    const result= await userCraftCollection.deleteOne(filter)
-    res.send(result)
+      const result = await gadgetsCollection.deleteOne(query);
+      res.send(result);
+    });
 
-  }) 
+    // posting user carts
+    app.post("/carts", async (req, res) => {
+      const cartFromBody = req.body;
+      // console.log(cartFromBody);
+      const result = await userCraftCollection.insertOne(cartFromBody);
+      res.send(result);
+    });
 
-// user review apis 
-app.get('/reviews',async(req,res)=>{
-  let query = {}
-    // console.log("review",req?.query?.email);
- 
-    if(req.query?.email){
-      query={email : req?.query?.email}
-    }
-  const result = await userReviewCollection.find(query).toArray()
-  res.send(result)
-})
+    //  getting users all cart and finding single users carts by email
+    app.get("/carts", verifyUser, async (req, res) => {
+      let query = {};
+      // console.log(req?.query?.email, req?.user?.email );
+      if (req?.query?.email !== req?.user?.email) {
+        return res.status(403).send({ message: "forbidden" });
+      }
+      if (req.query?.email) {
+        query = { userEmail: req.query.email };
+      }
 
-app.post('/reviews',async(req,res)=>{
-  const reviewData= req.body
-  const result =await userReviewCollection.insertOne(reviewData)
-  res.send(result)
+      const userCart = userCraftCollection.find(query);
+      const result = await userCart.toArray();
+      res.send(result);
+    });
+    //  deleting user cart
+    app.delete("/cart/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await userCraftCollection.deleteOne(filter);
+      res.send(result);
+    });
 
-})
+    // user review apis
+    app.get("/reviews", async (req, res) => {
+      let query = {};
+      // console.log("review",req?.query?.email);
 
+      if (req.query?.email) {
+        query = { email: req?.query?.email };
+      }
+      const result = await userReviewCollection.find(query).toArray();
+      res.send(result);
+    });
 
+    app.post("/reviews", async (req, res) => {
+      const reviewData = req.body;
+      const result = await userReviewCollection.insertOne(reviewData);
+      res.send(result);
+    });
 
-// users apis 
-app.get('/userss',verifyUser, async(req,res)=>{
-  const result = await usersCollection.find().toArray()
-  res.send(result)
-})
-app.get('/users/admin/:email',verifyUser, async(req,res)=>{
-  const email = req.params.email
-  console.log(email);
-  const filter = {email : email}
-  const findAdmin = await usersCollection.findOne(filter)
+    // users apis
+    app.get("/userss", verifyUser, async (req, res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result);
+    });
+    app.get("/users/admin/:email", verifyUser, async (req, res) => {
+      const email = req.params.email;
+      console.log(email);
+      const filter = { email: email };
+      const findAdmin = await usersCollection.findOne(filter);
 
-  let admin =false
-  if(findAdmin){
-    admin = findAdmin?.role==="admin"
-  }
+      let admin = false;
+      if (findAdmin) {
+        admin = findAdmin?.role === "admin";
+      }
 
-  res.send({admin})
-})
-app.post('/users', async(req,res)=>{
-  const userData = req.body
+      res.send({ admin });
+    });
+    app.post("/users", async (req, res) => {
+      const userData = req.body;
 
-  const filter = {email : userData.email}
-  const findUser = await usersCollection.findOne(filter)
-  if(findUser){
-    return res.send({message:'user Already Exist',insertedId:null})
-  }
+      const filter = { email: userData.email };
+      const findUser = await usersCollection.findOne(filter);
+      if (findUser) {
+        return res.send({ message: "user Already Exist", insertedId: null });
+      }
 
-  const result = await usersCollection.insertOne(userData)
-  res.send(result)
-})
-app.patch('/users/admin/:id', async(req,res)=>{
-  const id = req.params.id
+      const result = await usersCollection.insertOne(userData);
+      res.send(result);
+    });
+    app.patch("/users/admin/:id", async (req, res) => {
+      const id = req.params.id;
 
-  const filter = {_id :new ObjectId(id)}
-  const update = {
-    $set:{
-      role:'admin'
-    }
-  }
+      const filter = { _id: new ObjectId(id) };
+      const update = {
+        $set: {
+          role: "admin",
+        },
+      };
 
-  const result = await usersCollection.updateOne(filter,update)
-  res.send(result)
-})
-app.delete('/users/:id', async(req,res)=>{
-  const id = req.params.id
+      const result = await usersCollection.updateOne(filter, update);
+      res.send(result);
+    });
+    app.delete("/users/:id", async (req, res) => {
+      const id = req.params.id;
 
-  const filter = {_id :new ObjectId(id)}
-   const result = await usersCollection.deleteOne(filter)
-  res.send(result)
-})
+      const filter = { _id: new ObjectId(id) };
+      const result = await usersCollection.deleteOne(filter);
+      res.send(result);
+    });
 
-
-
-
-
-  // verification related apis 
-  app.post('/jwt', async(req, res)=>{
-   const user = req.body
-   const token = jwt.sign(user , process.env.VERIFICATION_TOKEN , {expiresIn:"1h"})
-  //  console.log('user=', user, 'and token =' , token);
-   res.cookie('token' , token , cookieOptions).send({success:'true'})
-  })
-  // clearing cookie with logout
-  app.post('/logout', async(req , res)=>{
-    res
-    .clearCookie('token',{...cookieOptions , maxAge:0})
-    .send({success:true})
-  })
-
+    // verification related apis
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.VERIFICATION_TOKEN, {
+        expiresIn: "1h",
+      });
+      //  console.log('user=', user, 'and token =' , token);
+      res.cookie("token", token, cookieOptions).send({ success: "true" });
+    });
+    // clearing cookie with logout
+    app.post("/logout", async (req, res) => {
+      res
+        .clearCookie("token", { ...cookieOptions, maxAge: 0 })
+        .send({ success: true });
+    });
   } finally {
-   
   }
 }
 run().catch(console.dir);
 
+app.get("/", (req, res) => {
+  res.send("gadget Shop is Running");
+});
 
-
-
-
-app.get('/', (req, res)=>{
-  res.send('gadget Shop is Running')
-})
-
-app.listen(port , ()=>{
-  console.log('port is running', port);
-})
+app.listen(port, () => {
+  console.log("port is running", port);
+});
