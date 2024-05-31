@@ -129,7 +129,7 @@ console.log(users);
                 </td>
                 <td>
                   <span className="  text-base font-medium lg:font-bold">
-                    {user?.name}
+                    {user?.name?user?.name:'Anonymous'}
                   </span>
                 </td>
                 <td>

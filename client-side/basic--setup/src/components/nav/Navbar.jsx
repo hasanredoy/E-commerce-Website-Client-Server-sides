@@ -8,9 +8,11 @@ import { IoSunnySharp } from "react-icons/io5";
 import { MdDashboardCustomize } from "react-icons/md";
 import gadgetLogo  from '../../assets/gadgets.png'
 import useCart from "../../useCart/useCart";
+import useAdmin from "../../hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useContext(MainContext);
+  const [isAdmin,]=useAdmin()
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const handleTheme = (e) => {
     //  console.log(e.target.value);
@@ -55,7 +57,8 @@ const Navbar = () => {
         Contact
       </NavLink>
 
-      <NavLink
+      {
+        isAdmin||<NavLink
         className={
           "  flex gap-1 justify-center items-center bg-[#046351] w-14 h-8 rounded-full hover:bg-slate-100 text-xl lg:mr-4 text-[#22f8d0]  font-bold  "
         }
@@ -63,6 +66,7 @@ const Navbar = () => {
       >
         <FaShoppingCart className=" text-neutral-300"></FaShoppingCart> {data?.length}
       </NavLink>
+      }
     </>
   );
 
@@ -176,7 +180,7 @@ const Navbar = () => {
                 className="dropdown-content z-[50] menu p-2 shadow  rounded-box bg-slate-200 text-black py-5 space-y-4 -left-28 w-36"
               >
                 <Link
-                  to={'/dashboard'}
+                  to={isAdmin?'/dashboard/adminHome':'/dashboard/userHome'}
                   className="flex w-32 rounded-md border-b-4 border-l-4 p-2 border border-[#01a587] gap-2 justify-center items-center "
                 >
                   <MdDashboardCustomize className=" text-xl"></MdDashboardCustomize>

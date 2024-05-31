@@ -13,7 +13,7 @@ if(loading||isAdminPending)return <div className='flex justify-center items-cent
 
   if(user&&Admin)return children;
 
-  return <Navigate state={location?.pathname} to={'/login'}></Navigate>
+  return <Navigate state={location?.pathname} to={'/'}></Navigate>
 
 };
 

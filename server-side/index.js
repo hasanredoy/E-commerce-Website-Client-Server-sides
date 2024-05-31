@@ -49,6 +49,8 @@ const verifyUser = (req, res, next) => {
   // next()
 };
 
+
+
 const cookieOptions = {
   httpOnly: true,
   sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
@@ -61,6 +63,15 @@ async function run() {
     const userCraftCollection = client.db("CraftsDB").collection("crafts");
     const userReviewCollection = client.db("CraftsDB").collection("reviews");
     const usersCollection = client.db("CraftsDB").collection("users");
+    // verify admin 
+const verifyAdmin =async (req,res,next)=>{
+  const query = {role : 'admin'}
+  const checkAdmin = usersCollection.find(query)
+  if(!checkAdmin){
+    res.status(403).send({message:'unauthorized'})
+  }
+  next()
+}
 
     // getting all gadgets
     app.get("/gadgets", async (req, res) => {
@@ -183,7 +194,7 @@ async function run() {
     });
 
     // users apis
-    app.get("/userss", verifyUser, async (req, res) => {
+    app.get("/userss", verifyUser, verifyAdmin,async (req, res) => {
       const result = await usersCollection.find().toArray();
       res.send(result);
     });

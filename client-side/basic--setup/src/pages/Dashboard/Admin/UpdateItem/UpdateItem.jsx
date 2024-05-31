@@ -1,4 +1,3 @@
-import { FaChessKing } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
 import useFetchCommon from "../../../../hooks/useFetchCommon";
 import Swal from "sweetalert2";
@@ -44,7 +43,7 @@ const UpdateItem = () => {
       console.log(res.data);
       if(res.data.modifiedCount>0){
         Swal.fire({
-          title: `$Updated Successfully`,
+          title: `${name} Updated Successfully`,
           icon: "success"
         });
       }
