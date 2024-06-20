@@ -58,7 +58,9 @@ if(isPending){
         </h1>
       </div>
       <div className="divider"></div>
-      <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
+      {
+        data.length>0?<>
+        <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">
          <h1 className=" text-base lg:text-xl font-bold">Total Items: {data?.length}</h1>
           <h1 className=" text-base lg:text-xl font-bold">Total Price: {totalPrice} $</h1>
@@ -121,6 +123,10 @@ if(isPending){
           </tbody>
         </table>
       </div>
+        </>
+        :
+        <h2 className=" text-red-500 text-3xl font-bold text-center">Your Cart Is Empty, Please Add Something In your Cart </h2>
+      }
     </div>
   );
 };

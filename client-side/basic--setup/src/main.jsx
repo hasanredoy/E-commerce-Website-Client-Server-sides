@@ -25,8 +25,9 @@ import UserHome from './pages/Dashboard/User/UserHome/UserHome.jsx';
 import AllUsers from './pages/Dashboard/Admin/AllUsers/AllUsers.jsx';
 import PrivetRout from './Routs/PrivetRout.jsx';
 import AdminRoute from './Routs/AdminRoute.jsx';
-import AllItems from './pages/Dashboard/Admin/AllItems.jsx/AllItems.jsx';
 import UpdateItem from './pages/Dashboard/Admin/UpdateItem/UpdateItem.jsx';
+import AllItems from './pages/Dashboard/Admin/AllItems/AllItems.jsx';
+import AddItem from './pages/Dashboard/Admin/AddItem/AddItem.jsx';
 
 const queryClient = new QueryClient()
 
@@ -87,6 +88,7 @@ const router = createBrowserRouter([
         path:'userProfile',
         element:<MyProfile></MyProfile>
       },
+      // admin route 
       {
         path:'allUsers',
         element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
@@ -94,6 +96,10 @@ const router = createBrowserRouter([
       {
         path:'allItems',
         element:<AdminRoute><AllItems></AllItems></AdminRoute>
+      },
+      {
+        path:'addItems',
+        element:<AdminRoute><AddItem></AddItem></AdminRoute>
       },
       {
         path:'update/:id',

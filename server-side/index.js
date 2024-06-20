@@ -143,6 +143,16 @@ const verifyAdmin =async (req,res,next)=>{
       const result = await gadgetsCollection.deleteOne(query);
       res.send(result);
     });
+   
+    // post gadget
+    app.post('/add-gadgets', async(req,res)=>{
+      const data = req.body;
+      const result = await gadgetsCollection.insertOne(data)
+      res.send(result)
+    }) 
+
+
+
 
     // posting user carts
     app.post("/carts", async (req, res) => {

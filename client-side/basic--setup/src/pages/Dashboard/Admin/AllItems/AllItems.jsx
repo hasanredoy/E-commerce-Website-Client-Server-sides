@@ -69,9 +69,7 @@ return (
          <h1 className=" text-base lg:text-xl font-bold">Total Items: {data?.length}</h1>
           
          </div>
-          <button className="bg-[#02c2d0] text-white rounded-md btn">
-            Pay
-          </button>
+      
         </div>
       <div className="text-black overflow-x-auto mx-auto my-10 rounded-md bg-gray-300">
        
