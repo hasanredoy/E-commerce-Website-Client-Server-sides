@@ -1,26 +1,43 @@
-import { FaStar } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import useFetch from "../../hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+// import react star rating
+import ReactStars from "react-rating-stars-component";
+
+import './review.css'
+import { useState } from "react";
+
+import moment from 'moment'
 
 const ReviewsPage = () => {
   const axiosHook = useFetch();
   const { user } = useAuth();
 
-  const { data: reviews = [] ,refetch} = useQuery({
+  // rating state 
+  const [rating , setRating]=useState(0)
+
+  // getting review data from db using tanstack
+  const { data: reviews = [], refetch } = useQuery({
     queryKey: ["reviews"],
     queryFn: async () => {
       const res = await axiosHook.get("/reviews");
       return res.data;
     },
   });
+  console.log(reviews);
+  // value of rating
+  const ratingChanged = (newRating) => {
+    // console.log(newRating);
+    setRating(newRating)
+  };
+// console.log(rating);
+  // posting rating in db
   const handleRating = (e) => {
     e.preventDefault();
-    const star = e.target.star.value;
     const review = e.target.review.value;
     const userReview = {
-      star,
+      star:rating,
       review,
       posting_time: new Date(),
       photo: user?.photoURL,
@@ -34,7 +51,7 @@ const ReviewsPage = () => {
         console.log(res.data);
 
         if (res.data.insertedId) {
-          refetch()
+          refetch();
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -49,7 +66,6 @@ const ReviewsPage = () => {
       });
   };
 
- 
   return (
     <div className="flex flex-col-reverse justify-between md:flex-row container mx-auto ">
       <div className=" w-full md:w-[70%] mt-0 mb-10   md:mt-10  ">
@@ -59,7 +75,7 @@ const ReviewsPage = () => {
         </h1>
         <div className="divider"></div>
         <div className=" grid grid-cols-1 md:grid-cols-2  gap-5">
-          {reviews?.slice(5-length).map((review) => (
+          {reviews?.map((review) => (
             <div
               key={review}
               className="container bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 "
@@ -75,7 +91,9 @@ const ReviewsPage = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-xl">{review?.name}</h4>
-                    <h4 className="font-medium">{review?.posting_time?.split("T")[0]}</h4>
+                    <h4 className="font-medium text-green-500">
+                      {moment(review?.posting_time).startOf().fromNow()}
+                    </h4>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2 text-yellow-500">
@@ -108,24 +126,19 @@ const ReviewsPage = () => {
                 How was your experience?
               </span>
             </div>
+            {/* react stars  */}
+            <ReactStars
+              count={5}
+              onChange={ratingChanged}
+              size={60}
+              isHalf={true}
+              emptyIcon={<i className="far fa-star"></i>}
+              halfIcon={<i className="fa fa-star-half-alt"></i>}
+              fullIcon={<i className="fa fa-star"></i>}
+              activeColor="#ffd700"
+            />
             <form onSubmit={handleRating} className="flex flex-col w-full">
-              <div className=" flex gap-3 w-[60%] mx-auto bg-neutral-600 text-yellow-400 p-1 mb-5 rounded-lg">
-                <label
-                  htmlFor="rating"
-                  className=" text-lg font-bold flex gap-1  items-center"
-                >
-                  Star <FaStar></FaStar>
-                </label>
-                <input
-                  pattern="\d*"
-                  maxLength="1"
-                  className=" w-full outline-none pl-1 rounded-full text-black"
-                  name="star"
-                  required
-                  type="text"
-                  placeholder="Star"
-                />
-              </div>
+              
               <textarea
                 name="review"
                 required

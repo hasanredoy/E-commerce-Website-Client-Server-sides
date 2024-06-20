@@ -7,7 +7,7 @@ const{data:users=[],refetch,isPending}=useQuery({
   queryKey:['users',axiosHook],
   queryFn:async()=>{
     const result = await axiosHook.get('/userss')
-    console.log(result.data);
+    // console.log(result.data);
     return result.data
   }
 })

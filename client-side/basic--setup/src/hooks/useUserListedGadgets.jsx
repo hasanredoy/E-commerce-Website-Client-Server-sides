@@ -1,17 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import useFetch from "./useFetch";
 import useAuth from "./useAuth";
+import useFetch from "./useFetch";
 
-
-
-const useTanStackQuery = () => {
-  const axiosHook = useFetch()
+const useUserListedGadgets = () => {
   const {user}=useAuth()
- const email = user?.email
-  // console.log(auth);
-  
+  const email = user.email
+   const axiosHook = useFetch()
+
   const {refetch, data } = useQuery({
-    queryKey: ['carts',email],
+    queryKey: ['user-listed-gadgets',email],
     queryFn: async () => {
       const res = await axiosHook.get(`/carts?email=
       ${email}
@@ -22,4 +19,4 @@ const useTanStackQuery = () => {
   return  [data,refetch]
 };
 
-export default useTanStackQuery;
+export default useUserListedGadgets;

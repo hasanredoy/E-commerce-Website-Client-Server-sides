@@ -1,12 +1,18 @@
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
 import useFetch from "../../../../hooks/useFetch";
+import usePostImage from "../../../../hooks/usePostImage";
+import { useState } from "react";
 
 const AddItem = () => {
   const axiosHook = useFetch();
   const { user } = useAuth();
   //  function for adding gadget
-  const handleAddItem = (e) => {
+  const [image , setImage]=useState([])
+ console.log(image);
+  const imageUrl =  usePostImage(image)
+  console.log(imageUrl);
+  const handleAddItem = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -16,6 +22,9 @@ const AddItem = () => {
     const rating = form.rating.value;
     const company = form.company.value;
     const description = form.description.value;
+
+
+
     // collecting all data in object for posting 
     const itemData = {
       category,
@@ -25,20 +34,24 @@ const AddItem = () => {
       product_name: name,
       rating,
       title,
+      image:imageUrl,
       seller_email: user?.email,
       seller_name: user?.displayName,
     };
-    console.log(itemData);
+    // console.log(itemData);
 // posting gadget data in db 
-    axiosHook.post(`/add-gadgets`, itemData).then((res) => {
+if(imageUrl){
+ axiosHook.post(`/add-gadgets`, itemData).then((res) => {
       console.log(res.data);
-      if (res.data.modifiedCount > 0) {
+      if (res.data?.insertedId ) {
         Swal.fire({
           title: `${name} added successfully`,
           icon: "success",
         });
       }
     });
+}
+   
   };
   return (
     <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
@@ -101,10 +114,9 @@ const AddItem = () => {
           </label>
           <input
             // defaultValue={image}
-
-            type="url"
-            placeholder="Image URL"
-            className="input input-bordered bg-white text-black focus:outline-sky-200"
+           onChange={(e)=>setImage(e.target.files[0])}
+            type="file"
+            
             required
             name="image"
           />

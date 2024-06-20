@@ -60,9 +60,9 @@ const cookieOptions = {
 async function run() {
   try {
     const gadgetsCollection = client.db("Gadget-ShopDB").collection("gadgets");
-    const userCraftCollection = client.db("CraftsDB").collection("crafts");
-    const userReviewCollection = client.db("CraftsDB").collection("reviews");
-    const usersCollection = client.db("CraftsDB").collection("users");
+    const userCraftCollection = client.db("Gadget-ShopDB").collection("carts");
+    const userReviewCollection = client.db("Gadget-ShopDB").collection("reviews");
+    const usersCollection = client.db("Gadget-ShopDB").collection("users");
     // verify admin 
 const verifyAdmin =async (req,res,next)=>{
   const query = {role : 'admin'}
@@ -102,6 +102,13 @@ const verifyAdmin =async (req,res,next)=>{
     app.get("/gadgets/count", async (req, res) => {
       const gadget = await gadgetsCollection.estimatedDocumentCount();
       res.send({ count: gadget });
+    });
+    //  get all gadgets for specific user 
+    app.get("/my-gadgets", async (req, res) => {
+      const email = req.query?.email
+      const query = {seller_email :email}
+      const result = await gadgetsCollection.find(query).toArray();
+      res.send(result);
     });
 
     // getting single gadgets

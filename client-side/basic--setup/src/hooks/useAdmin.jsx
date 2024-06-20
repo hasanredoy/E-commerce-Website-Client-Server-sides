@@ -4,7 +4,7 @@ import useFetch from "./useFetch";
 
 const useAdmin = () => {
 const {user} =useAuth()
-console.log(user?.email);
+// console.log(user?.email);
 const axiosHook = useFetch()
 const {data:Admin=[] , isPending:isAdminPending} =useQuery({
   queryKey:['admin',axiosHook],
@@ -13,7 +13,7 @@ const {data:Admin=[] , isPending:isAdminPending} =useQuery({
     return res.data.admin
   }
 })
-console.log(Admin);
+// console.log(Admin);
 // const isAdmin = Admin?.filter(user => user.role ==="admin")
   return [Admin,isAdminPending]
 };

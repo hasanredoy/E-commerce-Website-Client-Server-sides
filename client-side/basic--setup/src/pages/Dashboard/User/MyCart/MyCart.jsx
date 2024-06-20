@@ -48,7 +48,10 @@ if(isPending){
 }
   return (
     <div>
-      <div>
+    
+      {
+        data.length>0?<>
+          <div>
         <h4 className=" my-5 text-lg text-center font-bold text-[#11c6c9]">
           -- Welcome Back --
         </h4>
@@ -58,8 +61,6 @@ if(isPending){
         </h1>
       </div>
       <div className="divider"></div>
-      {
-        data.length>0?<>
         <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">
          <h1 className=" text-base lg:text-xl font-bold">Total Items: {data?.length}</h1>
@@ -125,7 +126,15 @@ if(isPending){
       </div>
         </>
         :
-        <h2 className=" text-red-500 text-3xl font-bold text-center">Your Cart Is Empty, Please Add Something In your Cart </h2>
+       <div className=" flex flex-col gap-5 items-center justify-center min-h-screen">
+         <h2 className=" text-3xl font-bold text-center">Your Cart Is Empty, Please Add Something In your Cart </h2>
+         <Link to={`/allGadgets`}>
+                    <button className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
+                      All Gadgets
+                    </button>
+                  </Link>
+       </div>
+        
       }
     </div>
   );
