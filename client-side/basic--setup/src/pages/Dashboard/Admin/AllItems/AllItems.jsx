@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const AllItems = () => {
   const axiosHook =useFetch()
-const{data,refetch,isPending}=useQuery({
+const{data,refetch}=useQuery({
   queryKey:['items',axiosHook],
   queryFn:async()=>{
     const result = await axiosHook.get('/gadgets')

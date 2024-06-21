@@ -106,9 +106,13 @@ const verifyAdmin =async (req,res,next)=>{
     //  get all gadgets for specific user 
     app.get("/my-gadgets", async (req, res) => {
       const email = req.query?.email
-      const query = {seller_email :email}
-      const result = await gadgetsCollection.find(query).toArray();
-      res.send(result);
+      const query = {seller_email:email}
+      console.log('specific user email',query);
+      
+      const resul = await gadgetsCollection.find(query).toArray();
+      console.log('specific user result',resul);
+
+      res.send(resul);
     });
 
     // getting single gadgets
@@ -200,7 +204,8 @@ const verifyAdmin =async (req,res,next)=>{
       if (req.query?.email) {
         query = { email: req?.query?.email };
       }
-      const result = await userReviewCollection.find(query).toArray();
+      const result = await userReviewCollection.find(query).sort({
+        posting_time:-1}).toArray();
       res.send(result);
     });
 
@@ -217,7 +222,7 @@ const verifyAdmin =async (req,res,next)=>{
     });
     app.get("/users/admin/:email", verifyUser, async (req, res) => {
       const email = req.params.email;
-      console.log(email);
+      // console.log(email);
       const filter = { email: email };
       const findAdmin = await usersCollection.findOne(filter);
 

@@ -6,17 +6,17 @@ const useUserListedGadgets = () => {
   const {user}=useAuth()
   const email = user.email
    const axiosHook = useFetch()
-
-  const {refetch, data } = useQuery({
-    queryKey: ['user-listed-gadgets',email],
+// get specif gadget for specific user 
+  const {refetch, data=[],isPending } = useQuery({
+    queryKey: ['userListedGadgets'],
     queryFn: async () => {
-      const res = await axiosHook.get(`/carts?email=
-      ${email}
-      `);
+      const res = await axiosHook.get(`/my-gadgets?email=${email}`);
+      // console.log(res.data);
       return res.data;
     },
   });
-  return  [data,refetch]
+  if(!email)refetch()
+  return  [data,refetch,isPending]
 };
 
 export default useUserListedGadgets;
