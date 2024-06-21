@@ -6,7 +6,7 @@ import { useState } from "react";
 import useUserListedGadgets from "../../../../hooks/useUserListedGadgets";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import useLoadingSpinner from "../../../../hooks/useLoadingSpinner";
+import LoadingSpinner from "../../../../reuseable/LoadingSpinner";
 
 const AddItem = () => {
   const axiosHook = useFetch();
@@ -62,8 +62,42 @@ const AddItem = () => {
       });
     }
   };
+
+// delete gadget 
+const handleDelete =(id,name)=>{
+  console.log(id);
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You Want To delete This item?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#039396",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axiosHook.delete(`/gadgets/${id}`)
+  .then((res)=>{
+    if(res.data.deletedCount>0){
+      refetch()
+    Swal.fire({
+      title: `${name} deleted Successfully`,
+      icon: "success"
+    });
+    }
+  })
+  .catch(err=>{
+    console.log(err);
+  }) 
+     
+    }
+  });
+  
+  
+  }
+
   if(isPending){
-    <useLoadingSpinner></useLoadingSpinner>
+   return  <LoadingSpinner></LoadingSpinner>
   }
   if(gadgets.length===0){
     return  <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
@@ -288,7 +322,7 @@ const AddItem = () => {
                     </th>
                     <td className=" text-center">
                       <button
-                        //  onClick={()=>handleDelete(item?._id,item?.cart?.product_name)}
+                         onClick={()=>handleDelete(item?._id,item?.product_name)}
                         className=" text-white  bg-red-600  rounded-full p-3"
                       >
                         <FaTrash></FaTrash>

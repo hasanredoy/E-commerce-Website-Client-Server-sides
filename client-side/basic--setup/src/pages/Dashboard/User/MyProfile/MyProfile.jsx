@@ -3,23 +3,32 @@ import useAuth from "../../../../hooks/useAuth";
 import useFetch from "../../../../hooks/useFetch";
 import useFetchCommon from "../../../../hooks/useFetchCommon";
 import axios from "axios";
-const api_key= import.meta.env.VITE_IMAGE_HOSTING_API_KEY
-const api_url = `https://api.imgbb.com/1/upload?key=${api_key}`
+import { useState } from "react";
+import usePostImage from "../../../../hooks/usePostImage";
+import { updateProfile } from "firebase/auth";
+
 const MyProfile = () => {
   const axiosCommon = useFetchCommon()
   const {user}=useAuth()
-  const handleUpdateUserProfile= async(e)=>{
+console.log(user);
+  // imageState 
+  const [image , setImage]=useState([])
+  // posting image on imgbb 
+  const imageUrl = usePostImage(image)
+// console.log(imageUrl);
+  // update user profile 
+  const handleUpdateUserProfile=(e)=>{
     e.preventDefault()
-    const image = e.target.image.files[0]
     const name = e.target.name.value
-    const email = e.target.email.value
-    const imageUrl = {image :image}
-    const uploadImage = await axios.post(api_url , image,{
-      headers:{
-        "content-type":"multipart/form-data"
-      }
+    const userImage = imageUrl 
+  if(imageUrl){
+    updateProfile(user,{
+      displayName:name ,
+      photoURL:imageUrl,
+      phoneNumber:user?.phoneNumber   
     })
-    console.log(uploadImage);
+  }
+  
       
   }
   return (
@@ -29,7 +38,9 @@ const MyProfile = () => {
         <form onSubmit={handleUpdateUserProfile} className=" w-full flex gap-10 flex-col justify-center ">
           <div className=" ">
           <h1 className=" text-xl pb-3 font-bold">Change Profile Photo? </h1>
-            <input  className="   w-[97px] "  type="file" name="image" />
+            <input
+            onChange={(e)=>setImage(e.target.files[0])}
+            type="file" name="image" />
           </div>
          
             <div className="form-control">
@@ -52,6 +63,7 @@ const MyProfile = () => {
                 type="email"
                 defaultValue={user?.email}
                 className="input input-bordered text-black bg-white focus:outline-sky-200"
+                readOnly
                 required
                 name="email"
               />

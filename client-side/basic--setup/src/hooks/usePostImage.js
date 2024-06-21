@@ -11,7 +11,7 @@ imageData.append("image",image)
 if(!image.name)return
   axios.post(api_url,imageData)
   .then(res=>{
-    console.log(res.data);
+    // console.log(res.data);
     setImageUrl(res.data?.data?.display_url)    
   })
   return imageUrl
