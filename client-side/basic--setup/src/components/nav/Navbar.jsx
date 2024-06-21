@@ -180,7 +180,7 @@ const Navbar = () => {
                 className="dropdown-content z-[50] menu p-2 shadow  rounded-box bg-slate-200 text-black py-5 space-y-4 -left-28 w-36"
               >
                 <Link
-                  to={isAdmin?'/dashboard/adminHome':'/dashboard/userHome'}
+                  to={'/dashboard/profile'}
                   className="flex w-32 rounded-md border-b-4 border-l-4 p-2 border border-[#01a587] gap-2 justify-center items-center "
                 >
                   <MdDashboardCustomize className=" text-xl"></MdDashboardCustomize>

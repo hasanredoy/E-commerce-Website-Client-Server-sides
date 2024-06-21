@@ -84,7 +84,8 @@ const resetPass = (email)=>{
     theme,
     googleLogin,
     setTheme,
-    loading
+    loading,
+    setUser
   }
   // console.log(theme);
   return (

@@ -29,10 +29,9 @@ const UserHome = () => {
       <div className="flex flex-col md:flex-row my-5 ">
         <div className=" flex items-center justify-center flex-col w-full lg:w-1/2 bg-[#FFEDD5] min-h-[400px]" >
           {
-            !user?.photoURL? <img className=" mb-5 w-52 rounded-full border-sky-500" src={user?.photoURL} alt="" />:<span><FaUser className=" text-[100px] mb-5 p-5 rounded-full border-2 border-sky-300"></FaUser></span>
+            user?.photoURL? <img className=" mb-5 w-44 h-44 rounded-full border-sky-500" src={user?.photoURL} alt="" />:<span><FaUser className=" text-[100px] mb-5 p-5 rounded-full border-2 border-sky-300"></FaUser></span>
           }
            
-            <h5 className=" text-xl font-bold">{user?.displayName}</h5>
         </div>
         <hr />
         <div className="flex items-center justify-center flex-col w-full lg:w-1/2 bg-[#cdffed] min-h-[400px] gap-5">

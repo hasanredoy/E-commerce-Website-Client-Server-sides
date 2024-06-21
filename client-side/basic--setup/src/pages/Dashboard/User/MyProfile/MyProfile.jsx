@@ -1,33 +1,51 @@
-import { FaEdit } from "react-icons/fa";
 import useAuth from "../../../../hooks/useAuth";
 import useFetch from "../../../../hooks/useFetch";
-import useFetchCommon from "../../../../hooks/useFetchCommon";
-import axios from "axios";
 import { useState } from "react";
 import usePostImage from "../../../../hooks/usePostImage";
 import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
 
 const MyProfile = () => {
-  const axiosCommon = useFetchCommon()
   const {user}=useAuth()
-console.log(user);
+  const email = user.email
+// console.log(user);
   // imageState 
   const [image , setImage]=useState([])
   // posting image on imgbb 
   const imageUrl = usePostImage(image)
-// console.log(imageUrl);
+console.log(imageUrl);
+const axiosHook = useFetch()
+function refreshPage() {
+setTimeout(()=>{
+  window.location.reload();
+},1500)
+}
+
   // update user profile 
   const handleUpdateUserProfile=(e)=>{
     e.preventDefault()
     const name = e.target.name.value
-    const userImage = imageUrl 
-  if(imageUrl){
-    updateProfile(user,{
+    const userData ={
+      name,
+      photo:imageUrl
+    }
+  
+      updateProfile(user,{
       displayName:name ,
       photoURL:imageUrl,
       phoneNumber:user?.phoneNumber   
     })
-  }
+    axiosHook.patch(`/users/${email}`,userData)
+    .then(res=>{
+      console.log(res.data);
+      if(res.data?.modifiedCount>0){
+        Swal.fire({
+          icon:'success',
+          text:"Profile Updated Successfully"
+      })
+      }
+    })
+  
   
       
   }
@@ -35,14 +53,26 @@ console.log(user);
     <div>
        <div className="  flex flex-col items-center my-10 justify-center">
         <img className=" w-[300px] h-[300px] rounded-full border border-sky-600" src={user?.photoURL} alt="" />
+
+        <h1 className=" text-2xl font-bold pt-5">Welcome <span className=" text-sky-500">{user?.displayName?user?.displayName:"Back"}</span>.. Wanna Update Your Profile?</h1>
+        <div className="divider"></div>
         <form onSubmit={handleUpdateUserProfile} className=" w-full flex gap-10 flex-col justify-center ">
-          <div className=" ">
+          {/* image  */}
+        <div className=" flex gap-[5%] mt-10">
+        <div className=" ">
           <h1 className=" text-xl pb-3 font-bold">Change Profile Photo? </h1>
             <input
             onChange={(e)=>setImage(e.target.files[0])}
             type="file" name="image" />
+           
           </div>
-         
+          <div>
+          {
+              imageUrl&&<img src={imageUrl} className=" w-32 h-32" alt="" />
+            }
+          </div>
+        </div>
+         {/* name  */}
             <div className="form-control">
               <label className="label">
                 <span className=" text-2xl ">Name</span>
@@ -55,6 +85,7 @@ console.log(user);
                 name="name"
               />
             </div>
+            {/* email  */}
             <div className="form-control">
               <label className="label">
                 <span className=" text-2xl ">Email </span>
@@ -69,7 +100,9 @@ console.log(user);
               />
             
             </div>
-          <button className=" btn bg-[#04d9bd]">Update</button>
+          <button
+          onClick={refreshPage}
+          className=" btn bg-[#04d9bd]">Update</button>
           </form>
        </div>
     </div>

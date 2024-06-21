@@ -7,7 +7,12 @@ import Swal from "sweetalert2";
 const MyCart = () => {
   const [data,refetch,isPending] = useCart();
   // console.log(data);
-  const totalPrice = data?.reduce((a, b) => a + b?.cart?.price, 0);
+  const totalPrice = data?.reduce((a, b) =>{
+    //  a + 
+    const priceB = parseFloat(b?.cart?.price)||0
+    const priceA = parseFloat(a)||0
+     return priceA+ priceB
+    }, 0).toFixed(2);
   const axiosCommon =useFetchCommon()
   // console.log(totalPrice);
 const handleDelete =(id,name)=>{

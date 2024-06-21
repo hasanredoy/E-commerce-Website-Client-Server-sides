@@ -7,6 +7,7 @@ import useUserListedGadgets from "../../../../hooks/useUserListedGadgets";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../../../reuseable/LoadingSpinner";
+import { FaX } from "react-icons/fa6";
 
 const AddItem = () => {
   const axiosHook = useFetch();
@@ -336,6 +337,12 @@ const handleDelete =(id,name)=>{
         </div>
       ) : (
         <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
+          <div className=" flex justify-end ">
+          <button 
+          onClick={()=>setShowForm(!showForm)}
+          className=" btn btn-circle"><FaX className=" text-2xl"></FaX></button>
+
+          </div>
           <h1 className=" text-lg md:text-2xl font-bold text-center mb-5">
             Please Fill Item Info Blew.
           </h1>

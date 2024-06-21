@@ -245,6 +245,9 @@ const verifyAdmin =async (req,res,next)=>{
       const result = await usersCollection.insertOne(userData);
       res.send(result);
     });
+    
+
+    //update user to admin
     app.patch("/users/admin/:id", async (req, res) => {
       const id = req.params.id;
 
@@ -258,6 +261,24 @@ const verifyAdmin =async (req,res,next)=>{
       const result = await usersCollection.updateOne(filter, update);
       res.send(result);
     });
+    //update user profile
+    app.patch("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const data = req.body
+      const filter = {email : email };
+      const update = {
+        $set: {
+          name:data.name,
+          photo:data.photo,
+          
+        },
+      };
+
+      const result = await usersCollection.updateOne(filter, update);
+      res.send(result);
+    });
+
+    //delete user 
     app.delete("/users/:id", async (req, res) => {
       const id = req.params.id;
 

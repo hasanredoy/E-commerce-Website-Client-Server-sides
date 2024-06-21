@@ -4,10 +4,12 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import useFetchCommon from "../../../../hooks/useFetchCommon";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../../../../reuseable/LoadingSpinner";
 
 const AllItems = () => {
   const axiosHook =useFetch()
-const{data,refetch}=useQuery({
+  // get all gadgets 
+const{data,refetch,isFetching}=useQuery({
   queryKey:['items',axiosHook],
   queryFn:async()=>{
     const result = await axiosHook.get('/gadgets')
@@ -15,9 +17,10 @@ const{data,refetch}=useQuery({
     return result.data
   }
 })
-console.log(data);
+// console.log(data);
 const axiosCommon =useFetchCommon()
 // console.log(totalPrice);
+// delete gadgets 
 const handleDelete =(id,name)=>{
 console.log(id);
 Swal.fire({
@@ -50,6 +53,10 @@ Swal.fire({
 
 }
 
+//return loading spinner if data is pending 
+if(isFetching){
+  return <LoadingSpinner></LoadingSpinner>
+}
 return (
     <div>
      

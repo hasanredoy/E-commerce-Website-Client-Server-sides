@@ -84,8 +84,9 @@ const router = createBrowserRouter([
         path:'myCart',
         element:<MyCart></MyCart>
       },
+      // common 
       {
-        path:'userProfile',
+        path:'profile',
         element:<MyProfile></MyProfile>
       },
       // admin route 

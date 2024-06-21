@@ -33,6 +33,7 @@ const Register = () => {
       email,
       name ,
       photo ,
+      
     }
     
       axios.post('http://localhost:5000/users',usersData)
