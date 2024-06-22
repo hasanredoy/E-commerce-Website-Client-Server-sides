@@ -324,7 +324,9 @@ const verifyAdmin =async (req,res,next)=>{
 
     // get payments 
     app.get("/payments",async(req,res)=>{
-      const result = await paymentsCollection.find().toArray()
+      const email= req.query?.email
+      const query = {email :email}
+      const result = await paymentsCollection.find(query).toArray()
       res.send(result)
     })
 

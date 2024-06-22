@@ -145,7 +145,8 @@ const CheckOutForm = () => {
         name:user?.displayName,
         totalPrice,
         delivery,
-        items:data
+        items:data,
+        status:"order received"
        }
        console.log(payment);
        await mutateAsync(payment)

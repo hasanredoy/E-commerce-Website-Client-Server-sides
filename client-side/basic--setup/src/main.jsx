@@ -30,6 +30,7 @@ import AllItems from './pages/Dashboard/Admin/AllItems/AllItems.jsx';
 import AddItem from './pages/Dashboard/Admin/AddItem/AddItem.jsx';
 import BecomeSeller from './pages/BecomeSeller/BecomeSeller.jsx';
 import Payment from './pages/PaymentPages/Payment.jsx';
+import PaymentHistory from './pages/Dashboard/User/PaymentHistory/PaymentHistory.jsx';
 
 const queryClient = new QueryClient()
 
@@ -82,6 +83,7 @@ const router = createBrowserRouter([
     path:"/dashboard",
     element:<PrivetRout><Dashboard></Dashboard></PrivetRout>,
     children:[
+      // user route 
       {
         path:'userHome',
         element:<UserHome></UserHome>
@@ -93,6 +95,10 @@ const router = createBrowserRouter([
       {
         path:'payment',
         element:<Payment></Payment>
+      },
+      {
+        path:'paymentHistory',
+        element:<PaymentHistory></PaymentHistory>
       },
       // common 
       {
