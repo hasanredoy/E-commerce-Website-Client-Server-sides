@@ -72,7 +72,7 @@ if(isPending){
           <h1 className=" text-base lg:text-xl font-bold">Total Price: {totalPrice} $</h1>
          </div>
        <Link to={'/dashboard/payment'}>
-       <button className="bg-[#02c2d0] text-white rounded-md btn">
+       <button disabled={!totalPrice} className="bg-[#02c2d0] text-white rounded-md btn">
             Pay
           </button>
        </Link>

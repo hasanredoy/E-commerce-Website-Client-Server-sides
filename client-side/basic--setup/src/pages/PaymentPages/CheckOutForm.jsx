@@ -9,8 +9,13 @@ import useFetchCommon from "../../hooks/useFetchCommon";
 import useCart from "../../useCart/useCart";
 import usePostUsingTanstack from "../../hooks/usePostUsingTanstack";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutForm = () => {
+  const axiosCommon = useFetchCommon();
+  // get user
+  const { user } = useAuth();
+
   // phon number state
   const [phoneNumber, setPhoneNumber] = useState();
   //state for show payment form after filling out delivery form
@@ -25,19 +30,12 @@ const CheckOutForm = () => {
   //state for delivery info
   const [delivery , setDelivery] = useState({});
 
-//  get result and post function 
-const [mutateAsync,result]=usePostUsingTanstack('/payments')
-console.log({result});
-// show toast after successfully payment 
-if(result.insertedId){
-  Swal.fire({
-    text:"Payment Successfully",
-    icon:'success'
-  })
-}
+  const navigate = useNavigate()
+
+
 
   // get all cart and price
-  const [data] = useCart();
+  const [data,refetch] = useCart();
   // console.log(data);
   const totalPrice = data?.reduce((a, b) => {
     const priceB = parseFloat(b?.cart?.price) || 0;
@@ -45,11 +43,20 @@ if(result.insertedId){
     return priceA + priceB;
   }, 0);
 
-  // get all cart title 
 
-  const axiosCommon = useFetchCommon();
-  // get user
-  const { user } = useAuth();
+  const email =user?.email
+  //  get result and post function 
+  const [mutateAsync,result]=usePostUsingTanstack(`/payments?email=${email}`)
+  console.log({result});
+  // show toast after successfully payment 
+  if(result?.result?.insertedId&&result?.deleteRes?.deletedCount>0){
+   refetch()
+   navigate("/dashboard/paymentHistory")
+    Swal.fire({
+      text:"Payment Successfully",
+      icon:'success'
+    })
+  }
 
   // get stripe and elements from stripe
   const stripe = useStripe();
@@ -133,7 +140,7 @@ if(result.insertedId){
     if(paymentIntent?.status=='succeeded'){
       setTransectionID(paymentIntent.id)
        const payment ={
-        transectionID,
+        transectionID:paymentIntent.id,
         email:user?.email,
         name:user?.displayName,
         totalPrice,
@@ -175,7 +182,7 @@ if(result.insertedId){
                   <span className="text-lg ">Your Phone Number</span>
                 </label>
                 <PhoneInput
-                  className="input"
+                  className="input input-bordered bg-white text-black"
                   international
                   countryCallingCodeEditable={false}
                   placeholder="Enter phone number"
@@ -240,6 +247,7 @@ if(result.insertedId){
                   style: {
                     base: {
                       fontSize: "16px",
+                      backgroundColor:"#fff",
                       color: "#171414",
                       "::placeholder": {
                         color: "#171414",
