@@ -100,6 +100,7 @@ const handleDelete =(id,name)=>{
   if(isPending){
    return  <LoadingSpinner></LoadingSpinner>
   }
+  // if user not listed any thing before return add item form 
   if(gadgets.length===0){
     return  <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
     <h1 className=" text-lg md:text-2xl font-bold text-center mb-5">

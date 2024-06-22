@@ -71,9 +71,11 @@ if(isPending){
          <h1 className=" text-base lg:text-xl font-bold">Total Items: {data?.length}</h1>
           <h1 className=" text-base lg:text-xl font-bold">Total Price: {totalPrice} $</h1>
          </div>
-          <button className="bg-[#02c2d0] text-white rounded-md btn">
+       <Link to={'/dashboard/payment'}>
+       <button className="bg-[#02c2d0] text-white rounded-md btn">
             Pay
           </button>
+       </Link>
         </div>
       <div className="text-black overflow-x-auto mx-auto my-10 rounded-md bg-gray-300">
        

@@ -28,6 +28,8 @@ import AdminRoute from './Routs/AdminRoute.jsx';
 import UpdateItem from './pages/Dashboard/Admin/UpdateItem/UpdateItem.jsx';
 import AllItems from './pages/Dashboard/Admin/AllItems/AllItems.jsx';
 import AddItem from './pages/Dashboard/Admin/AddItem/AddItem.jsx';
+import BecomeSeller from './pages/BecomeSeller/BecomeSeller.jsx';
+import Payment from './pages/PaymentPages/Payment.jsx';
 
 const queryClient = new QueryClient()
 
@@ -62,6 +64,10 @@ const router = createBrowserRouter([
         path:"/contact",
         element:<PrivetRout><ContactUs></ContactUs></PrivetRout> ,
       },
+      {
+        path:"/becomeSeller",
+        element:<PrivetRout><BecomeSeller></BecomeSeller></PrivetRout> ,
+      },
     ]
   },
   {
@@ -83,6 +89,10 @@ const router = createBrowserRouter([
       {
         path:'myCart',
         element:<MyCart></MyCart>
+      },
+      {
+        path:'payment',
+        element:<Payment></Payment>
       },
       // common 
       {

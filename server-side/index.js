@@ -3,8 +3,11 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+const stripe = require("stripe")(process.env.SK_Payment);
+
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
+
 
 const port = process.env.PORT || 5000;
 
@@ -63,6 +66,7 @@ async function run() {
     const userCraftCollection = client.db("Gadget-ShopDB").collection("carts");
     const userReviewCollection = client.db("Gadget-ShopDB").collection("reviews");
     const usersCollection = client.db("Gadget-ShopDB").collection("users");
+    const paymentsCollection = client.db("Gadget-ShopDB").collection("payments");
     // verify admin 
 const verifyAdmin =async (req,res,next)=>{
   const query = {role : 'admin'}
@@ -302,6 +306,41 @@ const verifyAdmin =async (req,res,next)=>{
         .clearCookie("token", { ...cookieOptions, maxAge: 0 })
         .send({ success: true });
     });
+
+
+    // create payment intent  
+    app.post('/payment-intent',async(req,res)=>{
+      const {price} = req.body
+      // create payment intent 
+      const paymentIntent=await stripe.paymentIntents.create({
+        amount: parseFloat(price * 100),
+        currency:"usd",
+        payment_method_types:['card']
+      })
+      res.send({
+        clientSecret:paymentIntent.client_secret
+      })
+    })
+
+    // get payments 
+    app.get("/payments",async(req,res)=>{
+      const result = await paymentsCollection.find().toArray()
+      res.send(result)
+    })
+
+    // post payments 
+    app.post("/payments",async(req,res)=>{
+      const data = req.body
+      const email= req.query?.email
+      const result = await paymentsCollection.insertOne(data)
+      console.log(result);
+      if(result?.insertedId){
+        const deleteRes = await userCraftCollection.deleteMany({userEmail:email})
+        res.send({result,deleteRes})
+      }
+    })
+
+
   } finally {
   }
 }
