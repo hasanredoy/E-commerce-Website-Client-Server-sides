@@ -32,6 +32,7 @@ import BecomeSeller from './pages/BecomeSeller/BecomeSeller.jsx';
 import Payment from './pages/PaymentPages/Payment.jsx';
 import PaymentHistory from './pages/Dashboard/User/PaymentHistory/PaymentHistory.jsx';
 import PaymentInvoice from './pages/Dashboard/User/PaymentHistory/PaymentInvoice.jsx';
+import AdminHome from './pages/Dashboard/Admin/AdminHome/AdminHome.jsx';
 
 const queryClient = new QueryClient()
 
@@ -127,6 +128,10 @@ const router = createBrowserRouter([
         path:'update/:id',
         element:<AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
         loader:({params})=>fetch(`http://localhost:5000/gadgets/${params.id}`)
+      },
+      {
+        path:'adminHome',
+        element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
       },
     ]       
   },

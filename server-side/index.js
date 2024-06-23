@@ -342,6 +342,26 @@ const verifyAdmin =async (req,res,next)=>{
       }
     })
 
+    // get admin stats 
+    app.get("/admin-stats", async(req,res)=>{
+      // get all payments 
+      const payments = await paymentsCollection.estimatedDocumentCount()
+
+      // get total paid amount 
+      const paidAmount = await paymentsCollection.aggregate([{
+        $group:{
+           _id:null,
+           totalAmount:{$sum: "$totalPrice"}
+        }
+      }]).toArray()
+      const totalPaidAmount= paidAmount[0].totalAmount
+      console.log(totalPaidAmount);
+
+      //  get all customer
+      const customer = await usersCollection.estimatedDocumentCount()
+      
+      res.send({payments,totalPaidAmount,customer})
+    })
 
   } finally {
   }
