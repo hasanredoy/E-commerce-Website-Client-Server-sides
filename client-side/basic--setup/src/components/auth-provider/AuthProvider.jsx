@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../../firebase/firebase.config"
-import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import axios from "axios";
 
 export const MainContext = createContext(null)
@@ -23,6 +23,15 @@ const AuthProvider = ({children}) => {
   const createUser=(email , password)=>{
     setLoading(true)
     return createUserWithEmailAndPassword( auth ,email,password)
+  }
+
+  const updateUserProfile = (name,photo,number) => {
+    console.log(number);
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+      phoneNumber:number
+    })
   }
 
   // login user 
@@ -85,7 +94,8 @@ const resetPass = (email)=>{
     googleLogin,
     setTheme,
     loading,
-    setUser
+    setUser,
+    updateUserProfile
   }
   // console.log(theme);
   return (

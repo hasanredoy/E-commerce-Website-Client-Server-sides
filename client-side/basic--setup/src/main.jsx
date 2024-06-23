@@ -33,6 +33,7 @@ import Payment from './pages/PaymentPages/Payment.jsx';
 import PaymentHistory from './pages/Dashboard/User/PaymentHistory/PaymentHistory.jsx';
 import PaymentInvoice from './pages/Dashboard/User/PaymentHistory/PaymentInvoice.jsx';
 import AdminHome from './pages/Dashboard/Admin/AdminHome/AdminHome.jsx';
+import ErrorPage from './pages/Error/ErrorPage.jsx';
 
 const queryClient = new QueryClient()
 
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout></Layout>,
+    errorElement:<ErrorPage></ErrorPage>,
     children:[
       {
         path:"/",
@@ -83,6 +85,7 @@ const router = createBrowserRouter([
   },
   {
     path:"/dashboard",
+    errorElement:<ErrorPage></ErrorPage>,
     element:<PrivetRout><Dashboard></Dashboard></PrivetRout>,
     children:[
       // user route 

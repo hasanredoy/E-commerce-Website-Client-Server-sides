@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaGreaterThan, FaLessThan, FaStar } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
-import banner from '../../assets/banner2.png'
+import banner from '../../assets/24644656_Mobile phone accessories cartoon illustration set.jpg'
 import Discount from "../../components/Discount/Discount";
 import useFetch from "../../hooks/useFetch";
 import useCart from "../../useCart/useCart";
@@ -102,7 +102,7 @@ const AllGadgets = () => {
             `url(${banner})`,
         }}
       >
-        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-overlay bg-opacity-70 bg-cover"></div>
         <div className="hero-content text-center text-white ">
           <div className="max-w-xl">
             <h1 className=" mb-5 text-3xl md:text-5xl font-bold">
@@ -129,7 +129,7 @@ const AllGadgets = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
                   fill="currentColor"
-                  className="w-4 h-4 text-black"
+                  className="w-6 h-6 text-white"
                 >
                   <path
                     fillRule="evenodd"

@@ -33,7 +33,6 @@ setTimeout(()=>{
       updateProfile(user,{
       displayName:name ,
       photoURL:imageUrl,
-      phoneNumber:user?.phoneNumber   
     })
     axiosHook.patch(`/users/${email}`,userData)
     .then(res=>{

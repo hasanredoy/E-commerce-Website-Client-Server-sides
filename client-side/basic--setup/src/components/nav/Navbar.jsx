@@ -9,6 +9,7 @@ import { MdDashboardCustomize } from "react-icons/md";
 import gadgetLogo  from '../../assets/gadgets.png'
 import useCart from "../../useCart/useCart";
 import useAdmin from "../../hooks/useAdmin";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logOut } = useContext(MainContext);
@@ -26,16 +27,35 @@ const Navbar = () => {
       .querySelector("html")
       .setAttribute("data-theme", localStorage.getItem("theme"));
   };
-  // console.log(theme);
+  console.log(user);
   useEffect(() => {
     document
       .querySelector("html")
       .setAttribute("data-theme", localStorage.getItem("theme"));
   }, []);
 
-  const handleLogOut = () => {
-    logOut().then().catch();
-  };
+  const handleLogOut=()=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want to Logout",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#039396",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logOut()
+        .then(()=>{
+          Swal.fire({
+            title: "Logged Out Successfully",
+            icon: "success"
+          });
+        })
+      }
+    });
+    
+  }
 
 
    const [data]=useCart()
