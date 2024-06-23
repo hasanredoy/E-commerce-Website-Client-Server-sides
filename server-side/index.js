@@ -360,7 +360,10 @@ const verifyAdmin =async (req,res,next)=>{
       //  get all customer
       const customer = await usersCollection.estimatedDocumentCount()
       
-      res.send({payments,totalPaidAmount,customer})
+      //  get all gadgets
+      const gadgets = await gadgetsCollection.estimatedDocumentCount()
+      
+      res.send({payments,totalPaidAmount,customer,gadgets})
     })
 
     app.get('/order-stats',async(req,res)=>{
