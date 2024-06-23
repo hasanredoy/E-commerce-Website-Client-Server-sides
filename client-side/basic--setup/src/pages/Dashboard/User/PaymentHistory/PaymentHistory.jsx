@@ -39,7 +39,7 @@ const PaymentHistory = () => {
                </td>
                <td className=" border-r border-gray-600 pl-6">
                  <ul className="flex flex-col w-[200px] gap-1 list-disc ">
-                   {item?.items?.map(singleItem =><li className=" font-bold " key={singleItem._id}>{singleItem?.cart?.product_name},</li>)}
+                   {item?.cart?.map(singleItem =><li className=" font-bold " key={singleItem._id}>{singleItem?.product_name},</li>)}
                  </ul>
                </td>
                <td className=" text-center border-r border-gray-600">

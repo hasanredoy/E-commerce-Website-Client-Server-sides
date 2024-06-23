@@ -355,12 +355,43 @@ const verifyAdmin =async (req,res,next)=>{
         }
       }]).toArray()
       const totalPaidAmount= paidAmount[0].totalAmount
-      console.log(totalPaidAmount);
+      // console.log(totalPaidAmount);
 
       //  get all customer
       const customer = await usersCollection.estimatedDocumentCount()
       
       res.send({payments,totalPaidAmount,customer})
+    })
+
+    app.get('/order-stats',async(req,res)=>{
+      const result = await paymentsCollection.aggregate([
+        {
+          $unwind:"$cart"
+        },
+        {
+          $group:{
+            _id:"$cart.category",
+            quantity:{
+              $sum:1
+            },
+            revenue:{
+              $sum:{
+                $toDouble: "$cart.price"
+                }
+            },
+            
+          }
+        },
+        {
+          $project:{
+            _id:0,
+            category:"$_id",
+            quantity:"$quantity",
+            revenue:"$revenue",
+          }
+        }
+      ]).toArray()
+      res.send(result)
     })
 
   } finally {

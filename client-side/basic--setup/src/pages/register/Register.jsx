@@ -33,6 +33,7 @@ const Register = () => {
       email,
       name ,
       photo ,
+      status:"user"
       
     }
     

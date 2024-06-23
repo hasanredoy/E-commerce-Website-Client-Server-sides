@@ -33,13 +33,13 @@ const AddItem = () => {
     const rating = form.rating.value;
     const company = form.company.value;
     const description = form.description.value;
-
+    const parseFloatPrice =  parseInt(price)
     // collecting all data in object for posting
     const itemData = {
       category,
       company,
       description,
-      price,
+      price:parseFloatPrice,
       product_name: name,
       rating,
       title,

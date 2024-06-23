@@ -2,6 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import useFetch from "../../../../hooks/useFetch";
 import paymentLogo from "../../../../assets/online-shopping-credit-card-payment-svgrepo-com.svg"
 
+// import bar chart 
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
+// import pie chart 
+import { PieChart, Pie, Sector,ResponsiveContainer } from 'recharts';
+
+
+// bar chart color 
+const colors = ['yellow', 'green', '#FFBB28', '#FF8042', 'red', 'pink'];
+
+//pie chart color 
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+
 const AdminHome = () => {
   const axiosHook = useFetch()
   // get admin stats 
@@ -13,7 +26,52 @@ const AdminHome = () => {
       return await res.data 
     }
   })
-  console.log(stats);
+  // get product stats 
+  const {data:orderStats=[]}=useQuery({
+    queryKey:['order  stats'],
+    queryFn:async ()=>{
+      const res=await axiosHook.get("/order-stats")
+      // console.log(res.data);
+      return await res.data 
+    }
+  })
+  console.log(orderStats);
+
+
+  // bar chart
+  
+  
+  const getPath = (x, y, width, height) => {
+    return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
+    ${x + width / 2}, ${y}
+    C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${x + width}, ${y + height}
+    Z`;
+  };
+  
+  const TriangleBar = (props) => {
+    const { fill, x, y, width, height } = props;
+  
+    return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
+  };
+
+  // pie chart
+  const pieChartData = orderStats?.map(item =>{
+    return {name:item?.category,quantity:item?.quantity}
+  }) 
+
+  const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+const w = orderStats?.length* 150
   return (
     <div>
       {/* stats  */}
@@ -75,6 +133,58 @@ const AdminHome = () => {
           
           </div>
         </section>
+      </div>
+
+      {/*bar chart  */}
+      <div className=" flex flex-col lg:flex-row gap-10">
+      <div className=" w-full lg:w-[58%] overflow-x-auto" >
+       <BarChart
+      width={w}
+      height={400}
+      data={orderStats}
+      
+      margin={{
+        top: 20,
+        right: 30,
+        left: 20,
+        bottom: 5,
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="category" />
+      <YAxis />
+      <Legend ></Legend>
+      <Tooltip key={"revenue"} ></Tooltip>
+      <Bar dataKey="quantity" fill="#8884d8" shape={<TriangleBar />} label={{ position: 'top' }}>
+        {orderStats.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={colors[index % 20]} />
+        ))}
+      </Bar>
+      
+    </BarChart>
+       </div>
+       
+       {/* pie chart  */}
+       <div className=" w-full lg:w-[40%] overflow-x-auto">
+        <PieChart width={400} height={400}>
+          <Pie
+            data={pieChartData}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="quantity"
+          >
+            {orderStats?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Legend></Legend>
+          <Tooltip></Tooltip>
+        </PieChart>
+       </div>
       </div>
     </div>
   );

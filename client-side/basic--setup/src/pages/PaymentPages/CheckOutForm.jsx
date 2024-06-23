@@ -38,6 +38,8 @@ const CheckOutForm = () => {
 
   // get all cart and price
   const [data,refetch] = useCart();
+  const cart =data.map(item=>item.cart)
+  // console.log(cart);
   // console.log(data);
   const totalPrice = data?.reduce((a, b) => {
     const priceB = parseFloat(b?.cart?.price) || 0;
@@ -157,7 +159,7 @@ const CheckOutForm = () => {
         name:user?.displayName,
         totalPrice,
         delivery,
-        items:data,
+        cart,
         status:"order received"
        }
       //  console.log(payment);
