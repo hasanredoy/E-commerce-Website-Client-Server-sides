@@ -31,6 +31,7 @@ import AddItem from './pages/Dashboard/Admin/AddItem/AddItem.jsx';
 import BecomeSeller from './pages/BecomeSeller/BecomeSeller.jsx';
 import Payment from './pages/PaymentPages/Payment.jsx';
 import PaymentHistory from './pages/Dashboard/User/PaymentHistory/PaymentHistory.jsx';
+import PaymentInvoice from './pages/Dashboard/User/PaymentHistory/PaymentInvoice.jsx';
 
 const queryClient = new QueryClient()
 
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
       {
         path:'paymentHistory',
         element:<PaymentHistory></PaymentHistory>
+      },
+      {
+        path:'invoice/:id',
+        element:<PaymentInvoice></PaymentInvoice>
       },
       // common 
       {

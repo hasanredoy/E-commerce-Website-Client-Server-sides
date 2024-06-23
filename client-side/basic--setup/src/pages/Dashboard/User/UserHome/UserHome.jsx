@@ -7,11 +7,15 @@ import { MdOutlinePayment } from "react-icons/md";
 import useFetch from "../../../../hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
 import { FaUser } from "react-icons/fa6";
+import useGetAllPayments from "../../../../hooks/useGetAllPayments";
 
 const UserHome = () => {
   const {user}=useAuth()
   const [cart,]=useCart()
   const axiosHook = useFetch()
+  // const theme = 
+
+  // get reviews 
   const { data: reviews = [] } = useQuery({
     queryKey: ["reviews"],
     queryFn: async () => {
@@ -19,6 +23,10 @@ const UserHome = () => {
       return res.data;
     },
   });
+
+
+  // get payments 
+  const [payments]=useGetAllPayments()
   // console.log(reviews);
   return (
     <div>
@@ -35,11 +43,11 @@ const UserHome = () => {
         </div>
         <hr />
         <div className="flex items-center justify-center flex-col w-full lg:w-1/2 bg-[#cdffed] min-h-[400px] gap-5">
-          <h1 className=" text-2xl lg:text-4xl font-bold">Your Activities</h1>
+          <h1 className=" text-2xl text-black lg:text-4xl font-bold">Your Activities</h1>
           <h4 className=" flex gap-2 items-center text-lg font-medium text-yellow-500"><MdElectricRickshaw></MdElectricRickshaw> Orders Deliver :3 </h4>
           <h4 className=" flex gap-2 items-center text-lg font-medium text-green-400"><FaShoppingCart></FaShoppingCart> Cart : {cart?.length} </h4>
           <h4 className=" flex gap-2 items-center text-lg font-medium text-orange-700"><FaStar></FaStar> Reviews : {reviews?.length}</h4>
-          <h4 className=" flex gap-2 items-center text-lg font-medium text-purple-700"><MdOutlinePayment></MdOutlinePayment> Payments : 3 </h4>
+          <h4 className=" flex gap-2 items-center text-lg font-medium text-purple-700"><MdOutlinePayment></MdOutlinePayment> Payments : {payments?.length}</h4>
 
         </div>
       </div>

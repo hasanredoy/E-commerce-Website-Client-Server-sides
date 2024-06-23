@@ -11,6 +11,8 @@ import usePostUsingTanstack from "../../hooks/usePostUsingTanstack";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
+import moment from "moment"
+
 const CheckOutForm = () => {
   const axiosCommon = useFetchCommon();
   // get user
@@ -47,7 +49,7 @@ const CheckOutForm = () => {
   const email =user?.email
   //  get result and post function 
   const [mutateAsync,result]=usePostUsingTanstack(`/payments?email=${email}`)
-  console.log({result});
+  // console.log({result});
   // show toast after successfully payment 
   if(result?.result?.insertedId&&result?.deleteRes?.deletedCount>0){
    refetch()
@@ -69,6 +71,16 @@ const CheckOutForm = () => {
     const house = form.house.value;
     const location = form.location.value;
     const date = form.date.value;
+    const newDate = moment(new Date()).format().split("T")[0];
+    console.log(date,newDate);
+    if(date<newDate){
+      Swal.fire({
+        text:"Invalid Date",
+        icon:"error",
+        didClose:true
+      })
+      return 
+    }
     const deliveryInfo = {
       phone: phoneNumber,
       location: location,
@@ -117,7 +129,7 @@ const CheckOutForm = () => {
       console.log("error", error);
       setError(error.message);
     } else {
-      console.log("payment", paymentMethod);
+      // console.log("payment", paymentMethod);
       setError("");
     }
 
@@ -135,7 +147,7 @@ const CheckOutForm = () => {
     if(confirmError){
       console.log({confirmError});
     }else{
-      console.log(paymentIntent);
+      // console.log(paymentIntent);
     }
     if(paymentIntent?.status=='succeeded'){
       setTransectionID(paymentIntent.id)
@@ -148,7 +160,7 @@ const CheckOutForm = () => {
         items:data,
         status:"order received"
        }
-       console.log(payment);
+      //  console.log(payment);
        await mutateAsync(payment)
     }
   };
