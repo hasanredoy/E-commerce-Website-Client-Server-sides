@@ -4,6 +4,7 @@ import { useState } from "react";
 import usePostImage from "../../../../hooks/usePostImage";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const MyProfile = () => {
   const {user}=useAuth()
@@ -13,7 +14,7 @@ const MyProfile = () => {
   const [image , setImage]=useState([])
   // posting image on imgbb 
   const imageUrl = usePostImage(image)
-console.log(imageUrl);
+// console.log(imageUrl);
 const axiosHook = useFetch()
 function refreshPage() {
 setTimeout(()=>{
@@ -36,7 +37,7 @@ setTimeout(()=>{
     })
     axiosHook.patch(`/users/${email}`,userData)
     .then(res=>{
-      console.log(res.data);
+      // console.log(res.data);
       if(res.data?.modifiedCount>0){
         Swal.fire({
           icon:'success',
@@ -50,6 +51,7 @@ setTimeout(()=>{
   }
   return (
     <div>
+      <DynamicPageTitle dynamicTitle={"My Profile | Dashboard"}></DynamicPageTitle>
        <div className="  flex flex-col items-center my-10 justify-center">
         <img className=" w-[300px] h-[300px] rounded-full border border-sky-600" src={user?.photoURL} alt="" />
 

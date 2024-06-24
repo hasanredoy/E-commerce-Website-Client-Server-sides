@@ -8,6 +8,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../../../reuseable/LoadingSpinner";
 import { FaX } from "react-icons/fa6";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const AddItem = () => {
   const axiosHook = useFetch();
@@ -51,7 +52,7 @@ const AddItem = () => {
     // posting gadget data in db
     if (imageUrl) {
       axiosHook.post(`/add-gadgets`, itemData).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data?.insertedId) {
           setShowForm(!showForm)
           refetch()
@@ -66,7 +67,7 @@ const AddItem = () => {
 
 // delete gadget 
 const handleDelete =(id,name)=>{
-  console.log(id);
+  // console.log(id);
   Swal.fire({
     title: "Are you sure?",
     text: "You Want To delete This item?",
@@ -233,6 +234,7 @@ const handleDelete =(id,name)=>{
   }
   return (
     <div>
+      <DynamicPageTitle dynamicTitle={"Add item | Dashboard"}></DynamicPageTitle>
       {!showForm ? (
         <div>
           <div>

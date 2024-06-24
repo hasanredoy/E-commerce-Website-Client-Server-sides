@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import Navbar from "../../components/nav/Navbar";
 import loginImage from "../../assets/laptop-with-login-password-form-screen.png";
 import GoogleLogin from "../../socialLogin/GoogleLogin";
+import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 
 const Login = () => {
   const { loginUser,resetPass} = useContext(MainContext);
@@ -15,19 +16,20 @@ const Login = () => {
 
 
   const path = location.state || '/';
-  console.log(location);
+  // console.log(location);
   const handleLogin = (e) => {
     e.preventDefault();
 
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    console.log(email, password);
+    // console.log(email, password);
 
     loginUser(email, password)
       .then((res) => {
         navigate(path)
-        console.log(res.user)})
+        // console.log(res.user)
+      })
       .catch((err) => console.log(err));
   };
  
@@ -52,6 +54,7 @@ const Login = () => {
 
   return (
     <div className=" min-h-screen">
+      <DynamicPageTitle dynamicTitle={"Login | Dashboard"}></DynamicPageTitle>
       <Navbar></Navbar>
       {
         modal||<div className={"  flex flex-col-reverse lg:flex-row  items-center mt-3 lg:mt-20 w-[95%] mx-auto "}>

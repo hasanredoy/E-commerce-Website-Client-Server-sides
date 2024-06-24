@@ -3,6 +3,7 @@ import useCart from "../../../../useCart/useCart";
 import { FaTrash } from "react-icons/fa";
 import useFetchCommon from "../../../../hooks/useFetchCommon";
 import Swal from "sweetalert2";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const MyCart = () => {
   const [data,refetch,isPending] = useCart();
@@ -16,7 +17,7 @@ const MyCart = () => {
   const axiosCommon =useFetchCommon()
   // console.log(totalPrice);
 const handleDelete =(id,name)=>{
-  console.log(id);
+  // console.log(id);
   Swal.fire({
     title: "Are you sure?",
     text: "You Want To delete This item?",
@@ -53,6 +54,7 @@ if(isPending){
 }
   return (
     <div>
+      <DynamicPageTitle dynamicTitle={"My Cart | Dashboard"}></DynamicPageTitle>
     
       {
         data.length>0?<>

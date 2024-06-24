@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import useGetAllPayments from "../../../../hooks/useGetAllPayments";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const PaymentHistory = () => {
   const [payments,] = useGetAllPayments()
-  console.log(payments);
+  // console.log(payments);
   if(payments?.length==0){
     return <div>
       <h2>No History Yet..</h2>
@@ -14,6 +15,7 @@ const PaymentHistory = () => {
   }
   return (
     <div className=" my-10 ">
+      <DynamicPageTitle dynamicTitle={"Payment History | Dashboard"}></DynamicPageTitle>
       <h1 className=" text-2xl font-bold text-center">All Payments History</h1>
       <div className="text-black overflow-x-auto mx-auto my-10 rounded-md w-full bg-gray-300">
        

@@ -4,6 +4,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { FaLocationArrow } from "react-icons/fa";
 import banner from '../../assets/contact.png'
 import useAuth from '../../hooks/useAuth';
+import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 const ContactUs = () => {
   const {user}=useAuth()
   const handleMessage=(e)=>{
@@ -11,6 +12,7 @@ const ContactUs = () => {
   }
   return (
     <div className=' my-5 lg:my-20 flex flex-col gap-5 container mx-auto lg:flex-row'>
+      <DynamicPageTitle dynamicTitle={"Contact"}></DynamicPageTitle>
       <div className=" mx-auto">
       <img src={banner} alt="" />
       </div>

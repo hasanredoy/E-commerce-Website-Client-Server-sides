@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 
 const BecomeSeller = () => {
   return (
     <div className=" flex gap-5 justify-center min-h-screen items-center flex-col">
+      <DynamicPageTitle dynamicTitle={"Become Seller"}></DynamicPageTitle>
       <h1 className=" text-3xl font-black text-center">
         Working on It 🛠⚒ , Please Co-Operate 💜💚..
       </h1>

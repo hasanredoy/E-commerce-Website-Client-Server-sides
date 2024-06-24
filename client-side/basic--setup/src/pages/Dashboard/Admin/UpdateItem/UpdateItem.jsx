@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import useFetchCommon from "../../../../hooks/useFetchCommon";
 import Swal from "sweetalert2";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const UpdateItem = () => {
   const item = useLoaderData()
@@ -51,6 +52,7 @@ const UpdateItem = () => {
   }
   return (
     <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
+      <DynamicPageTitle dynamicTitle={"Update item | Dashboard"}></DynamicPageTitle>
     <div className=" flex justify-end">
 
     

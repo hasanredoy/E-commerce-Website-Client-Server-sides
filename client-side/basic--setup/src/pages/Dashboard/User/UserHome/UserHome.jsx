@@ -7,6 +7,7 @@ import useFetch from "../../../../hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
 import { FaUser } from "react-icons/fa6";
 import useGetAllPayments from "../../../../hooks/useGetAllPayments";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const UserHome = () => {
   const {user}=useAuth()
@@ -29,6 +30,7 @@ const UserHome = () => {
   // console.log(reviews);
   return (
     <div>
+      <DynamicPageTitle dynamicTitle={"User Home | Dashboard"}></DynamicPageTitle>
       <div>
         <h4 className=" text-2xl lg:text-4xl text-center mt-5 font-bold">Hi ,Welcome {user?.displayName? <span className=" text-[#19dbd8]">{user?.displayName}</span>: 'Back'}</h4>
         

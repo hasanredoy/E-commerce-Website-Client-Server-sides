@@ -16,6 +16,7 @@ import {
 } from "recharts";
 // import pie chart
 import { PieChart, Pie } from "recharts";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 // bar chart color
 const colors = ["yellow", "green", "#FFBB28", "#FF8042", "red", "pink"];
@@ -98,6 +99,7 @@ const AdminHome = () => {
   const w = orderStats?.length * 150;
   return (
     <div>
+      <DynamicPageTitle dynamicTitle={"Admin Home | Dashboard"}></DynamicPageTitle>
       {/* stats  */}
       <div>
         <section className="p-4 mb-5 md:p-8  ">

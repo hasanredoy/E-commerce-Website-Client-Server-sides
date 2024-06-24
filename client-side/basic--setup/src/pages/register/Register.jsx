@@ -8,28 +8,28 @@ import GoogleLogin from "../../socialLogin/GoogleLogin";
 import registerImg from "../../assets/computer-security-with-login-password-padlock.jpg"
 import usePostImage from "../../hooks/usePostImage";
 import Swal from "sweetalert2";
+import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 const Register = () => {
 
   const {createUser , modal ,setModal,updateUserProfile} = useContext(MainContext)
   const [photo,setPhoto]=useState([])
   
   const imgUrl = usePostImage(photo)
-  console.log(imgUrl);
+  // console.log(imgUrl);
  const handleRegister=  (e)=>{
   e.preventDefault()
 
   const name = e.target.name.value
-  const number = e.target.number.value
   const email = e.target.email.value
   const password = e.target.password.value
 
   // console.log(createUser);
-  console.log(name);
+  // console.log(name);
 
   createUser(email , password)
   .then(res=>{
-    console.log(res.user);
-    updateUserProfile(name,imgUrl,number)
+    // console.log(res.user);
+    updateUserProfile(name,imgUrl)
     setModal(true)
     const usersData ={
       email,
@@ -41,7 +41,7 @@ const Register = () => {
     
       axios.post('http://localhost:5000/users',usersData)
       .then(res=>{
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch(err=>{
         console.log(err);
@@ -61,6 +61,7 @@ const Register = () => {
 
   return (
     <div className="min-h-[calc(100vh-116px)] flex items-center  relative">
+      <DynamicPageTitle dynamicTitle={"Register"}></DynamicPageTitle>
     <div className=" flex flex-col lg:flex-row gap-5">
       {/* img div  */}
       <div className=" w-full flex  items-center lg:w-[40%]">
@@ -94,19 +95,6 @@ const Register = () => {
             type="file"
             required
             onChange={(e)=>setPhoto(e.target.files[0])}
-          />
-        </div>
-
-        <div className="form-control">
-          <label className="label">
-            <span className=" ">You&apos;re Phone Number <small className=" text-green-600">(Don&apos;t Worry We Won&apos;t Publish You&apos;re Number)</small></span>
-          </label>
-          <input
-            type="number"
-            placeholder="Number"
-            className="input input-bordered bg-white text-black   focus:outline-sky-200"
-            required
-            name="number"
           />
         </div>
 

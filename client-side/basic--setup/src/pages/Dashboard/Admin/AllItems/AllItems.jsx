@@ -5,6 +5,7 @@ import useFetchCommon from "../../../../hooks/useFetchCommon";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../../../reuseable/LoadingSpinner";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const AllItems = () => {
   const axiosHook =useFetch()
@@ -13,7 +14,7 @@ const{data,refetch,isFetching}=useQuery({
   queryKey:['items',axiosHook],
   queryFn:async()=>{
     const result = await axiosHook.get('/gadgets')
-    console.log(result.data);
+    // console.log(result.data);
     return result.data
   }
 })
@@ -59,7 +60,7 @@ if(isFetching){
 }
 return (
     <div>
-     
+     <DynamicPageTitle dynamicTitle={"All Items | Dashboard"}></DynamicPageTitle>
      
         <div>
         <h4 className=" my-5 text-lg text-center font-bold text-[#11c6c9]">

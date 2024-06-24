@@ -9,6 +9,7 @@ import Discount from "../../components/Discount/Discount";
 import useFetch from "../../hooks/useFetch";
 import useCart from "../../useCart/useCart";
 import Swal from "sweetalert2";
+import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 const AllGadgets = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const axiosCommon = useFetchCommon();
@@ -56,7 +57,7 @@ const AllGadgets = () => {
   }, [axiosCommon]);
   const itemsPerPage = 6;
   const totalPage = Math.ceil(count / itemsPerPage);
-  console.log(totalPage);
+  // console.log(totalPage);
   let numberOfPages = [];
   for (let i = 0; i < totalPage; i++) {
     // console.log(i);
@@ -74,7 +75,7 @@ const AllGadgets = () => {
       return res.data;
     },
   });
-  console.log(gadgets);
+  // console.log(gadgets);
   const handelSearch =(e)=>{
     e.preventDefault()
     refetch()
@@ -94,6 +95,7 @@ const AllGadgets = () => {
   // console.log(currentPage);
   return (
     <div className="mb-10 overflow-hidden">
+      <DynamicPageTitle dynamicTitle={"All Gadgets"}></DynamicPageTitle>
       {/* banner  */}
       <div
         className="hero bg-cover min-h-[500px] mb-20"

@@ -6,6 +6,7 @@ import FaQ from "../../components/FAQ/FaQ";
 import Discount from "../../components/Discount/Discount";
 import discount50 from "../../assets/50-percent.png";
 import Testemonial from "../../components/Testemonial/Testemonial";
+import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 
 const Home = () => {
   let [slide, setSlide] = useState(1);
@@ -17,6 +18,7 @@ const Home = () => {
   } else
     return (
       <div className=" mx-auto ">
+        <DynamicPageTitle dynamicTitle={"Home"}></DynamicPageTitle>
         {/* banner */}
         <div
           className=" relative min-h-[500px] lg:min-h-screen bg-contain md:bg-cover flex flex-col md:flex-row justify-between mb-5 "

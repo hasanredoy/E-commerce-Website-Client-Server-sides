@@ -9,6 +9,7 @@ import './review.css'
 import { useState } from "react";
 
 import moment from 'moment'
+import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 
 const ReviewsPage = () => {
   const axiosHook = useFetch();
@@ -25,7 +26,7 @@ const ReviewsPage = () => {
       return res.data;
     },
   });
-  console.log(reviews);
+  // console.log(reviews);
   // value of rating
   const ratingChanged = (newRating) => {
     // console.log(newRating);
@@ -48,7 +49,7 @@ const ReviewsPage = () => {
     axiosHook
       .post("/reviews", userReview)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
 
         if (res.data.insertedId) {
           refetch();
@@ -68,6 +69,7 @@ const ReviewsPage = () => {
 
   return (
     <div className="flex flex-col-reverse justify-between md:flex-row container mx-auto ">
+      <DynamicPageTitle dynamicTitle={"Reviews"}></DynamicPageTitle>
       <div className=" w-full md:w-[70%] mt-0 mb-10   md:mt-10  ">
         <h1 className=" text-3xl lg:text-4xl text-center font-bold">
           <span className=" text-[#379e9f]">Hear</span> What Our Customer Say

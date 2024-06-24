@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import useAdmin from "../../../../hooks/useAdmin";
 
 import useUsers from "../../../../hooks/useUsers";
+import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 
 const AllUsers = () => {
   const axiosHook = useFetch()
@@ -78,6 +79,7 @@ console.log(users);
   console.log(isAdmin);
   return (
     <div>
+      <DynamicPageTitle dynamicTitle={"All Users | Dashboard"}></DynamicPageTitle>
       {
         isPending && <div className='flex justify-center items-center h-full'>
         <span className="loading loading-infinity loading-lg "></span>
