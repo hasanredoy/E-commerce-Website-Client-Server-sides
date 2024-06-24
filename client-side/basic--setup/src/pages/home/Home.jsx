@@ -7,6 +7,7 @@ import Discount from "../../components/Discount/Discount";
 import discount50 from "../../assets/50-percent.png";
 import Testemonial from "../../components/Testemonial/Testemonial";
 import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
+import OurSuccess from "../../components/OurSuccess/OurSuccess";
 
 const Home = () => {
   let [slide, setSlide] = useState(1);
@@ -138,6 +139,10 @@ const Home = () => {
         {/* FaQ */}
         <div>
           <FaQ></FaQ>
+        </div>
+        {/*success */}
+        <div>
+          <OurSuccess></OurSuccess>
         </div>
 
          {/* Testimonial */}

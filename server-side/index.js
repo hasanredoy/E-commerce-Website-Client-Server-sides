@@ -393,10 +393,10 @@ const verifyAdmin =async (req,res,next)=>{
       const Amount = await gadgetsCollection.aggregate([{
         $group:{
            _id:null,
-           totalAmount:{$sum: "$totalPrice"}
+           totalAmount:{$sum: "$price"}
         }
       }]).toArray()
-      const totalAmount= paidAmount[0].totalAmount
+      const totalAmount= Amount[0].totalAmount
       // console.log(totalPaidAmount);
 
       //  get all customer
@@ -405,7 +405,7 @@ const verifyAdmin =async (req,res,next)=>{
       //  get all gadgets
       const gadgets = await gadgetsCollection.estimatedDocumentCount()
       
-      res.send({payments,revenue,customer,gadgets})
+      res.send({payments,revenue:totalAmount,customer,gadgets})
     })
     // get admin stats 
     app.get("/admin-stats", async(req,res)=>{
@@ -474,3 +474,15 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log("port is running", port);
 });
+
+
+/************* Naming Conventions ************
+***********************************************
+*app.get("/gadgets")
+*
+*app.get("/gadgets/:id")
+*
+*app.get("/gadgets-item-name")
+*
+*app.get()
+**/
