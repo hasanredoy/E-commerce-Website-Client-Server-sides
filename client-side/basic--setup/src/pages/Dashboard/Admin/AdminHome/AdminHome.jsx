@@ -44,7 +44,7 @@ const AdminHome = () => {
       return await res.data;
     },
   });
-  console.log(orderStats);
+  // console.log(orderStats);
 
   // bar chart
 

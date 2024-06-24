@@ -6,13 +6,18 @@ import Swal from "sweetalert2";
 import ReactStars from "react-rating-stars-component";
 
 import './review.css'
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 
 import moment from 'moment'
 import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 import Pagination from "../../reuseable/Pagination";
 import PaginationDiv from "../../reuseable/PaginationDiv";
 import LoadingSpinner from "../../reuseable/LoadingSpinner";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+
+
 
 const ReviewsPage = () => {
   const axiosHook = useFetch();
@@ -20,12 +25,19 @@ const ReviewsPage = () => {
 
   // rating state 
   const [rating , setRating]=useState(0)
+
+
+
+  useEffect(()=>{
+    AOS.init()
+  },[])
   // current page state 
   const [currentPage, setCurrentPage] = useState(0);
 
 
+
    const [numberOfPages , totalPage,itemsPerPage] =Pagination("/reviews",6)
-   console.log(numberOfPages);
+  //  console.log(numberOfPages);
 
   // getting review data from db using tanstack
   const { data: reviews = [], refetch,isPending } = useQuery({
@@ -80,6 +92,8 @@ const ReviewsPage = () => {
   if(isPending){
     return <LoadingSpinner></LoadingSpinner>
   }
+
+ 
   return (
     <div className="flex flex-col-reverse justify-between md:flex-row container mx-auto ">
       <DynamicPageTitle dynamicTitle={"Reviews"}></DynamicPageTitle>
@@ -92,6 +106,9 @@ const ReviewsPage = () => {
         <div className=" grid grid-cols-1 md:grid-cols-2  gap-5">
           {reviews?.map((review) => (
             <div
+            data-aos="zoom-in-down" data-aos-delay="300"
+            data-aos-duration="1000"
+            data-aos-easing="ease-in-out"
               key={review}
               className="container bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 "
             >

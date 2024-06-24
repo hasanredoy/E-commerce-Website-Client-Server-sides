@@ -12,7 +12,7 @@ const GoogleLogin = () => {
   const handleGoogleLogin = ()=>{
     googleLogin()
     .then(res=>{
-      console.log(res.user);
+      // console.log(res.user);
       const userData = {
         name:res?.user?.displayName,
         email:res?.user?.email,
@@ -21,7 +21,7 @@ const GoogleLogin = () => {
       }
       axiosCommon.post("/users",userData)
       .then(res=>{
-        console.log(res.data);
+        // console.log(res.data);
         navigate('/')
       })
     })

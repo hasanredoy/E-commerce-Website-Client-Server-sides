@@ -11,6 +11,10 @@ import useCart from "../../useCart/useCart";
 import Swal from "sweetalert2";
 import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 import LoadingSpinner from "../../reuseable/LoadingSpinner";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+
 const AllGadgets = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const axiosCommon = useFetchCommon();
@@ -18,8 +22,8 @@ const AllGadgets = () => {
   const [count, setCount] = useState();
   const [search, setSearch] = useState('');
   const axiosHook = useFetch()
-  const url = '/carts'
   const userEmail = user?.email;
+  const url = `/carts?email=${userEmail}`
   const [, feds]=useCart()
   const handleCart=(cart)=>{
     const userCart = {
@@ -29,7 +33,7 @@ const AllGadgets = () => {
     if(!user){
       return <Navigate to={'/login'}></Navigate> 
     }
-    if(user){
+    if(userEmail){
     axiosHook.post(url , userCart)
     .then(res=>{
       // console.log(refetch);
@@ -41,6 +45,16 @@ const AllGadgets = () => {
           title: `${cart.product_name} added in Cart Successfully`,
           showConfirmButton: false,
           timer: 1500
+        });
+      }
+      if(res.data.message=='cart is full'){
+        feds()
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `Cart is full`,
+          showConfirmButton: false,
+          timer: 1000
         });
       }
     })
@@ -94,7 +108,9 @@ const AllGadgets = () => {
     }
   };
   // console.log(currentPage);
-  
+  useEffect(()=>{
+    AOS.init()
+  },[])
   return (
     <div className="mb-10 overflow-hidden">
       <DynamicPageTitle dynamicTitle={"All Gadgets"}></DynamicPageTitle>
@@ -159,6 +175,9 @@ const AllGadgets = () => {
       <div className="  container mx-auto  grid grid-cols-1 lg:grid-cols-3 gap-5   ">
         {gadgets?.map((data) => (
           <div
+          data-aos="zoom-in-up" data-aos-delay="300"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
             key={data.id}
             className="card w-[98%] mx-auto lg:w-auto   to-base-300  shadow-lg px-2 bg-base-200  hover:scale-100 lg:hover:scale-105   hover:border-0 lg:hover:border-2  hover:border-orange-400"
           >

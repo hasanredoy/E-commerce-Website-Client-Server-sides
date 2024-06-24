@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useFetch from "../../hooks/useFetch";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 const Testemonial = () => {
   const axiosHook = useFetch();
@@ -12,6 +16,9 @@ const Testemonial = () => {
       return res.data;
     },
   });
+  useEffect(()=>{
+    AOS.init()
+  },[])
   return (
     <div className=" w-full  mt-0 mb-10   md:mt-10  ">
       <h1 className=" text-3xl lg:text-4xl text-center font-bold">
@@ -22,6 +29,9 @@ const Testemonial = () => {
       <div className=" grid grid-cols-1 md:grid-cols-2  gap-5 ">
         {reviews?.slice(4 - 8).map((review) => (
           <div
+          data-aos="zoom-in-down" data-aos-delay="300"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
             key={review._id}
             className=" bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full  p-6 mx-auto divide-y rounded-md divide-gray-700 "
           >

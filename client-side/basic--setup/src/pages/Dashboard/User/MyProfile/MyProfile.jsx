@@ -53,7 +53,7 @@ setTimeout(()=>{
     <div>
       <DynamicPageTitle dynamicTitle={"My Profile | Dashboard"}></DynamicPageTitle>
        <div className="  flex flex-col items-center my-10 justify-center">
-        <img className=" w-[300px] h-[300px] rounded-full border border-sky-600" src={user?.photoURL} alt="" />
+        <img className=" w-48 h-48 lg:w-[300px] lg:h-[300px] rounded-full border border-sky-600" src={user?.photoURL} alt="" />
 
         <h1 className=" text-2xl font-bold pt-5">Welcome <span className=" text-sky-500">{user?.displayName?user?.displayName:"Back"}</span>.. Wanna Update Your Profile?</h1>
         <div className="divider"></div>

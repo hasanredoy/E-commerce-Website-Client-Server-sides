@@ -41,7 +41,7 @@ const UpdateItem = () => {
     }
     axiosCommon.put(`/gadgets/${_id}`,itemData)
     .then(res=>{
-      console.log(res.data);
+      // console.log(res.data);
       if(res.data.modifiedCount>0){
         Swal.fire({
           title: `${name} Updated Successfully`,

@@ -28,7 +28,7 @@ const Home = () => {
               "url(https://cdn.pixabay.com/photo/2019/03/21/15/18/shop-4071232_1280.png)",
           }}
         >
-          <div className=" absolute left-0 top-10">
+          <div className=" hidden lg:block absolute left-0 top-10">
             <img className=" w-20 h-20" src={discount50} alt="" />
           </div>
           <div className="  flex pt-5 md:pt-10 md:h-auto lg:min-h-svh w-full lg:w-1/2  items-start lg:items-center justify-center text-white bg-black bg-opacity-60 text-center lg:text-start">

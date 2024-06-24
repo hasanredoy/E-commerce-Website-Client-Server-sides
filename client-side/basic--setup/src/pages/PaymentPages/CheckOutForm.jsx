@@ -34,7 +34,7 @@ const CheckOutForm = () => {
 
   const navigate = useNavigate()
 
-
+console.log(clientSecret);
 
   // get all cart and price
   const [data,refetch] = useCart();
@@ -65,7 +65,7 @@ const CheckOutForm = () => {
   // get stripe and elements from stripe
   const stripe = useStripe();
   const elements = useElements();
-
+console.log(totalPrice);
   //handler for delivery info
   const handleDelivery = async (e) => {
     e.preventDefault();
@@ -74,7 +74,7 @@ const CheckOutForm = () => {
     const location = form.location.value;
     const date = form.date.value;
     const newDate = moment(new Date()).format().split("T")[0];
-    console.log(date,newDate);
+    // console.log(date,newDate);
     if(date<newDate){
       Swal.fire({
         text:"Invalid Date",
@@ -95,7 +95,7 @@ const CheckOutForm = () => {
        const res = await axiosCommon.post("/payment-intent", {
       price: totalPrice,
     });
-    // console.log(res.data);
+    console.log(res.data);
     setClientSecret(res.data?.clientSecret);
     }
     // console.log(deliveryInfo);
@@ -131,7 +131,7 @@ const CheckOutForm = () => {
       console.log("error", error);
       setError(error.message);
     } else {
-      // console.log("payment", paymentMethod);
+      console.log("payment", paymentMethod);
       setError("");
     }
 

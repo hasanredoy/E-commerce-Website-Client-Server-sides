@@ -14,7 +14,8 @@ import useAuth from "../../../../hooks/useAuth";
 const MyCart = () => {
   const [currentPage ,setCurrentPage]=useState(0)
 
-  const [numberOfPages , totalPage,itemsPerPage] =Pagination("/carts",8)
+  const [numberOfPages , totalPage,itemsPerPage] =Pagination("/carts",5)
+  console.log(numberOfPages);
 const axiosHook = useFetch()
 const {user} = useAuth()
 // get cart for Pagination
@@ -26,7 +27,7 @@ const {refetch, data:paginationCart=[],isPending } = useQuery({
   },
 });
 
-  const [data] = useCart();
+  const [data,reload] = useCart();
   // console.log(data);
   const totalPrice = data?.reduce((a, b) =>{
     const priceB = parseFloat(b?.cart?.price)||0
@@ -51,6 +52,7 @@ const handleDelete =(id,name)=>{
   .then((res)=>{
     if(res.data.deletedCount>0){
       refetch()
+      reload()
     Swal.fire({
       title: `${name} deleted Successfully`,
       icon: "success"

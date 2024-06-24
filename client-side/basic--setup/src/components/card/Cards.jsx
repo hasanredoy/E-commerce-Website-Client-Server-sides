@@ -8,13 +8,17 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useCart from "../../useCart/useCart";
 import useFetch from "../../hooks/useFetch";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 const Cards = () => {
   const {user} =useAuth()
 
   const axiosHook = useFetch()
-  const url = '/carts'
   const userEmail = user?.email;
+  const url = `/carts?email=${userEmail}`
+
    const [, refetch]=useCart()
   const handleCart=(cart)=>{
     const userCart = {
@@ -38,6 +42,15 @@ const Cards = () => {
           timer: 1500
         });
       }
+      if(res.data.message=='cart is full'){
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: `Cart is full`,
+          showConfirmButton: false,
+          timer: 1000
+        });
+      }
     })
     .catch(err => console.log(err)
     )
@@ -49,11 +62,17 @@ const Cards = () => {
     axiosCommon.get("/gadgets").then((data) => setGadgets(data.data));
   }, [axiosCommon]);
 
+  useEffect(()=>{
+    AOS.init()
+  },[])
   return (
     <div>
       <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  ">
         {gadgets?.slice(6, 12).map((data) => (
           <div
+          data-aos="zoom-in-up" data-aos-delay="300"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out"
             key={data.id}
             className="card w-[98%] mx-auto lg:w-auto   to-base-300  shadow-lg px-2 bg-base-200  hover:scale-100 lg:hover:scale-105   hover:border-0 lg:hover:border-2  hover:border-orange-400"
           >

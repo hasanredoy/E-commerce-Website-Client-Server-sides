@@ -65,8 +65,8 @@ const [isAdmin] =useAdmin()
     <div className=" flex gap-10 container mx-auto">
 
       {/* sidebar */}
-       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl  absolute`}><TiThMenu></TiThMenu></button>
-      <div className={` ${menu?"block":'hidden'} absolute z-40 w-[50%] min-h-screen  px-5 pt-4  bg-[#039396] `}>
+       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl  fixed`}><TiThMenu></TiThMenu></button>
+      <div className={` ${menu?"block":'hidden'} absolute z-40 w-[60%] min-h-svh   px-5 pt-4  bg-[#039396] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
 
@@ -183,7 +183,7 @@ const [isAdmin] =useAdmin()
         </div>
        </div>
       </div>
-      <div className=" w-full lg:w-[70%] ">
+      <div className=" px-5 w-full lg:w-[70%] ">
         <Outlet></Outlet>
       </div>
     </div>

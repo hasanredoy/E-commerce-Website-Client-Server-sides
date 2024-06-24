@@ -1,22 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import useFetchCommon from "../../hooks/useFetchCommon";
 import { TbTruckDelivery } from "react-icons/tb";
-import gadgetsLogo from "../../assets/wellness-gadget-technology-device-equipment-innovation-electronic-svgrepo-com.svg" 
+import gadgetsLogo from "../../assets/wellness-gadget-technology-device-equipment-innovation-electronic-svgrepo-com.svg";
 import LoadingSpinner from "../../reuseable/LoadingSpinner";
+import { useEffect } from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 const OurSuccess = () => {
-const axiosCommon= useFetchCommon()
-  // get stats 
-  const { data:stats=[],isPending } = useQuery({
-    queryKey: ['success-stats'],
+  const axiosCommon = useFetchCommon();
+  // get stats
+  const { data: stats = [], isPending } = useQuery({
+    queryKey: ["success-stats"],
     queryFn: async () => {
       const res = await axiosCommon.get(`/success-stats`);
       return res.data;
     },
   });
-  console.log(stats);
-  if(isPending){
-    return <LoadingSpinner></LoadingSpinner>
+  // console.log(stats);
+
+  useEffect(()=>{
+    AOS.init();
+  },[])
+  if (isPending) {
+    return <LoadingSpinner></LoadingSpinner>;
   }
   return (
     <section className="p-4 mb-5 md:p-8  ">
@@ -25,7 +33,9 @@ const axiosCommon= useFetchCommon()
       </div>
       <div className="container grid grid-cols-1 gap-6 m-4 mx-auto md:m-0 lg:grid-cols-2">
         {/* user stat  */}
-        <div className="bg-sky-300 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5 ">
+        <div  data-aos="zoom-in" data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out" className="bg-sky-300 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5 ">
           <div className="flex items-center  justify-center px-4  ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,8 +52,10 @@ const axiosCommon= useFetchCommon()
             <p className="text-2xl font-semibold">{stats?.customer}</p>
           </div>
         </div>
-{/* payment stat  */}
-        <div className="bg-slate-200 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5  ">
+        {/* payment stat  */}
+        <div data-aos="zoom-in" data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out" className="bg-slate-200 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5  ">
           <div className="flex items-center justify-center px-4  ">
             <TbTruckDelivery className=" text-6xl text-green-600"></TbTruckDelivery>
           </div>
@@ -53,7 +65,9 @@ const axiosCommon= useFetchCommon()
           </div>
         </div>
         {/* Earnings stats  */}
-        <div className="bg-green-200 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5 ">
+        <div data-aos="zoom-in" data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out" className="bg-green-200 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5 ">
           <div className="flex items-center justify-center px-4  ">
             <svg
               fill="none"
@@ -73,26 +87,25 @@ const axiosCommon= useFetchCommon()
             </svg>
           </div>
           <div className="flex items-center justify-between flex-1 p-3">
-          <p className=" text-lg font-bold">Total Revenue</p>
-          <p className="text-2xl font-semibold">{stats?.revenue}$</p>
+            <p className=" text-lg font-bold">Total Revenue</p>
+            <p className="text-2xl font-semibold">{stats?.revenue}$</p>
           </div>
         </div>
         {/* gadgets stats  */}
-        <div className="bg-stone-200 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5 ">
+        <div data-aos="zoom-in" data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out" className="bg-stone-200 h-32 text-black flex overflow-hidden rounded-lg    flex-col p-5 ">
           <div className="flex items-center justify-center px-4  ">
             <img src={gadgetsLogo} className=" h-14 w-14" alt="gadgets logo" />
           </div>
           <div className="flex items-center justify-between flex-1 p-3">
             <p className=" font-bold text-lg">Total Gadgets</p>
-            <p className="text-2xl font-semibold">
-              {stats?.gadgets} 
-            </p>
+            <p className="text-2xl font-semibold">{stats?.gadgets}</p>
           </div>
         </div>
       </div>
     </section>
-  
-  )
+  );
 };
 
 export default OurSuccess;

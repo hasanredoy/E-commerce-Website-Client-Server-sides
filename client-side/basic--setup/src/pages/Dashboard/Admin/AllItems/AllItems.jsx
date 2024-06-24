@@ -30,7 +30,7 @@ const axiosCommon =useFetchCommon()
 // console.log(totalPrice);
 // delete gadgets 
 const handleDelete =(id,name)=>{
-console.log(id);
+// console.log(id);
 Swal.fire({
   title: "Are you sure?",
   text: "You Want To delete This item?",

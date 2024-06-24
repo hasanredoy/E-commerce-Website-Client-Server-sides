@@ -7,12 +7,12 @@ const useGetAllPayments = () => {
   const email = user?.email
   const axiosHook = useFetch()
 
-  console.log(email)
+  // console.log(email)
   const {refetch, data } = useQuery({
     queryKey: ['payments for user '],
     queryFn: async () => {
       const res = await axiosHook.get(`/payments?email=${email}`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });
