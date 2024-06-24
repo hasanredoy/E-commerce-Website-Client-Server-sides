@@ -6,10 +6,12 @@ import Swal from "sweetalert2";
 import ReactStars from "react-rating-stars-component";
 
 import './review.css'
-import { useState } from "react";
+import {  useState } from "react";
 
 import moment from 'moment'
 import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
+import Pagination from "../../reuseable/Pagination";
+import PaginationDiv from "../../reuseable/PaginationDiv";
 
 const ReviewsPage = () => {
   const axiosHook = useFetch();
@@ -17,15 +19,22 @@ const ReviewsPage = () => {
 
   // rating state 
   const [rating , setRating]=useState(0)
+  // current page state 
+  const [currentPage, setCurrentPage] = useState(0);
+
+
+   const [numberOfPages , totalPage,itemsPerPage] =Pagination()
+   console.log(numberOfPages);
 
   // getting review data from db using tanstack
   const { data: reviews = [], refetch } = useQuery({
-    queryKey: ["reviews"],
+    queryKey: ["reviews",currentPage],
     queryFn: async () => {
-      const res = await axiosHook.get("/reviews");
+      const res = await axiosHook.get(`/reviews?page=${currentPage}&size=${itemsPerPage}`);
       return res.data;
     },
   });
+  
   // console.log(reviews);
   // value of rating
   const ratingChanged = (newRating) => {
@@ -114,7 +123,28 @@ const ReviewsPage = () => {
               </div>
             </div>
           ))}
+          
         </div>
+        {/* <div className=" flex justify-center gap-5 my-5 bg-slate-500 p-5">
+        <button onClick={handlePrev} className=" btn">
+          <FaLessThan></FaLessThan>
+        </button>
+          {numberOfPages.map((page) => (
+          <button
+            onClick={() => setCurrentPage(page)}
+            className={` btn ${
+              currentPage === page && "btn-warning text-white font-bold "
+            } `}
+            key={page}
+          >
+            {page + 1}
+          </button>
+        ))}
+        <button onClick={handleNext} className=" btn">
+          <FaGreaterThan></FaGreaterThan>
+        </button>
+        </div> */}
+        <PaginationDiv   numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} totalPage={totalPage}></PaginationDiv>
       </div>
       <div className="divider lg:hidden"></div>
       <div className=" mt-10">

@@ -204,13 +204,21 @@ const verifyAdmin =async (req,res,next)=>{
     app.get("/reviews", async (req, res) => {
       let query = {};
       // console.log("review",req?.query?.email);
-
+      const size = parseInt(req?.query?.size);
+      const page = parseInt(req?.query?.page);
       if (req.query?.email) {
         query = { email: req?.query?.email };
       }
       const result = await userReviewCollection.find(query).sort({
-        posting_time:-1}).toArray();
+        posting_time:-1}).limit(size).skip(page*size).toArray();
       res.send(result);
+    });
+
+    // get user reviews count
+    app.get("/reviews/count", async (req, res) => {
+     
+      const result = await userReviewCollection.estimatedDocumentCount()
+      res.send({count:result});
     });
 
     app.post("/reviews", async (req, res) => {

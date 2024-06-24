@@ -1,5 +1,6 @@
 import {Helmet} from "react-helmet";
 
+// eslint-disable-next-line react/prop-types
 const DynamicPageTitle = ({dynamicTitle}) => {
   return (
     <Helmet>
