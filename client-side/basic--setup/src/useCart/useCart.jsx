@@ -5,7 +5,6 @@ import useFetch from "../hooks/useFetch";
 const useCart = () => {
   const axiosHook = useFetch()
   const {user} =useAuth()
-
   
   const {refetch, data=[],isPending } = useQuery({
     queryKey: ['user-carts'],

@@ -27,7 +27,7 @@ const Navbar = () => {
       .querySelector("html")
       .setAttribute("data-theme", localStorage.getItem("theme"));
   };
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     document
       .querySelector("html")

@@ -15,12 +15,13 @@ const PaginationDiv = ({numberOfPages,setCurrentPage,currentPage,totalPage}) => 
     }
   };
   return (
-    <div className=" flex justify-center gap-5 my-5 bg-slate-500 p-5">
+    <div className=" min-w-full flex justify-center gap-5 my-5 bg-slate-500 p-5">
         <button onClick={handlePrev} className=" btn">
           <FaLessThan></FaLessThan>
         </button>
+        {/* eslint-disable-next-line react/prop-types */}
           {numberOfPages?.map((page) => (
-          <button
+            <button
             onClick={() => setCurrentPage(page)}
             className={` btn ${
               currentPage === page && "btn-warning text-white font-bold "

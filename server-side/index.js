@@ -179,6 +179,7 @@ const verifyAdmin =async (req,res,next)=>{
 
     //  getting users all cart and finding single users carts by email
     app.get("/carts", verifyUser, async (req, res) => {
+
       let query = {};
       // console.log(req?.query?.email, req?.user?.email );
       if (req?.query?.email !== req?.user?.email) {
@@ -192,6 +193,32 @@ const verifyAdmin =async (req,res,next)=>{
       const result = await userCart.toArray();
       res.send(result);
     });
+    //  getting users all carts-for-pagination
+    app.get("/carts-for-pagination", verifyUser, async (req, res) => {
+      const size = parseInt(req?.query?.size);
+      const page = parseInt(req?.query?.page);
+      let query = {};
+      // console.log("page",page,"size",size);
+      if (req?.query?.email !== req?.user?.email) {
+        return res.status(403).send({ message: "forbidden" });
+      }
+      if (req.query?.email) {
+        query = { userEmail: req.query.email };
+      }
+
+      const userCart = userCraftCollection.find(query).limit(size).skip(size*page);
+      const result = await userCart.toArray();
+      res.send(result);
+    });
+    //  getting user cart count
+    app.get("/carts/count",async (req, res) => {
+      
+
+      const result = await userCraftCollection.estimatedDocumentCount();
+      res.send({count:result});
+    });
+
+
     //  deleting user cart
     app.delete("/cart/:id", async (req, res) => {
       const id = req.params.id;

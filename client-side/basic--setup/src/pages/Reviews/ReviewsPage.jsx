@@ -23,7 +23,7 @@ const ReviewsPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
 
-   const [numberOfPages , totalPage,itemsPerPage] =Pagination()
+   const [numberOfPages , totalPage,itemsPerPage] =Pagination("/reviews")
    console.log(numberOfPages);
 
   // getting review data from db using tanstack

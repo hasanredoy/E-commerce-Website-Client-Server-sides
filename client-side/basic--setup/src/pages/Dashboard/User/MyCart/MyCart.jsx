@@ -4,12 +4,31 @@ import { FaTrash } from "react-icons/fa";
 import useFetchCommon from "../../../../hooks/useFetchCommon";
 import Swal from "sweetalert2";
 import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
+import PaginationDiv from "../../../../reuseable/PaginationDiv";
+import Pagination from "../../../../reuseable/Pagination";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useFetch from "../../../../hooks/useFetch";
+import useAuth from "../../../../hooks/useAuth";
 
 const MyCart = () => {
-  const [data,refetch,isPending] = useCart();
+  const [currentPage ,setCurrentPage]=useState(0)
+
+  const [numberOfPages , totalPage,itemsPerPage] =Pagination("/carts")
+const axiosHook = useFetch()
+const {user} = useAuth()
+// get cart for Pagination
+const {refetch, data:paginationCart=[],isPending } = useQuery({
+  queryKey: ['user-carts-for-pagination',currentPage],
+  queryFn: async () => {
+    const res = await axiosHook.get(`/carts-for-pagination?email=${user?.email}&page=${currentPage}&size=${itemsPerPage}`);
+    return res.data;
+  },
+});
+
+  const [data] = useCart();
   // console.log(data);
   const totalPrice = data?.reduce((a, b) =>{
-    //  a + 
     const priceB = parseFloat(b?.cart?.price)||0
     const priceA = parseFloat(a)||0
      return priceA+ priceB
@@ -94,7 +113,7 @@ if(isPending){
             </tr>
           </thead>
           <tbody>
-            {data?.map((item, index) => (
+            {paginationCart?.map((item, index) => (
               <tr key={item._id}>
                 <th>{index + 1}</th>
                 <td>
@@ -131,7 +150,9 @@ if(isPending){
               </tr>
             ))}
           </tbody>
+
         </table>
+          <PaginationDiv currentPage={currentPage} setCurrentPage={setCurrentPage} numberOfPages={numberOfPages} totalPage={totalPage}></PaginationDiv>
       </div>
         </>
         :
