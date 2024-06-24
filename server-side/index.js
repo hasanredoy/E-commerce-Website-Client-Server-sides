@@ -256,8 +256,15 @@ const verifyAdmin =async (req,res,next)=>{
 
     // users apis
     app.get("/userss", verifyUser, verifyAdmin,async (req, res) => {
-      const result = await usersCollection.find().toArray();
+      const size = parseInt(req?.query?.size);
+      const page = parseInt(req?.query?.page);
+      const result = await usersCollection.find().limit(size).skip(page*size).toArray();
       res.send(result);
+    });
+    // users apis count
+    app.get("/users/count",async (req, res) => {
+      const result = await usersCollection.estimatedDocumentCount();
+      res.send({count:result});
     });
     app.get("/users/admin/:email", verifyUser, async (req, res) => {
       const email = req.params.email;
@@ -377,6 +384,29 @@ const verifyAdmin =async (req,res,next)=>{
       }
     })
 
+    // get success stats 
+    app.get("/success-stats", async(req,res)=>{
+      // get all payments 
+      const payments = await paymentsCollection.estimatedDocumentCount()
+
+      // get total paid amount 
+      const Amount = await gadgetsCollection.aggregate([{
+        $group:{
+           _id:null,
+           totalAmount:{$sum: "$totalPrice"}
+        }
+      }]).toArray()
+      const totalAmount= paidAmount[0].totalAmount
+      // console.log(totalPaidAmount);
+
+      //  get all customer
+      const customer = await usersCollection.estimatedDocumentCount()
+      
+      //  get all gadgets
+      const gadgets = await gadgetsCollection.estimatedDocumentCount()
+      
+      res.send({payments,revenue,customer,gadgets})
+    })
     // get admin stats 
     app.get("/admin-stats", async(req,res)=>{
       // get all payments 

@@ -6,14 +6,21 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../../../reuseable/LoadingSpinner";
 import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
+import Pagination from "../../../../reuseable/Pagination";
+import PaginationDiv from "../../../../reuseable/PaginationDiv";
+import { useState } from "react";
 
 const AllItems = () => {
   const axiosHook =useFetch()
+  const [currentPage,setCurrentPage]=useState(0)
+
+  // get pagination function 
+  const [numberOfPages , totalPage,itemsPerPage,count] =Pagination("/gadgets",10)
   // get all gadgets 
 const{data,refetch,isFetching}=useQuery({
-  queryKey:['items',axiosHook],
+  queryKey:['items',axiosHook,currentPage],
   queryFn:async()=>{
-    const result = await axiosHook.get('/gadgets')
+    const result = await axiosHook.get(`/gadgets?size=${itemsPerPage}&page=${currentPage}`)
     // console.log(result.data);
     return result.data
   }
@@ -67,14 +74,14 @@ return (
           -- Welcome Back --
         </h4>
         <h1 className=" my-5 text-3xl lg:text-4xl text-center font-bold">
-          Check Your Cart Place Your{" "}
-          <span className=" text-[#11c6c9]">Order</span> !
+          Here are all listed {" "}
+          <span className=" text-[#11c6c9]">Gadgets</span> ..
         </h1>
       </div>
       <div className="divider"></div>
       <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">
-         <h1 className=" text-base lg:text-xl font-bold">Total Items: {data?.length}</h1>
+         <h1 className=" text-base lg:text-xl font-bold">Total Items: {count}</h1>
           
          </div>
       
@@ -141,6 +148,9 @@ return (
           </tbody>
         </table>
       </div>
+      {
+            numberOfPages.length>1&&<PaginationDiv currentPage={currentPage} setCurrentPage={setCurrentPage} numberOfPages={numberOfPages} totalPage={totalPage}></PaginationDiv>
+          }
        
       
       

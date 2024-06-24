@@ -14,7 +14,7 @@ import useAuth from "../../../../hooks/useAuth";
 const MyCart = () => {
   const [currentPage ,setCurrentPage]=useState(0)
 
-  const [numberOfPages , totalPage,itemsPerPage] =Pagination("/carts")
+  const [numberOfPages , totalPage,itemsPerPage] =Pagination("/carts",8)
 const axiosHook = useFetch()
 const {user} = useAuth()
 // get cart for Pagination
@@ -114,7 +114,7 @@ if(isPending){
           </thead>
           <tbody>
             {paginationCart?.map((item, index) => (
-              <tr key={item._id}>
+              <tr className=" bg-gray-100 border-b border-gray-700 " key={item._id}>
                 <th>{index + 1}</th>
                 <td>
                   <div className="flex items-center gap-3">
@@ -152,7 +152,9 @@ if(isPending){
           </tbody>
 
         </table>
-          <PaginationDiv currentPage={currentPage} setCurrentPage={setCurrentPage} numberOfPages={numberOfPages} totalPage={totalPage}></PaginationDiv>
+          {
+            numberOfPages.length>1&&<PaginationDiv currentPage={currentPage} setCurrentPage={setCurrentPage} numberOfPages={numberOfPages} totalPage={totalPage}></PaginationDiv>
+          }
       </div>
         </>
         :

@@ -10,6 +10,7 @@ import useFetch from "../../hooks/useFetch";
 import useCart from "../../useCart/useCart";
 import Swal from "sweetalert2";
 import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
+import LoadingSpinner from "../../reuseable/LoadingSpinner";
 const AllGadgets = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const axiosCommon = useFetchCommon();
@@ -65,7 +66,7 @@ const AllGadgets = () => {
   }
   // console.log(numberOfPages);
   
-  const { data: gadgets = [],refetch } = useQuery({
+  const { data: gadgets = [],refetch,isFetching } = useQuery({
     queryKey: ["gadgets", itemsPerPage, currentPage,search],
     queryFn: async () => {
       const res = await axiosCommon.get(
@@ -93,6 +94,7 @@ const AllGadgets = () => {
     }
   };
   // console.log(currentPage);
+  
   return (
     <div className="mb-10 overflow-hidden">
       <DynamicPageTitle dynamicTitle={"All Gadgets"}></DynamicPageTitle>
@@ -153,6 +155,7 @@ const AllGadgets = () => {
     </div>
 
   {/* cards */}
+  {isFetching&&<LoadingSpinner></LoadingSpinner>}
       <div className="  container mx-auto  grid grid-cols-1 lg:grid-cols-3 gap-5   ">
         {gadgets?.map((data) => (
           <div

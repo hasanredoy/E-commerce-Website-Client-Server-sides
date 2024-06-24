@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetchCommon from "../hooks/useFetchCommon";
 
-const Pagination = (url) => {
+const Pagination = (url,itemsCount) => {
   // console.log(url);
   // count state
   const [count, setCount] = useState(0);
@@ -17,7 +17,7 @@ const Pagination = (url) => {
     });
   }, [axiosCommon,url]);
   console.log(count);
-  const itemsPerPage = 6;
+  const itemsPerPage = itemsCount;
   const totalPage = Math.ceil(count / itemsPerPage);
   let numberOfPages = [];
   console.log(numberOfPages);
@@ -26,7 +26,7 @@ const Pagination = (url) => {
     numberOfPages.push(i);
   }
 
-  return [numberOfPages,totalPage,itemsPerPage]
+  return [numberOfPages,totalPage,itemsPerPage,count]
 };
 
 export default Pagination;

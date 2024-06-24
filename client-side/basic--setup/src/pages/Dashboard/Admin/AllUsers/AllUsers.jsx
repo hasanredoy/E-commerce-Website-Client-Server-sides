@@ -5,11 +5,18 @@ import useAdmin from "../../../../hooks/useAdmin";
 
 import useUsers from "../../../../hooks/useUsers";
 import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
+import Pagination from "../../../../reuseable/Pagination";
+import { useState } from "react";
+import PaginationDiv from "../../../../reuseable/PaginationDiv";
 
 const AllUsers = () => {
   const axiosHook = useFetch()
+  const [currentPage,setCurrentPage]=useState(0)
+
+  // get pagination function 
+  const [numberOfPages , totalPage,itemsPerPage,count] =Pagination("/users",10)
  
-  const [users,refetch,isPending]=useUsers()
+  const [users,refetch,isPending]=useUsers(currentPage,itemsPerPage)
 console.log(users);
   
   const handleAdmin=(id,name)=>{
@@ -97,7 +104,7 @@ console.log(users);
       <div className="divider"></div>
       <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">
-         <h1 className=" text-base lg:text-xl font-bold">Total Users: {users?.length}</h1>
+         <h1 className=" text-base lg:text-xl font-bold">Total Users: {count}</h1>
           
          </div>
           
@@ -111,7 +118,7 @@ console.log(users);
               <th></th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">Image</th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">User Name</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold"></th>
+              <th className=" text-base lg:text-xl font-medium lg:font-bold">Email</th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">Role</th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">Action</th>
             </tr>
@@ -135,7 +142,9 @@ console.log(users);
                   </span>
                 </td>
                 <td>
-                  
+                <span className="  text-base font-medium lg:font-bold">
+                    {user?.email?user?.email:'Anonymous'}
+                  </span>
                 </td>
                 <th>
                  {
@@ -158,6 +167,9 @@ console.log(users);
           </tbody>
         </table>
       </div>
+      {
+            numberOfPages.length>1&&<PaginationDiv currentPage={currentPage} setCurrentPage={setCurrentPage} numberOfPages={numberOfPages} totalPage={totalPage}></PaginationDiv>
+          }
     </div>
   );
 };
