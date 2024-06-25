@@ -485,5 +485,12 @@ app.listen(port, () => {
 *
 *app.get("/gadgets-item-name")
 *
-*app.get()
+*app.post("/gadgets")
+*
+*app.put("/gadgets")
+*
+*app.patch("/gadgets")
+*
+*app.delete("/gadgets")
+*
 **/
