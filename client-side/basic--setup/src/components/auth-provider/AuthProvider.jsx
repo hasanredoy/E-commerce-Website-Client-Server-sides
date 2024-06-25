@@ -63,12 +63,12 @@ const resetPass = (email)=>{
       setLoading(false)
      
       if(currentUser){
-          axios.post('http://localhost:5000/jwt',loggedUser,{withCredentials:true})
+          axios.post('https://gadget-shop-server-nine.vercel.app/jwt',loggedUser,{withCredentials:true})
           .then(()=> {
             // console.log(res.data);
           })
       }else{
-        axios.post('http://localhost:5000/logout', loggedUser ,{withCredentials:true})
+        axios.post('https://gadget-shop-server-nine.vercel.app/logout', loggedUser ,{withCredentials:true})
         .then(()=>{
 
         })

@@ -6,7 +6,7 @@ import useAuth from "./useAuth";
 
 
 const axiosHook = axios.create({
-  baseURL:'http://localhost:5000',
+  baseURL:'https://gadget-shop-server-nine.vercel.app',
   withCredentials:true,
 })
 

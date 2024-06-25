@@ -34,7 +34,7 @@ const CheckOutForm = () => {
 
   const navigate = useNavigate()
 
-console.log(clientSecret);
+// console.log(clientSecret);
 
   // get all cart and price
   const [data,refetch] = useCart();
@@ -65,7 +65,7 @@ console.log(clientSecret);
   // get stripe and elements from stripe
   const stripe = useStripe();
   const elements = useElements();
-console.log(totalPrice);
+// console.log(totalPrice);
   //handler for delivery info
   const handleDelivery = async (e) => {
     e.preventDefault();
@@ -95,7 +95,7 @@ console.log(totalPrice);
        const res = await axiosCommon.post("/payment-intent", {
       price: totalPrice,
     });
-    console.log(res.data);
+    // console.log(res.data);
     setClientSecret(res.data?.clientSecret);
     }
     // console.log(deliveryInfo);
@@ -131,7 +131,7 @@ console.log(totalPrice);
       console.log("error", error);
       setError(error.message);
     } else {
-      console.log("payment", paymentMethod);
+      // console.log("payment", paymentMethod);
       setError("");
     }
 

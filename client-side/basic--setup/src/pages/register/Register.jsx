@@ -39,7 +39,7 @@ const Register = () => {
       
     }
     
-      axios.post('http://localhost:5000/users',usersData)
+      axios.post('https://gadget-shop-server-nine.vercel.app/users',usersData)
       .then(res=>{
         // console.log(res.data);
       })

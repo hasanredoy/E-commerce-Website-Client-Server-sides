@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://e-commerce-shop-88710.web.app","https://e-commerce-shop-88710.firebaseapp.com","http://localhost:5173"],
+    origin: ["https://e-commerce-shop-88710.web.app","https://e-commerce-shop-88710.firebaseapp.com"],
     credentials: true,
   })
 );
@@ -366,7 +366,7 @@ const verifyAdmin =async (req,res,next)=>{
     })
 
     // get payments 
-    app.get("/payments",verifyUser,async(req,res)=>{
+    app.get("/payments",async(req,res)=>{
       const email= req.query?.email
       const query = {email :email}
       const result = await paymentsCollection.find(query).toArray()

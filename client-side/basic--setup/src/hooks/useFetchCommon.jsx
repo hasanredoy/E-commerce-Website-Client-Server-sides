@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosCommon = axios.create({
-  baseURL:'http://localhost:5000'
+  baseURL:'https://gadget-shop-server-nine.vercel.app'
 })
 const useFetchCommon = () => {
   return axiosCommon;
