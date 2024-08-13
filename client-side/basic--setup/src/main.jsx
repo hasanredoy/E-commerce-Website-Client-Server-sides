@@ -50,7 +50,7 @@ const router = createBrowserRouter([
           </PrivetRout>
         ),
         loader: ({ params }) =>
-          fetch(`https://gadget-shop-server-nine.vercel.app/gadgets/${params.id}`),
+          fetch(`http://localhost:5000/gadgets/${params.id}`),
       },
       {
         path: "/myCart",
@@ -166,7 +166,7 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://gadget-shop-server-nine.vercel.app/gadgets/${params.id}`),
+          fetch(`http://localhost:5000/gadgets/${params.id}`),
       },
       {
         path: "adminHome",

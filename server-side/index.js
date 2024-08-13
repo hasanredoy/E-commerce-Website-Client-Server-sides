@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://e-commerce-shop-88710.web.app","https://e-commerce-shop-88710.firebaseapp.com"],
+    origin: ["https://e-commerce-shop-88710.web.app","https://e-commerce-shop-88710.firebaseapp.com",'http://localhost:5173'],
     credentials: true,
   })
 );
@@ -219,7 +219,7 @@ const verifyAdmin =async (req,res,next)=>{
       res.send({count:result.length});
     });
 
-
+ 
     //  deleting user cart
     app.delete("/cart/:id", async (req, res) => {
       const id = req.params.id;
@@ -462,6 +462,7 @@ const verifyAdmin =async (req,res,next)=>{
       ]).toArray()
       res.send(result)
     })
+  
 
   } finally {
   }

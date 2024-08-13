@@ -61,37 +61,38 @@ const Navbar = () => {
    const [data]=useCart()
   const links = (
     <>
-      <NavLink className={"  text-lg font-bold lg:mr-5 "} to={"/"}>
+      <NavLink className={"   text-sm lg:text-base  font-semibold lg:mr-5 "} to={"/"}>
         Home
       </NavLink>
-      <NavLink className={"text-lg font-semibold lg:mr-5 "} to={"/allGadgets"}>
+      <NavLink className={"t text-sm lg:text-base font-semibold lg:mr-5 "} to={"/allGadgets"}>
         All Gadgets
       </NavLink>
-      <NavLink className={"text-lg font-semibold lg:mr-5 "} to={"/becomeSeller"}>
+      <NavLink className={" text-sm lg:text-base  font-semibold lg:mr-5 "} to={"/becomeSeller"}>
         Become Seller
       </NavLink>
-      <NavLink className={"text-lg font-semibold lg:mr-5 "} to={"/reviews"}>
+      <NavLink className={" text-sm lg:text-base  font-semibold lg:mr-5 "} to={"/reviews"}>
         Reviews
       </NavLink>
-      <NavLink className={"text-lg lg:mr-5 font-semibold "} to={"/contact"}>
+      <NavLink className={" text-sm lg:text-base  lg:mr-5 font-semibold "} to={"/contact"}>
         Contact
       </NavLink>
 
-      {
-        isAdmin||<NavLink
+      { user&&
+        <>{isAdmin||<NavLink
         className={
           "  flex gap-1 justify-center items-center bg-[#046351] w-14 h-8 rounded-full hover:bg-slate-100 text-xl lg:mr-4 text-[#22f8d0]  font-bold  "
         }
         to={"/dashboard/myCart"}
       >
         <FaShoppingCart className=" text-neutral-300"></FaShoppingCart> {data?.length}
-      </NavLink>
+      </NavLink>}</>
       }
     </>
   );
 
   return (
-    <div className="navbar  bg-base-300    mx-auto">
+    <div className="bg-base-300 ">
+      <div className="  w-[95%] lg:w-[90%] navbar     mx-auto">
       <div className=" w-full lg:navbar-start ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -115,11 +116,11 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-3 "
           >
             <div
-              className={` flex gap-2 justify-center items-center  rounded-full p-2 border-b-2 border-[#15f7ce] ${
+              className={` flex gap-2 justify-center items-center  rounded-full py-1 px-2 border-b-2 border-[#15f7ce] ${
                 theme === "light" ? "bg-white" : "bg-[#121212]"
               }  `}
             >
-              <span className=" text-base lg:text-xl ">
+              <span className=" text-sm lg:text-base ">
                 {theme === "light" && (
                   <IoSunnySharp className=""></IoSunnySharp>
                 )}
@@ -162,11 +163,11 @@ const Navbar = () => {
       </div>
       <div className="navbar-end flex gap-5">
         <div
-          className={` hidden md:flex gap-2 justify-center items-center  rounded-full p-2 border border-b-2 border-[#046351] ${
+          className={` hidden md:flex gap-2 justify-center items-center  rounded-full py-1 px-2 border border-b-2 border-[#046351] ${
             theme === "light" ? "bg-white " : "bg-[#121212]"
           }  `}
         >
-          <span className=" text-base lg:text-xl ">
+          <span className=" text-sm lg:text-base ">
             {theme === "light" && <IoSunnySharp className=""></IoSunnySharp>}
             {theme === "dark" && <FaMoon></FaMoon>}
           </span>
@@ -223,12 +224,14 @@ const Navbar = () => {
           <Link
             to={"/login"}
             title="Login"
-            className="btn rounded-full  btn-outline btn-md btn-info hover:btn-secondary flex items-center justify-center pb-0 lg:pb-1 lg:text-xl  text-white"
+            className="btn-primary"
           >
             <FaSignInAlt className=" flex text-xl"></FaSignInAlt>
             <span className=" hidden md:flex">Login</span>
           </Link>
         )}
+      </div>
+
       </div>
     </div>
   );
