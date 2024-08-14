@@ -226,8 +226,8 @@ const Navbar = () => {
             title="Login"
             className="btn-primary"
           >
-            <FaSignInAlt className=" flex text-xl"></FaSignInAlt>
-            <span className=" hidden md:flex">Login</span>
+            <FaSignInAlt className="hidden md:block "></FaSignInAlt>
+            <span className="  ">Login</span>
           </Link>
         )}
       </div>
