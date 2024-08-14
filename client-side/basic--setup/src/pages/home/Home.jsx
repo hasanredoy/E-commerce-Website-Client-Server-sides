@@ -43,7 +43,7 @@ const Home = () => {
                   <p className="mb-5">
                   Discover a world of cutting-edge technology and innovative gadgets designed to make your life easier, more fun, and more connected. From the latest smartphones and tablets to smart home devices and wearable tech, we have everything you need to stay ahead of the curve. Our friendly and knowledgeable staff are here to help you find the perfect gadget to suit your needs. Explore our wide range of products and experience the future of technology today! 🚀
                   </p>
-                  <button className=" btn border-t-4 border-r-4 border-neutral-800 ">
+                  <button className=" btn-secondary">
                     <a href="#cards"> Shop Now!</a>
                   </button>
                 </div>
@@ -134,16 +134,16 @@ const Home = () => {
         </section>
         {/* card  */}
 
-        <div className=" w-[95%] lg:w-[90%] mx-auto my-10">
+        <section className=" w-[95%] lg:w-[90%] mx-auto my-10">
           <div id="cards">
             <Cards></Cards>
           </div>
-        </div>
+        </section>
 
         {/* FaQ */}
-        <div>
+        <section className=" bg-base-200 bg-opacity-30">
           <FaQ></FaQ>
-        </div>
+        </section>
         {/*success */}
         <div>
           <OurSuccess></OurSuccess>

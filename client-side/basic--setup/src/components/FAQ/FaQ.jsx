@@ -1,21 +1,19 @@
+import Heading from "../../reuseable/Heading";
+
 const FaQ = () => {
   return (
-    <div>
-      <section className="bg-base-200 container mx-auto my-10 rounded-md ">
+
+      <section className="w-[95%] lg:w-[90%]   mx-auto my-10 rounded-md ">
         <div className="container flex flex-col justify-center p-4 mx-auto md:p-8">
           <div>
-            <p className="p-2 text-lg text-[#42dec1] font-bold tracking-wider text-center ">
-              --?-- Some Asked QnA About Gadgets Shop --?-- 
-            </p>
-            <h2 className="mb-12 text-4xl font-bold leading-none text-center sm:text-5xl">
-              Frequently Asked Questions
-            </h2>
+            <Heading description={'Some Asked QnA About Gadgets Shop'} title={'  Frequently Asked Questions'}/>
+          
           </div>
           {/* main content  */}
           <div className=" flex flex-col-reverse lg:flex-row gap-5 ">
             <div className="flex flex-col w-full lg:w-[60%] divide-y sm:px-8 lg:px-10 divide-gray-600 gap-3">
-              <details className=" border border-gray-300 rounded-md pl-2">
-                <summary className="py-2 font-bold text-xl outline-none cursor-pointer hover:underline">
+              <details className=" border border-b-0 border-gray-300 rounded-md pl-2">
+                <summary className="py-2 font-semibold text-base outline-none cursor-pointer border-b-0 hover:underline">
                 What types of gadgets do you sell?
                 </summary>
                 <div className="pl-7 pb-4">
@@ -25,7 +23,7 @@ const FaQ = () => {
                 </div>
               </details>
               <details className=" border border-gray-300 rounded-md pl-2">
-                <summary className="py-2 font-bold text-xl outline-none cursor-pointer hover:underline">
+                <summary className="py-2 font-semibold text-base outline-none cursor-pointer hover:underline">
                 How can I place an order?
                 </summary>
                 <div className="pl-7 pb-4">
@@ -35,7 +33,7 @@ const FaQ = () => {
                 </div>
               </details>
               <details className=" border border-gray-300 rounded-md pl-2">
-                <summary className="py-2 font-bold text-xl outline-none cursor-pointer hover:underline">
+                <summary className="py-2 font-semibold text-base outline-none cursor-pointer hover:underline">
                 What payment methods do you accept?
                 </summary>
                 <div className="pl-7 pb-4">
@@ -45,7 +43,7 @@ const FaQ = () => {
                 </div>
               </details>
               <details className=" border border-gray-300 rounded-md pl-2">
-                <summary className="py-2 font-bold text-xl outline-none cursor-pointer hover:underline">
+                <summary className="py-2 font-semibold text-base outline-none cursor-pointer hover:underline">
                 How long does shipping take?
                 </summary>
                 <div className="pl-7 pb-4">
@@ -55,7 +53,7 @@ const FaQ = () => {
                 </div>
               </details>
               <details className=" border border-gray-300 rounded-md pl-2">
-                <summary className="py-2 font-bold text-xl outline-none cursor-pointer hover:underline">
+                <summary className="py-2 font-semibold text-base outline-none cursor-pointer hover:underline">
                 What is your return policy?
                 </summary>
                 <div className="pl-7 pb-4">
@@ -65,7 +63,7 @@ const FaQ = () => {
                 </div>
               </details>
               <details className=" border border-gray-300 rounded-md pl-2">
-                <summary className="py-2 font-bold text-xl outline-none cursor-pointer hover:underline">
+                <summary className="py-2 font-semibold text-base outline-none cursor-pointer hover:underline">
                 Do your products come with a warranty?
 
 
@@ -77,7 +75,7 @@ const FaQ = () => {
                 </div>
               </details>
               <details className=" border border-gray-300 rounded-md pl-2">
-                <summary className="py-2 font-bold text-xl outline-none cursor-pointer hover:underline">
+                <summary className="py-2 font-semibold text-base outline-none cursor-pointer hover:underline">
                 Do you offer any discounts or promotions?
                 </summary>
                 <div className="pl-7 pb-4">
@@ -94,7 +92,7 @@ const FaQ = () => {
           </div>
         </div>
       </section>
-    </div>
+
   );
 };
 
