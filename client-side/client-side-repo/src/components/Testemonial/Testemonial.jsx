@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Heading from "../../reuseable/Heading";
 
 
 const Testemonial = () => {
@@ -20,11 +21,8 @@ const Testemonial = () => {
     AOS.init()
   },[])
   return (
-    <div className=" w-full  mt-0 mb-10   md:mt-10  ">
-      <h1 className=" text-3xl lg:text-4xl text-center font-bold">
-        <span className=" text-[#379e9f]">Hear</span> What Our Customer Say
-        About Us !
-      </h1>
+    <div className=" w-full    ">
+     <Heading description={'Hear what'} title={'Our client says'}></Heading>
       <div className="divider"></div>
       <div className=" grid grid-cols-1 md:grid-cols-2  gap-5 ">
         {reviews?.slice(4 - 8).map((review) => (
@@ -69,7 +67,7 @@ const Testemonial = () => {
         ))}
       </div>
       <Link className=" flex justify-center my-5" to={'/reviews'}>
-      <button className="  text-white font-bold bg-[#0f6f5d] btn border-b-4 border-r-4 border-neutral-400 border-t-0 border-l-0">
+      <button className="btn-primary">
         Hear More
       </button>
       </Link>

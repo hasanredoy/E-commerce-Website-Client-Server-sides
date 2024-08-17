@@ -20,14 +20,7 @@ const Pagination = (url,itemsCount) => {
     });
   }, [axiosCommon,url,email]);
   // console.log(count);
-  const itemsPerPage = itemsCount;
-  const totalPage = Math.ceil(count / itemsPerPage);
-  let numberOfPages = [];
-  // console.log(numberOfPages);
-  for (let i = 0; i < totalPage; i++) {
-    // console.log(i);
-    numberOfPages.push(i);
-  }
+  
 
   return [numberOfPages,totalPage,itemsPerPage,count]
 };

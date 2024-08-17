@@ -122,20 +122,20 @@ const AllGadgets = () => {
             `url(${banner})`,
         }}
       >
-        <div className="hero-overlay bg-opacity-70 bg-cover"></div>
+        <div className="hero-overlay bg-opacity-60 bg-black bg-cover"></div>
         <div className="hero-content text-center text-white ">
           <div className="max-w-xl">
-            <h1 className=" mb-5 text-3xl md:text-5xl font-bold">
+            <h1 className=" mb-5 text-2xl md:text-3xl  font-bold">
               {" "}
               Hi{" "}
               <span className=" bg-gradient-to-r  bg-clip-text text-transparent from-[#03caa6]  to-[#5df7db]">
-                {user?.displayName}
+                {user?.displayName?user.displayName:'Welcome Back'}
               </span>
               !! Wanna Buy Something..
             </h1>
-            <p className="mb-5  ">
+            <p className="mb-5 text-sm md:text-base  ">
               Check Our Latest Gadgets , We Guarantee You will Be Satisfied
-              after buying our SmartPhones , Laptops , Tablets , Watches ,
+              after buying our SmartPhones, Laptops, Tablets, Watches,
               Headset and etc., you will Find best quality and quantity in our
               Product...
             </p>
@@ -172,14 +172,14 @@ const AllGadgets = () => {
 
   {/* cards */}
   {isFetching&&<LoadingSpinner></LoadingSpinner>}
-      <div className="  container mx-auto  grid grid-cols-1 lg:grid-cols-3 gap-5   ">
+      <div className=" w-[95%] lg:w-[90%] mx-auto my-10  grid grid-cols-1 lg:grid-cols-3 gap-8   ">
         {gadgets?.map((data) => (
           <div
           data-aos="zoom-in-up" data-aos-delay="300"
-          data-aos-duration="1000"
+          data-aos-duration="1500"
           data-aos-easing="ease-in-out"
             key={data.id}
-            className="card w-[98%] mx-auto lg:w-auto   to-base-300  shadow-lg px-2 bg-base-200  hover:scale-100 lg:hover:scale-105   hover:border-0 lg:hover:border-2  hover:border-orange-400"
+            className="card   to-base-300  shadow-lg px-2 bg-base-200  hover:scale-100 lg:hover:scale-105   hover:border-0 lg:hover:border-2  hover:border-orange-400"
           >
             <h2 className="font-bold text-center text-xl mt-2">
               {data.product_name}

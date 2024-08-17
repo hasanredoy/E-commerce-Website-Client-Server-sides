@@ -15,7 +15,7 @@ const PaginationDiv = ({numberOfPages,setCurrentPage,currentPage,totalPage}) => 
     }
   };
   return (
-    <div className=" min-w-full flex justify-center gap-5 my-5 bg-slate-500 p-5">
+    <div className=" min-w-full flex justify-center gap-5 my-5  p-5">
         <button onClick={handlePrev} className=" btn">
           <FaLessThan></FaLessThan>
         </button>

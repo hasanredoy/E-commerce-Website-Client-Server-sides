@@ -7,9 +7,9 @@ const Details = () => {
   const {handleCart}=useAuth()
   return (
     <div>
-      <div className="card  border-none lg:border border-[#03fcce] bg-base-200  shadow-xl px-2  my-8 container mx-auto pt-5 flex flex-col lg:flex-row gap-5"
+      <div className="card  border-none lg:border border-[#03fcce] bg-base-200 bg-opacity-30  shadow-xl px-2  my-8 container mx-auto pt-5 flex flex-col lg:flex-row gap-5"
         >
-          <div className="w-full lg:w-[30%]">
+          <div className="w-full lg:w-[40%]">
           <figure className=" bg-white  mx-auto">
             <img className=" mx-auto" src={data.image} alt="Shoes" />
           </figure>
@@ -20,9 +20,9 @@ const Details = () => {
           </div>
           <div className="card-body w-full lg:w-[50%]
           ">
-            <h3 className="text-2xl font-bold">{data.title}</h3>
+            <h3 className="text-xl font-bold">{data.title}</h3>
             <p className=" font-bold text-lg">{data.company}</p>
-            <p>
+            <p className=" max-w-xl">
               {data.description}{" "}
               
             </p>
@@ -33,7 +33,7 @@ const Details = () => {
             <div className="card-actions justify-between my-5">
               
             <button
-                  className=" btn border-t-4 border-r-4 border-neutral-600"
+                  className=" btn-primary"
                   onClick={() => handleCart(data)}
                 >
                   Add to Cart

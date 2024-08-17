@@ -4,7 +4,7 @@ import {Helmet} from "react-helmet";
 const DynamicPageTitle = ({dynamicTitle}) => {
   return (
     <Helmet>
-      <title>{dynamicTitle} | GadgetShop</title>
+      <title>{dynamicTitle} | Gadget Shop</title>
     </Helmet>
   );
 };

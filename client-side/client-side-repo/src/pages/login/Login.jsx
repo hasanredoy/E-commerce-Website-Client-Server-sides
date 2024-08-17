@@ -57,9 +57,9 @@ const Login = () => {
       <DynamicPageTitle dynamicTitle={"Login | Dashboard"}></DynamicPageTitle>
       <Navbar></Navbar>
       {
-        modal||<div className={"  flex flex-col-reverse lg:flex-row  items-center mt-3 lg:mt-20 w-[95%] mx-auto "}>
+        modal||<div className={" w-[95%] lg:w-[90%] mx-auto my-10   flex flex-col-reverse lg:flex-row  items-center mt-3 lg:mt-20"}>
         <div className="card shrink-0 w-full lg:w-1/2 shadow-2xl  mx-auto bg-base-100 ">
-          <h1 className=" text-2xl text-center font-bold pt-3">
+          <h1 className=" text-xl text-center font-bold pt-3">
             {" "}
             Do You Wanna Login!{" "}
           </h1>
@@ -75,7 +75,7 @@ const Login = () => {
           <form onSubmit={handleLogin} className="card-body">
             <div className="form-control">
               <label className="label">
-                <span className=" text-2xl ">Email</span>
+                <span className="  ">Email</span>
               </label>
               <input
                 type="email"
@@ -87,7 +87,7 @@ const Login = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className=" text-2xl ">Password</span>
+                <span className="">Password</span>
               </label>
               <input
                 type="password"
@@ -96,18 +96,18 @@ const Login = () => {
                 required
                 name="password"
               />
-              <h1 onClick={()=>setModal(true)} className=" text-lg font-semibold mt-3 cursor-pointer hover:underline">
+              <h1 onClick={()=>setModal(true)} className=" text-sm font-semibold mt-3 cursor-pointer hover:underline">
                 Forget Password ?
               </h1>
             </div>
 
             <div className="form-control mt-6  mx-auto">
-              <button className="btn bg-[#03b0a4] text-white font-bold text-lg">
+              <button className="btn-primary">
                 Login
               </button>
             </div>
           </form>
-          <p className=" text-center mb-2 text-lg font-bold ">
+          <p className=" text-center mb-2  ">
             New Here !{" "}
             <Link
               className=" font-bold hover:underline text-blue-700"

@@ -145,12 +145,12 @@ const Home = () => {
           <FaQ></FaQ>
         </section>
         {/*success */}
-        <div>
+        <section className=" w-[95%] lg:w-[90%] mx-auto my-10"> 
           <OurSuccess></OurSuccess>
-        </div>
+        </section>
 
         {/* Testimonial */}
-        <div className=" mt-20 w-[80%] mx-auto">
+        <div className="w-[95%] lg:w-[90%] mx-auto my-10">
           <Testemonial></Testemonial>
         </div>
       </div>

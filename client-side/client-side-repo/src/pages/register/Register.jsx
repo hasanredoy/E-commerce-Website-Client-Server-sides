@@ -68,8 +68,8 @@ const Register = () => {
      <img src={registerImg} className=" " alt="" />
       </div>
       {/* form div */}
-      <div className={`card shrink-0 w-full lg:w-[50%] shadow-2xl  mx-auto my-5 ${modal?"hidden":"block"} bg-base-300`}>
-      <h1 className=" text-3xl text-center font-bold pt-3">Please Register !</h1>
+      <div className={`card shrink-0 w-full lg:w-[50%] shadow-2xl  mx-auto my-5 ${modal?"hidden":"block"} bg-base-300 bg-opacity-30`}>
+      <h1 className=" text-xl text-center font-bold pt-3">Please Register !</h1>
 
     <form onSubmit={handleRegister} className="card-body">
 
@@ -123,9 +123,8 @@ const Register = () => {
         />
       
       </div>
-      <div className="form-control mt-6 w-1/3 mx-auto">
-        <button className="btn bg-[#159fa9]  font-bold text-white">Register</button>
-      </div>
+
+        <button className="btn-primary mt-5 text-center flex justify-center w-36 mx-auto ">Register</button>
       
     </form>
     <div className="divider">or</div>

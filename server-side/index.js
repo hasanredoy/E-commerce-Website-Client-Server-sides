@@ -120,7 +120,7 @@ const verifyAdmin =async (req,res,next)=>{
     });
 
     // getting single gadgets
-    app.get("/gadgets/:id",verifyUser, async (req, res) => {
+    app.get("/gadgets/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
 
