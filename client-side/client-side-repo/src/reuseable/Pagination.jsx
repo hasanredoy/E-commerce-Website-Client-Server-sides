@@ -8,7 +8,14 @@ const Pagination = (url,itemsCount) => {
   const email = user.email
   // count state
   const [count, setCount] = useState(0);
-
+  const itemsPerPage = itemsCount;
+  const totalPage = Math.ceil(count / itemsPerPage);
+  let numberOfPages = [];
+  // console.log(numberOfPages);
+  for (let i = 0; i < totalPage; i++) {
+    // console.log(i);
+    numberOfPages.push(i);
+  }
   const axiosCommon = useFetchCommon();
 
   // function for pagination

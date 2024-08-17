@@ -68,7 +68,7 @@ const router = createBrowserRouter([
         path: "/reviews",
         element: (
           <PrivetRout>
-            <ReviewsPage></ReviewsPage>{" "}
+            <ReviewsPage></ReviewsPage>
           </PrivetRout>
         ),
       },

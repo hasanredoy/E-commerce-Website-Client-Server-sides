@@ -15,6 +15,7 @@ import PaginationDiv from "../../reuseable/PaginationDiv";
 import LoadingSpinner from "../../reuseable/LoadingSpinner";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Heading from "../../reuseable/Heading";
 
 
 
@@ -47,6 +48,10 @@ const ReviewsPage = () => {
       return res.data;
     },
   });
+
+  const handleDeleteUserReview =()=>{
+    
+  }
   
   // console.log(reviews);
   // value of rating
@@ -98,10 +103,8 @@ const ReviewsPage = () => {
     <div className="flex flex-col-reverse justify-between md:flex-row container mx-auto ">
       <DynamicPageTitle dynamicTitle={"Reviews"}></DynamicPageTitle>
       <div className=" w-full md:w-[70%] mt-0 mb-10   md:mt-10  ">
-        <h1 className=" text-2xl lg:text-3xl text-center font-bold">
-          <span className=" text-[#379e9f]">Hear</span> What Our Customer Say
-          About Us !
-        </h1>
+        <Heading description={'Hear '} title={'About Us!'}></Heading>
+     
         <div className="divider"></div>
         <div className=" grid grid-cols-1 md:grid-cols-2  gap-5">
           {reviews?.map((review) => (
@@ -122,8 +125,8 @@ const ReviewsPage = () => {
                     />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xl">{review?.name}</h4>
-                    <h4 className="font-medium text-green-500">
+                    <h4 className="font-bold text-base lg:text-lg">{review?.name}</h4>
+                    <h4 className="font-medium text-sm text-green-500">
                       {moment(review?.posting_time).startOf().fromNow()}
                     </h4>
                   </div>
@@ -139,7 +142,7 @@ const ReviewsPage = () => {
                   <span className="text-xl font-bold">{review.star}</span>
                 </div>
               </div>
-              <div className="p-4 space-y-2 text-lg ">
+              <div className="p-4 px-8 space-y-2 text-lg ">
                 <p>{review?.review}</p>
               </div>
             </div>
@@ -178,6 +181,8 @@ const ReviewsPage = () => {
               <textarea
                 name="review"
                 required
+                minLength={20}
+                maxLength={5000}
                 rows="3"
                 placeholder="Message..."
                 className="p-4 rounded-md resize-none "
