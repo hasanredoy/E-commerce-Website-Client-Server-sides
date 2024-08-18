@@ -1,8 +1,10 @@
+import { ImSpinner9 } from "react-icons/im";
 
 const LoadingSpinner = () => {
   return (
-    <div className='flex justify-center items-center h-full'>
-  <span className="loading loading-infinity loading-lg text-7xl text-sky-500 z-50" ></span>
+    <div className='flex justify-center items-center h-[calc(100dvh-200px)]'>
+
+  <ImSpinner9 className=" animate-spin text-2xl"/>
 </div>
   );
 };

@@ -129,9 +129,9 @@ const ReviewsPage = () => {
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
               key={review?._id}
-              className=" relative container bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md "
+              className=" relative container bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full max-w-lg p-6 mx-auto  rounded-md "
             >
-              {user.email==review?.email&&<button title="delete your review" onClick={handleDeleteUserReview} className=" absolute top-1 right-1 cursor-pointer text-xl text-red-600"><FaTrashAlt></FaTrashAlt></button>}
+              {user.email==review?.email&&<button title="delete your review" onClick={handleDeleteUserReview} className=" absolute p-1 top-1 right-1 cursor-pointer text-xl text-red-600"><FaTrashAlt></FaTrashAlt></button>}
               
               <div className="flex justify-between p-4">
                 <div className="flex space-x-4">
@@ -160,6 +160,7 @@ const ReviewsPage = () => {
                   <span className="text-xl font-bold">{review.star}</span>
                 </div>
               </div>
+              <div className="divider"></div>
               <div className="p-4 px-8 space-y-2 text-lg ">
                 <p>{review?.review}</p>
               </div>

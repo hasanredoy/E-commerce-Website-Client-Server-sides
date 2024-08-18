@@ -30,7 +30,7 @@ const ContactUs = () => {
             {/* direct contact  */}
             <div className=" flex lg:ml-10 flex-col justify-center lg:justify-start  items-center md:items-start  space-y-3 w-full md:w-1/2">
              <h1 className=" text-base lg:text-lg font-semibold">Contact us Directly </h1>
-             <h3 className=" flex   gap-2 text-sm md:text-base "><IoLocationOutline className="pt-1 md:pt-0 text-3xl"></IoLocationOutline> 3/5 street - Aushkandi, Nabigonj, Sylhet, Bangladesh</h3>
+             <h3 className=" flex   gap-2 text-sm md:text-base "><IoLocationOutline className="pt-1 md:pt-0 text-3xl"></IoLocationOutline> 3/5 street - Abu Dhabi, UAE</h3>
             
             </div>
           </div>

@@ -181,7 +181,7 @@ const AllGadgets = () => {
             key={data.id}
             className="card   to-base-300  shadow-lg px-2 bg-base-200  hover:scale-100 lg:hover:scale-105   hover:border-0 lg:hover:border-2  hover:border-orange-400"
           >
-            <h2 className="font-bold text-center text-xl mt-2">
+            <h2 className="font-bold text-center text-base lg:text-lg mt-2">
               {data.product_name}
               
             </h2>
@@ -190,21 +190,22 @@ const AllGadgets = () => {
               <img className=" h-[200px]" src={data.image} alt="Shoes" />
             </figure>
             <div className="card-body">
-              <h3 className="text-lg font-semibold">{data.title}</h3>
-              <p className=" font-bold">{data.company}</p>
-              <p>
+              <h3 className="text-sm lg:text-base font-semibold">{data.title}</h3>
+              <p className=" font-semibold">{data.company}</p>
+              <p className=" text-sm">
                 {data.description.slice(0, 60)}{" "}
-                <Link to={data?._id} className=" pl-2 font-bold text-blue-700">
+                <Link to={data?._id} className=" pl-2 font-semibold text-blue-700">
                   Read More...
                 </Link>
               </p>
 
-              <h4 className=" flex gap-5 text-xl items-center ">
-                {data.rating}{" "}
-                <FaStar className=" text-2xl text-yellow-400"></FaStar>{" "}
+              <h4 className=" flex gap-2 text-sm lg:text-base items-center ">
+              <span className="  space-x-2">  Rating:{" "}{" "}
+              {data.rating}</span>
+                <FaStar className=" text-xl text-yellow-400"></FaStar>{" "}
               </h4>
-              <h4 className=" flex gap-5 text-xl items-center py-5 ">
-                Price : <span className=" font-bold">{data.price} $</span>{" "}
+              <h4 className=" flex gap-5 text-base  lg:text-lg items-center py-5 ">
+                Price : <span className=" font-semibold">{data.price} $</span>{" "}
               </h4>
               <div className="card-actions justify-between my-5">
                 <button
