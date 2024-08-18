@@ -38,7 +38,7 @@ const ReviewsPage = () => {
 
 
 
-   const [numberOfPages , totalPage,itemsPerPage] =Pagination("/reviews",6)
+   const [numberOfPages , totalPage,itemsPerPage,,reload] =Pagination("/reviews",6)
   //  console.log(numberOfPages);
 
   // getting review data from db using tanstack
@@ -54,8 +54,16 @@ const ReviewsPage = () => {
     const {data} = await axiosHook.delete(`/users/${user?.email}`)
     console.log(data);
     if(data.deletedCount>0){
-       console.log("hello");
-   refetch()
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Your review has been removed..`,
+        showConfirmButton: false,
+        timer: 1500,
+      });      
+      refetch()
+      reload()
     }
   }
   
@@ -93,6 +101,8 @@ const ReviewsPage = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          reload()
+
         }
       })
       .catch((err) => {
@@ -158,7 +168,7 @@ const ReviewsPage = () => {
           
         </div>
        
-       {numberOfPages?.length>1&&
+       {
         <PaginationDiv   numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} totalPage={totalPage}></PaginationDiv>}
       </div>
       <div className="divider lg:hidden"></div>
@@ -195,12 +205,14 @@ const ReviewsPage = () => {
                 placeholder="Message..."
                 className="p-4 rounded-md resize-none "
               ></textarea>
-              <button
+     <div className=" flex justify-center my-5">
+     <button
                 type="submit"
-                className="py-4 my-8 font-semibold rounded-md text-white bg-[#039577]"
+                className="btn-primary"
               >
                 Leave feedback
               </button>
+     </div>
             </form>
           </div>
         </div>

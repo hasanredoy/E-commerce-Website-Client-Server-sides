@@ -21,7 +21,11 @@
   padding: 6px 15px;
   border-radius: 8px;
   display: flex;
+  text-align: center;
   gap: 5px;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
   align-items: center;
 }
 .btn-primary:hover {
@@ -47,4 +51,8 @@
   /* btn bg-[] text-white border-l-4 border-b-4 border-[#2efed8] */
   background-color: #cff8f8;
   color: black;
+}
+
+.text-primary{
+  color: #046351;
 }
