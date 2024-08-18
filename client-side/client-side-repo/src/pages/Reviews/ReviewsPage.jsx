@@ -16,6 +16,7 @@ import LoadingSpinner from "../../reuseable/LoadingSpinner";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Heading from "../../reuseable/Heading";
+import { FaTrashAlt } from "react-icons/fa";
 
 
 
@@ -49,11 +50,16 @@ const ReviewsPage = () => {
     },
   });
 
-  const handleDeleteUserReview =()=>{
-    
+  const handleDeleteUserReview = async()=>{
+    const {data} = await axiosHook.delete(`/users/${user?.email}`)
+    console.log(data);
+    if(data.deletedCount>0){
+       console.log("hello");
+   refetch()
+    }
   }
   
-  // console.log(reviews);
+  console.log(reviews);
   // value of rating
   const ratingChanged = (newRating) => {
     // console.log(newRating);
@@ -100,7 +106,7 @@ const ReviewsPage = () => {
 
  
   return (
-    <div className="flex flex-col-reverse justify-between md:flex-row container mx-auto ">
+    <div className="flex flex-col-reverse justify-between md:flex-row  w-[95%] lg:w-[90%] mx-auto my-10 ">
       <DynamicPageTitle dynamicTitle={"Reviews"}></DynamicPageTitle>
       <div className=" w-full md:w-[70%] mt-0 mb-10   md:mt-10  ">
         <Heading description={'Hear '} title={'About Us!'}></Heading>
@@ -112,9 +118,11 @@ const ReviewsPage = () => {
             data-aos="zoom-in-down" data-aos-delay="300"
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
-              key={review}
-              className="container bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md divide-gray-700 "
+              key={review?._id}
+              className=" relative container bg-base-200 hover:bg-base-300 hover:border border-[#08fefe] flex flex-col w-full max-w-lg p-6 mx-auto divide-y rounded-md "
             >
+              {user.email==review?.email&&<button title="delete your review" onClick={handleDeleteUserReview} className=" absolute top-1 right-1 cursor-pointer text-xl text-red-600"><FaTrashAlt></FaTrashAlt></button>}
+              
               <div className="flex justify-between p-4">
                 <div className="flex space-x-4">
                   <div>
@@ -157,11 +165,11 @@ const ReviewsPage = () => {
       <div className=" mt-10">
         <div className="flex flex-col max-w-xl bg-base-200 p-5 shadow-sm rounded-xl lg:p-8 ">
           <div className="flex flex-col items-center w-full">
-            <h2 className=" text-xl lg:text-2xl font-bold text-center">
+            <h2 className=" text-lg lg:text-xl font-bold text-center">
               Please Leave Your opinion!
             </h2>
             <div className="flex flex-col items-center py-6 space-y-3">
-              <span className="text-center text-base">
+              <span className="text-center text-sm lg:text-base">
                 How was your experience?
               </span>
             </div>

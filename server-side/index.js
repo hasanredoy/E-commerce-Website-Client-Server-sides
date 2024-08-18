@@ -292,6 +292,15 @@ const verifyAdmin =async (req,res,next)=>{
       const result = await usersCollection.insertOne(userData);
       res.send(result);
     });
+    app.delete("/users/:email", async (req, res) => {
+      const email = req.params?.email;
+ 
+    //  console.log({email},'for delete users reviews');
+
+      const result = await userReviewCollection.deleteOne({email});
+      // console.log({result});
+      res.send(result);
+    });
     
 
     //update user to admin
