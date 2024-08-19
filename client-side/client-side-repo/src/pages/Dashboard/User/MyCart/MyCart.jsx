@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useFetch from "../../../../hooks/useFetch";
 import useAuth from "../../../../hooks/useAuth";
+import Heading from "../../../../reuseable/Heading";
 
 const MyCart = () => {
   const [currentPage ,setCurrentPage]=useState(0)
@@ -79,15 +80,8 @@ if(isPending){
     
       {
         data.length>0?<>
-          <div>
-        <h4 className=" my-5 text-lg text-center font-bold text-[#11c6c9]">
-          -- Welcome Back --
-        </h4>
-        <h1 className=" my-5 text-3xl lg:text-4xl text-center font-bold">
-          Check Your Cart Place Your{" "}
-          <span className=" text-[#11c6c9]">Order</span> !
-        </h1>
-      </div>
+  
+      <Heading description={' Welcome Back '} title={"Check Your Cart Place Your Order"}/>
       <div className="divider"></div>
         <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">

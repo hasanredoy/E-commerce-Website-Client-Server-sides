@@ -16,7 +16,7 @@ const PaymentHistory = () => {
   return (
     <div className=" my-10 ">
       <DynamicPageTitle dynamicTitle={"Payment History | Dashboard"}></DynamicPageTitle>
-      <h1 className=" text-2xl font-bold text-center">All Payments History</h1>
+      <h1 className=" text-xl lg:text-2xl font-bold text-center">All Payments History</h1>
       <div className="text-black overflow-x-auto mx-auto my-10 rounded-md w-full bg-gray-300">
        
        <table className="table">
@@ -24,17 +24,17 @@ const PaymentHistory = () => {
          <thead className=" text-white  bg-[#039396]">
            <tr>
              <th></th>
-             <th className="px-10 border-r text-base lg:text-xl font-medium lg:font-bold">Transection ID</th>
-             <th className="px-10 border-r text-base lg:text-xl font-medium lg:font-bold">Items</th>
-             <th className="px-10 border-r text-base lg:text-xl font-medium lg:font-bold">Total Price</th>
-             <th className="px-10 border-r text-base lg:text-xl font-medium lg:font-bold">Delivery Location</th>
-             <th className="px-10 border-r text-base lg:text-xl font-medium lg:font-bold">Delivery Date</th>
-             <th className="px-10 border-r text-base lg:text-xl font-medium lg:font-bold">Status</th>
+             <th className="px-10 border-r text-base lg:text-lg font-medium lg:font-bold">Transection ID</th>
+             <th className="px-10 border-r text-base lg:text-lg font-medium lg:font-bold">Items</th>
+             <th className="px-10 border-r text-base lg:text-lg font-medium lg:font-bold">Total Price</th>
+             <th className="px-10 border-r text-base lg:text-lg font-medium lg:font-bold">Delivery Location</th>
+             <th className="px-10 border-r text-base lg:text-lg font-medium lg:font-bold">Delivery Date</th>
+             <th className="px-10 border-r text-base lg:text-lg font-medium lg:font-bold">Status</th>
            </tr>
          </thead>
          <tbody>
            {payments?.map((item, index) => (
-             <tr key={item._id} className=" text-lg">
+             <tr key={item._id} className="  ">
                <th>{index + 1}</th>
                <td className=" text-center border-r border-gray-600">
                 <h4 className=" font-bold text-green-600" >{item.transectionID}</h4>

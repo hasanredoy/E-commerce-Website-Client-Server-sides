@@ -190,8 +190,8 @@ const AllGadgets = () => {
               <img className=" h-[200px]" src={data.image} alt="Shoes" />
             </figure>
             <div className="card-body">
-              <h3 className="text-sm lg:text-base font-semibold">{data.title}</h3>
-              <p className=" font-semibold">{data.company}</p>
+              <h3 className="text-base lg:text-lg font-semibold">{data.title}</h3>
+              <p className="">{data.company}</p>
               <p className=" text-sm">
                 {data.description.slice(0, 60)}{" "}
                 <Link to={data?._id} className=" pl-2 font-semibold text-blue-700">
@@ -204,18 +204,18 @@ const AllGadgets = () => {
               {data.rating}</span>
                 <FaStar className=" text-xl text-yellow-400"></FaStar>{" "}
               </h4>
-              <h4 className=" flex gap-5 text-base  lg:text-lg items-center py-5 ">
+              <h4 className=" flex gap-5 text-sm  lg:text-base items-center py-2 ">
                 Price : <span className=" font-semibold">{data.price} $</span>{" "}
               </h4>
-              <div className="card-actions justify-between my-5">
+              <div className="card-actions justify-between my-2">
                 <button
-                  className=" btn border-t-4 border-r-4 border-neutral-600"
+                  className=" btn-secondary"
                   onClick={() => handleCart(data)}
                 >
                   Add to Cart
                 </button>
                 <Link to={`/item/${data._id || ""}`}>
-                  <button className=" btn btn-info border-b-4 border-neutral-800">
+                  <button className=" btn-primary  ">
                     View Details
                   </button>
                 </Link>

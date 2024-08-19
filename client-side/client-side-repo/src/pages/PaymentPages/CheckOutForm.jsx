@@ -276,7 +276,7 @@ const CheckOutForm = () => {
               />
               <div className=" flex mt-5 justify-center ">
                 <button
-                  className=" font-bold text-lg btn bg-sky-500 text-white"
+                  className="btn-primary"
                   type="submit"
                   disabled={!stripe || !elements || !clientSecret}
                 >

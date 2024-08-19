@@ -50,18 +50,18 @@ setTimeout(()=>{
       
   }
   return (
-    <div>
+    <div className=" md:p-10">
       <DynamicPageTitle dynamicTitle={"My Profile | Dashboard"}></DynamicPageTitle>
        <div className="  flex flex-col items-center my-10 justify-center">
         <img className=" w-48 h-48 lg:w-[300px] lg:h-[300px] rounded-full border border-sky-600" src={user?.photoURL} alt="" />
 
         <h1 className=" text-2xl font-bold pt-5">Welcome <span className=" text-sky-500">{user?.displayName?user?.displayName:"Back"}</span>.. Wanna Update Your Profile?</h1>
         <div className="divider"></div>
-        <form onSubmit={handleUpdateUserProfile} className=" w-full flex gap-10 flex-col justify-center ">
+        <form  onSubmit={handleUpdateUserProfile} className=" w-full border p-5 rounded-md border-gray-400 flex gap-10 flex-col justify-center ">
           {/* image  */}
         <div className=" flex gap-[5%] mt-10">
         <div className=" ">
-          <h1 className=" text-xl pb-3 font-bold">Change Profile Photo? </h1>
+          <h1 className=" pb-3 font-bold">Change Profile Photo? </h1>
             <input
             onChange={(e)=>setImage(e.target.files[0])}
             type="file" name="image" />
@@ -76,7 +76,7 @@ setTimeout(()=>{
          {/* name  */}
             <div className="form-control">
               <label className="label">
-                <span className=" text-2xl ">Name</span>
+                <span className=" font-bold ">Name</span>
               </label>
               <input
                 type="text"
@@ -89,7 +89,7 @@ setTimeout(()=>{
             {/* email  */}
             <div className="form-control">
               <label className="label">
-                <span className=" text-2xl ">Email </span>
+                <span className="font-bold ">Email </span>
               </label>
               <input
                 type="email"
@@ -103,7 +103,7 @@ setTimeout(()=>{
             </div>
           <button
           onClick={refreshPage}
-          className=" btn bg-[#04d9bd]">Update</button>
+          className=" btn-primary w-20 mx-auto">Update</button>
           </form>
        </div>
     </div>

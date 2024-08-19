@@ -8,6 +8,7 @@ import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 import Pagination from "../../../../reuseable/Pagination";
 import { useState } from "react";
 import PaginationDiv from "../../../../reuseable/PaginationDiv";
+import Heading from "../../../../reuseable/Heading";
 
 const AllUsers = () => {
   const axiosHook = useFetch()
@@ -92,15 +93,8 @@ console.log(users);
         <span className="loading loading-infinity loading-lg "></span>
       </div>
       }
-        <div>
-        <h4 className=" my-5 text-lg text-center font-bold text-[#11c6c9]">
-          -- Welcome Back --
-        </h4>
-        <h1 className=" my-5 text-3xl lg:text-4xl text-center font-bold">
-          Here Are All Users on This Website
-          <span className=" text-[#11c6c9]">Order</span> !
-        </h1>
-      </div>
+   
+      <Heading description={'Welcome Back'} title={'Here Are All Users on This Website'}/>
       <div className="divider"></div>
       <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">

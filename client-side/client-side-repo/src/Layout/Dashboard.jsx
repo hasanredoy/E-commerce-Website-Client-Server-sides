@@ -62,11 +62,11 @@ const Dashboard = () => {
 const [isAdmin] =useAdmin()
 // console.log(data);
   return (
-    <div className=" flex gap-10 container mx-auto">
+    <div className=" flex gap-10 lg:mr-20 justify-between mx-auto">
 
       {/* sidebar */}
-       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl  fixed`}><TiThMenu></TiThMenu></button>
-      <div className={` ${menu?"block":'hidden'} absolute z-40 w-[60%] min-h-svh   px-5 pt-4  bg-[#039396] `}>
+       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl p-1  fixed`}><TiThMenu></TiThMenu></button>
+      <div className={` ${menu?"block":'hidden'} lg:hidden absolute z-40 w-[60%] md:w-[40%] min-h-[calc(100dvh+500px)]  px-5 pt-4  bg-[#039396] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
 
@@ -125,7 +125,7 @@ const [isAdmin] =useAdmin()
        </div>
       </div>
       {/* links for lg  */}
-      <div className={` hidden lg:block w-[20%] min-h-screen  px-5 pt-4  bg-[#039396] `}>
+      <div className={` hidden lg:block w-[26%] min-h-screen  px-5 pt-4  bg-[#039396] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
 
