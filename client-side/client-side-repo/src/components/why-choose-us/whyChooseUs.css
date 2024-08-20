@@ -1,22 +1,4 @@
-#star-six {
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 100px solid red;
-  position: relative;
-}
-#star-six:after {
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-top: 100px solid red;
-  position: absolute;
-  content: "";
-  top: 30px;
-  left: -50px;
-}
+
 .smartphone {
   width: 300px;
   height: 300px;
@@ -33,12 +15,12 @@
 }
 .smartphone:before {
   content: "";
-  width: 280px;
-  height: 280px;
+  width: 287px;
+  height: 288px;
   background-color: #fff;
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 5px;
+  left: 7px;
   border-radius: 20px;
   z-index: 1;
 }
@@ -59,35 +41,3 @@
   text-align: center;
 }
 
-
-.features-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.feature-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-color: #f1f1f1;
-  border-radius: 10px;
-}
-
-.feature-item:nth-child(odd) {
-  flex-direction: row-reverse;
-}
-
-.text-block h3 {
-  font-size: 1.2em;
-}
-
-.text-block p {
-  font-size: 0.95em;
-}
-
-.icon-block img {
-  width: 60px;
-  height: 60px;
-}
