@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "../../../../reuseable/LoadingSpinner";
 import { FaX } from "react-icons/fa6";
 import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
+import Heading from "../../../../reuseable/Heading";
 
 const AddItem = () => {
   const axiosHook = useFetch();
@@ -103,7 +104,7 @@ const handleDelete =(id,name)=>{
   }
   // if user not listed any thing before return add item form 
   if(gadgets.length===0){
-    return  <div className=" bg-base-300 rounded-xl  p-5 lg:p-10  shadow-lg ">
+    return  <div className=" bg-base-300 rounded-xl m-5  p-5 lg:p-10  shadow-lg ">
     <h1 className=" text-lg md:text-2xl font-bold text-center mb-5">
       Please Fill Item Info Blew.
     </h1>
@@ -225,7 +226,7 @@ const handleDelete =(id,name)=>{
       </div>
 
       <div className="mt-6  w-full  col-span-2 flex justify-center">
-        <button className="btn border-0  bg-[#17a774] text-white font-bold text-lg">
+        <button className="btn-primary">
           Add Item
         </button>
       </div>
@@ -233,22 +234,16 @@ const handleDelete =(id,name)=>{
   </div>
   }
   return (
-    <div className=" p-10">
+    <div className=" md:p-5">
       <DynamicPageTitle dynamicTitle={"Add item | Dashboard"}></DynamicPageTitle>
-      {!showForm ? (
+     <section>
+     {!showForm ? (
         <div>
-          <div>
-            <h4 className=" my-5 text-lg text-center font-bold text-[#11c6c9]">
-              -- Welcome Back --
-            </h4>
-            <h1 className=" my-5 text-2xl lg:text-4xl text-center font-bold">
-              Here are your all listed item{" "}
-              <span className=" text-[#11c6c9]">{user?.displayName}...</span>
-            </h1>
-          </div>
+       
+          <Heading description={'Welcome Back'} title={'  Here are your all listed item'}></Heading>
           <div className="divider"></div>
           <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
-            <div className="flex flex-col lg:w-[100%] gap-3 justify-between lg:flex-row">
+            <div className="flex  justify-between w-full items-center ">
               <h1 className=" text-base lg:text-lg font-bold">
                 Total Items: {gadgets?.length}
               </h1>
@@ -290,8 +285,8 @@ const handleDelete =(id,name)=>{
               <tbody>
                 {gadgets?.map((item, index) => (
                   <tr key={item._id}>
-                    <th className="border-r border-gray-500">{index + 1}</th>
-                    <td className="border-r border-gray-500">
+                    <th className="border-r border-b border-gray-500">{index + 1}</th>
+                    <td className="border-r border-b border-gray-500">
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="  w-16 h-16">
@@ -300,31 +295,31 @@ const handleDelete =(id,name)=>{
                         </div>
                       </div>
                     </td>
-                    <td className="border-r border-gray-500">
+                    <td className="border-r border-b border-gray-500">
                       <span className="  text-sm lg:text-base font-medium">
                         {item?.product_name}
                       </span>
                     </td>
-                    <td className="border-r border-gray-500">
+                    <td className="border-r border-b border-gray-500">
                       <span className="  text-sm lg:text-base font-medium">
                         {item?.price} $
                       </span>
                     </td>
-                    <th className="border-r border-gray-500">
+                    <th className="border-r border-b border-gray-500">
                       <Link to={`/item/${item?._id}`}>
                         <button className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
                           View Details
                         </button>
                       </Link>
                     </th>
-                    <th className="border-r border-gray-500">
+                    <th className="border-r border-b border-gray-500">
                       <Link to={`/dashboard/update/${item?._id}`}>
                         <button className=" btn">
                           <FaEdit></FaEdit>
                         </button>
                       </Link>
                     </th>
-                    <td className=" text-center">
+                    <td className=" text-center border-b border-gray-500">
                       <button
                          onClick={()=>handleDelete(item?._id,item?.product_name)}
                         className=" text-white  bg-red-600  rounded-full p-3"
@@ -339,23 +334,23 @@ const handleDelete =(id,name)=>{
           </div>
         </div>
       ) : (
-        <div className=" bg-base-300 rounded-xl  p-5 lg:p-10  shadow-lg ">
-          <div className=" flex justify-end ">
-          <button 
+        <div className=" bg-base-300 relative mt-2 rounded-xl  p-5 lg:p-10  shadow-lg ">    <button 
           onClick={()=>setShowForm(!showForm)}
-          className=" btn btn-circle"><FaX className=" text-2xl"></FaX></button>
+          className="  absolute top-1 right-1 p-1 bg-gray-300"><FaX className=" text-lg"></FaX></button>
 
-          </div>
+      
           <h1 className=" text-lg md:text-2xl font-bold text-center mb-5">
             Please Fill Item Info Blew.
           </h1>
 
           <form
-            className=" grid grid-cols-1 lg:grid-cols-2 gap-4"
+            className=" "
             onSubmit={handleAddItem}
           >
-            {/* name  */}
-            <div className="form-control">
+           {/* section for name and title  */}
+           <section className=" flex w-full flex-col gap-5 lg:flex-row">
+             {/* name  */}
+             <div className="form-control flex-1">
               <label className="label">
                 <span className=" text-base md:text-lg ">Product Name</span>
               </label>
@@ -369,7 +364,7 @@ const handleDelete =(id,name)=>{
               />
             </div>
             {/* title  */}
-            <div className="form-control">
+            <div className="form-control  flex-1">
               <label className="label">
                 <span className=" text-base md:text-lg ">Product Title</span>
               </label>
@@ -382,8 +377,12 @@ const handleDelete =(id,name)=>{
                 name="title"
               />
             </div>
+           </section>
+           {/* section for price and image  */}
+           <section className=" flex w-full flex-col gap-5 lg:flex-row">
+            
             {/* price  */}
-            <div className="form-control">
+            <div className="form-control flex-1">
               <label className="label">
                 <span className=" text-base md:text-lg ">Price</span>
               </label>
@@ -410,6 +409,7 @@ const handleDelete =(id,name)=>{
                 name="image"
               />
             </div>
+           </section>
             {/* category */}
             <div className="form-control">
               <label className="label">
@@ -467,13 +467,15 @@ const handleDelete =(id,name)=>{
             </div>
 
             <div className="mt-6  w-full  col-span-2 flex justify-center">
-              <button className="btn border-0  bg-[#17a774] text-white font-bold text-lg">
+              <button className="btn-primary">
                 Add Item
               </button>
             </div>
+       
           </form>
         </div>
       )}
+     </section>
     </div>
   );
 };

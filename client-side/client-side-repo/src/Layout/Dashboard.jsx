@@ -65,7 +65,7 @@ const [isAdmin] =useAdmin()
     <div className=" flex gap-10 lg:mr-20 justify-between mx-auto">
 
       {/* sidebar */}
-       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl pt-1 pl-0.5  fixed`}><TiThMenu></TiThMenu></button>
+       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden  text-xl  pt-1 pl-0.5  fixed`}><TiThMenu></TiThMenu></button>
       <div className={` ${menu?"block":'hidden'} lg:hidden absolute z-40 w-[60%] md:w-[40%] min-h-[calc(100dvh+500px)]  px-5 pt-4  bg-[#046351] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">

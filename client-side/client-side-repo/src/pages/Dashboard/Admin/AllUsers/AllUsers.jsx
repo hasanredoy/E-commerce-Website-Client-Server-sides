@@ -120,8 +120,8 @@ console.log(users);
           <tbody>
             {users?.map((user, index) => (
               <tr key={user._id}>
-                <th className="border-r border-gray-500">{index + 1}</th>
-                <td className="border-r border-gray-500">
+                <th className="border-r border-b border-gray-500">{index + 1}</th>
+                <td className="border-r border-b border-gray-500">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="  w-16 h-16">
@@ -130,17 +130,17 @@ console.log(users);
                     </div>
                   </div>
                 </td>
-                <td className="border-r border-gray-500">
+                <td className="border-r border-b border-gray-500">
                   <span className="  text-sm lg:text-base font-medium">
                     {user?.name?user?.name:'Anonymous'}
                   </span>
                 </td>
-                <td className="border-r border-gray-500">
+                <td className="border-r border-b border-gray-500">
                 <span className="  text-sm lg:text-base font-medium">
                     {user?.email?user?.email:'Anonymous'}
                   </span>
                 </td>
-                <th className="border-r border-gray-500">
+                <th className="border-r border-b border-gray-500">
                  {
                   user?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(user?._id,user?.name)} className=" btn-primary w-32 flex text-center">
                       Make Admin
@@ -151,7 +151,7 @@ console.log(users);
                     
                  
                 </th>
-                <td className=" text-center">
+                <td className=" text-center border-b border-gray-500">
                   <button onClick={()=>handleDelete(user?._id,user?.cart?.product_name)} className=" text-white  bg-red-600  rounded-full p-3">
                     <FaTrash></FaTrash>
                   </button>

@@ -36,23 +36,23 @@ const PaymentHistory = () => {
            {payments?.map((item, index) => (
              <tr key={item._id} className="  ">
                <th>{index + 1}</th>
-               <td className=" text-center border-r border-gray-600">
+               <td className=" border-b text-center border-r border-gray-600">
                 <h4 className=" font-bold text-green-600" >{item.transectionID}</h4>
                </td>
-               <td className=" border-r border-gray-600 pl-6">
+               <td className=" border-b border-r border-gray-600 pl-6">
                  <ul className="flex flex-col w-[200px] gap-1 list-disc ">
                    {item?.cart?.map(singleItem =><li className=" font-bold " key={singleItem._id}>{singleItem?.product_name},</li>)}
                  </ul>
                </td>
-               <td className=" text-center border-r border-gray-600">
+               <td className=" border-b text-center border-r border-gray-600">
                  <span className="  font-medium lg:font-bold">
                    {item?.totalPrice} $
                  </span>
                </td>
-               <th className=" text-center border-r border-gray-600">
+               <th className=" border-b text-center border-r border-gray-600">
                 <span>{item?.delivery?.location}</span>
                </th>
-               <td className=" text-center border-r border-gray-600">
+               <td className=" border-b text-center border-r border-gray-600">
                  <span className=" font-bold">{item?.delivery?.date}</span>
                </td>
                <td className=" text-center p-2 border-r border-gray-600">

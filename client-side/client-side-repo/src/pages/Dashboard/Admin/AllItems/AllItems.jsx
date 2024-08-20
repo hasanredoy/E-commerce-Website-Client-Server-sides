@@ -96,8 +96,8 @@ return (
           <tbody>
             {data?.map((item, index) => (
               <tr key={item._id}>
-                <th className="border-r border-gray-500">{index + 1}</th>
-                <td className="border-r border-gray-500">
+                <th className="border-r border-b border-gray-500">{index + 1}</th>
+                <td className="border-r border-b border-gray-500">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="  w-16 h-16">
@@ -106,31 +106,31 @@ return (
                     </div>
                   </div>
                 </td>
-                <td className="border-r border-gray-500">
+                <td className="border-r border-b border-gray-500">
                   <span className="  text-sm lg:text-base font-medium">
                     {item?.product_name}
                   </span>
                 </td>
-                <td className="border-r border-gray-500">
+                <td className="border-r border-b border-gray-500">
                   <span className="  text-sm lg:text-base font-medium">
                     {item?.price} $
                   </span>
                 </td>
-                <th className="border-r border-gray-500">
+                <th className="border-r border-b border-gray-500">
                   <Link to={`/item/${item?._id}`}>
                     <button className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
                       View Details
                     </button>
                   </Link>
                 </th>
-                <th className="border-r border-gray-500">
+                <th className="border-r border-b border-gray-500">
                  <Link to={`/dashboard/update/${item?._id}`}>
                     <button className=" btn">
                       <FaEdit></FaEdit>
                     </button>
                  </Link>
                 </th>
-                <td className=" text-center">
+                <td className=" text-center border-b border-gray-500">
                   <button onClick={()=>handleDelete(item?._id,item?.cart?.product_name)} className=" text-white  bg-red-600  rounded-full p-3">
                     <FaTrash></FaTrash>
                   </button>

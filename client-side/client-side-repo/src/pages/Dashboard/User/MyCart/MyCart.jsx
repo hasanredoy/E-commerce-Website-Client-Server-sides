@@ -111,8 +111,8 @@ if(isPending){
           <tbody>
             {paginationCart?.map((item, index) => (
               <tr className=" bg-gray-100 border-b border-gray-700 " key={item._id}>
-                <th>{index + 1}</th>
-                <td>
+                <th className="border-r border-b border-gray-500">{index + 1}</th>
+                <td className="border-r border-b border-gray-500">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="  w-16 h-16">
@@ -121,24 +121,24 @@ if(isPending){
                     </div>
                   </div>
                 </td>
-                <td>
+                <td className="border-r border-b border-gray-500">
                   <span className="  text-sm lg:text-base font-medium">
                     {item?.cart?.product_name}
                   </span>
                 </td>
-                <td>
+                <td className="border-r border-b border-gray-500">
                   <span className="  text-sm lg:text-base font-medium">
                     {item?.cart?.price} $
                   </span>
                 </td>
-                <th>
+                <th className="border-r border-b border-gray-500">
                   <Link to={`/item/${item?.cart?._id}`}>
                     <button className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
                       View Details
                     </button>
                   </Link>
                 </th>
-                <td className=" text-center">
+                <td className=" text-center border-b border-gray-500">
                   <button onClick={()=>handleDelete(item?._id,item?.cart?.product_name)} className=" text-white  bg-red-600  rounded-full p-3">
                     <FaTrash></FaTrash>
                   </button>
