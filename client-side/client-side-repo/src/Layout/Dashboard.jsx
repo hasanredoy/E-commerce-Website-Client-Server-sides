@@ -66,12 +66,12 @@ const [isAdmin] =useAdmin()
 
       {/* sidebar */}
        <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl p-1  fixed`}><TiThMenu></TiThMenu></button>
-      <div className={` ${menu?"block":'hidden'} lg:hidden absolute z-40 w-[60%] md:w-[40%] min-h-[calc(100dvh+500px)]  px-5 pt-4  bg-[#039396] `}>
+      <div className={` ${menu?"block":'hidden'} lg:hidden absolute z-40 w-[60%] md:w-[40%] min-h-[calc(100dvh+500px)]  px-5 pt-4  bg-[#046351] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
 
        <div
-              className={` text-white flex gap-2  items-center   p-2 border-b-2 border-[#15f7ce] mb-3 `}
+              className={` text-white flex gap-2  items-center   p-2 border-b-2 border-[#046351] mb-3 `}
             >
               <span className="  text-base lg:text-xl ">
                 {theme === "light" && (
@@ -80,7 +80,7 @@ const [isAdmin] =useAdmin()
                 {theme === "dark" && <FaMoon></FaMoon>}
               </span>
               <select
-                className=" bg-[#039396] text-white font-bold outline-none border-0"
+                className=" bg-[#046351] text-white font-bold outline-none border-0"
                 defaultValue={
                   localStorage.getItem("theme")
                     ? localStorage.getItem("theme")
@@ -125,12 +125,12 @@ const [isAdmin] =useAdmin()
        </div>
       </div>
       {/* links for lg  */}
-      <div className={` hidden lg:block w-[26%] min-h-screen  px-5 pt-4  bg-[#039396] `}>
+      <div className={` hidden lg:block w-[26%] min-h-screen  px-5 pt-4  bg-[#046351] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
 
        <div
-              className={` text-white flex gap-2  items-center   p-2 border-b-2 border-[#15f7ce] mb-3 `}
+              className={` text-white flex gap-2  items-center   p-2 border-b-2 border-[#046351] mb-3 `}
             >
               <span className="  text-base lg:text-xl ">
                 {theme === "light" && (
@@ -139,7 +139,7 @@ const [isAdmin] =useAdmin()
                 {theme === "dark" && <FaMoon></FaMoon>}
               </span>
               <select
-                className=" bg-[#039396] text-white font-bold outline-none border-0"
+                className=" bg-[#046351] text-white font-bold outline-none border-0"
                 defaultValue={
                   localStorage.getItem("theme")
                     ? localStorage.getItem("theme")

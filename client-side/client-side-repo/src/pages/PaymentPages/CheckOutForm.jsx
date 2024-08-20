@@ -169,14 +169,7 @@ const CheckOutForm = () => {
 
   return (
     <div className=" mt-[5%]">
-      <div>
-        <h1 className=" text-2xl font-bold text-center">
-          Welcome{" "}
-          <span className=" text-sky-500">
-            {user?.displayName ? user.displayName : "Back"}
-          </span>
-        </h1>
-      </div>
+
       {/* form div  */}
       <div>
         <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
@@ -248,7 +241,7 @@ const CheckOutForm = () => {
 
               <button
                 // onClick={()=>{setShowPaymentInput(!showPaymentInput)}}
-                className=" col-span-2 font-bold text-lg btn bg-sky-500 text-white"
+                className=" col-span-2 font-bold text-lg btn-primary"
                 type="submit"
               >
                 Next
