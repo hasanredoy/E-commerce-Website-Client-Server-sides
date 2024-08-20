@@ -8,6 +8,7 @@ import discount50 from "../../assets/50-percent.png";
 import Testemonial from "../../components/Testemonial/Testemonial";
 import DynamicPageTitle from "../../reuseable/DynamicPageTitle";
 import OurSuccess from "../../components/OurSuccess/OurSuccess";
+import WhyChooseUs from "../../components/why-choose-us/WhyChooseUs";
 
 const Home = () => {
   let [slide, setSlide] = useState(1);
@@ -129,28 +130,32 @@ const Home = () => {
           </div>
         </section>
         {/* discount */}
-        <section className=" w-[95%] lg:w-[90%] mx-auto my-10">
+        <section className=" w-[95%] lg:w-[90%] mx-auto my-20">
           <Discount discount={50}></Discount>
         </section>
         {/* card  */}
 
-        <section className=" w-[95%] lg:w-[90%] mx-auto my-10">
+        <section className=" w-[95%] lg:w-[90%] mx-auto my-20">
           <div id="cards">
             <Cards></Cards>
           </div>
+        </section>
+        {/* why choose us   */}
+        <section className=" w-[95%] lg:w-[90%] mx-auto my-20"> 
+          <WhyChooseUs></WhyChooseUs>
+        </section>
+
+        {/*success */}
+        <section className=" w-[95%] lg:w-[90%] mx-auto my-20"> 
+          <OurSuccess></OurSuccess>
         </section>
 
         {/* FaQ */}
         <section className=" bg-base-200 bg-opacity-30">
           <FaQ></FaQ>
         </section>
-        {/*success */}
-        <section className=" w-[95%] lg:w-[90%] mx-auto my-10"> 
-          <OurSuccess></OurSuccess>
-        </section>
-
         {/* Testimonial */}
-        <div className="w-[95%] lg:w-[90%] mx-auto my-10">
+        <div className="w-[95%] lg:w-[90%] mx-auto my-20">
           <Testemonial></Testemonial>
         </div>
       </div>
