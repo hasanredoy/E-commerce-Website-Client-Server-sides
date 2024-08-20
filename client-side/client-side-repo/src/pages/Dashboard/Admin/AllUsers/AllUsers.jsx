@@ -26,7 +26,7 @@ console.log(users);
       text: `You Want To Make ${name} Admin?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#039396",
+      confirmButtonColor: "#046351",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes"
     }).then((result) => {
@@ -56,7 +56,7 @@ console.log(users);
       text: `You Want Remove This ${name} User?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#039396",
+      confirmButtonColor: "#046351",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes"
     }).then((result) => {
@@ -103,12 +103,12 @@ console.log(users);
          </div>
           
         </div>
-      <div className="text-black overflow-x-auto mx-auto my-10 rounded-md bg-gray-300">
+      <div className=" overflow-x-auto mx-auto my-10 rounded-md bg-accent bg-opacity-10">
        
         <table className="table">
           {/* head */}
-          <thead className=" text-white  bg-[#039396]">
-            <tr>
+          <thead className="   bg-[#046351]">
+            <tr className=" text-white">
               <th></th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">Image</th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">User Name</th>
@@ -142,7 +142,7 @@ console.log(users);
                 </td>
                 <th>
                  {
-                  user?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(user?._id,user?.name)} className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
+                  user?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(user?._id,user?.name)} className=" btn-primary w-32 flex text-center">
                       Make Admin
                     </button>
                  }

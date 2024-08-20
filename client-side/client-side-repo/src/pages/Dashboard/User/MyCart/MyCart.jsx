@@ -44,7 +44,7 @@ const handleDelete =(id,name)=>{
     text: "You Want To delete This item?",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#039396",
+    confirmButtonColor: "#046351",
     cancelButtonColor: "#d33",
     confirmButtonText: "Yes"
   }).then((result) => {
@@ -98,7 +98,7 @@ if(isPending){
        
         <table className="table">
           {/* head */}
-          <thead className=" text-white  bg-[#039396]">
+          <thead className=" text-white  bg-[#046351]">
             <tr>
               <th></th>
               <th className=" text-base lg:text-xl font-medium lg:font-bold">Image</th>

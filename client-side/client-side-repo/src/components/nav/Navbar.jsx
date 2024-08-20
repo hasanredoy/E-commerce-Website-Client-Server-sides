@@ -40,7 +40,7 @@ const Navbar = () => {
       text: "You Want to Logout",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#039396",
+      confirmButtonColor: "#046351",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Logout"
     }).then((result) => {

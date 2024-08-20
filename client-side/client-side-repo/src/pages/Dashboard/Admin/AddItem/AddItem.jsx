@@ -73,7 +73,7 @@ const handleDelete =(id,name)=>{
     text: "You Want To delete This item?",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#039396",
+    confirmButtonColor: "#046351",
     cancelButtonColor: "#d33",
     confirmButtonText: "Yes"
   }).then((result) => {
@@ -264,7 +264,7 @@ const handleDelete =(id,name)=>{
           <div className="text-black overflow-x-auto mx-auto my-10 rounded-md bg-gray-300">
             <table className="table">
               {/* head */}
-              <thead className=" text-white  bg-[#039396]">
+              <thead className=" text-white  bg-[#046351]">
                 <tr>
                   <th></th>
                   <th className=" text-base lg:text-xl font-medium lg:font-bold">

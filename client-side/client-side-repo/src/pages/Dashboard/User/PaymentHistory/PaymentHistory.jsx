@@ -21,7 +21,7 @@ const PaymentHistory = () => {
        
        <table className="table">
          {/* head */}
-         <thead className=" text-white  bg-[#039396]">
+         <thead className=" text-white  bg-[#046351]">
            <tr>
              <th></th>
              <th className="px-10 border-r text-base lg:text-lg font-medium lg:font-bold">Transection ID</th>
