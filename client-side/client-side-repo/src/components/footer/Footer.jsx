@@ -11,7 +11,7 @@ const Footer = () => {
       <Link to={"/"}>
           <div className=" flex gap-0 lg:ga rounded-sm px-1 border bg-slate-50 ">
             <img src={gadgetLogo} className=" h-10 w-10" alt="" />
-            <h1 className="font-black text-base lg:text-xl bg-gradient-to-l to-[#046351] from-[#03c7a3]  bg-clip-text text-transparent flex flex-col md:flex-row items-center">
+            <h1 className="font-black text-base lg:text-lg bg-gradient-to-l to-[#046351] from-[#03c7a3]  bg-clip-text text-transparent flex flex-col md:flex-row items-center">
               Gadget <span className="ml-2">Shop</span>
              
             </h1>

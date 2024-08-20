@@ -103,7 +103,7 @@ const handleDelete =(id,name)=>{
   }
   // if user not listed any thing before return add item form 
   if(gadgets.length===0){
-    return  <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
+    return  <div className=" bg-base-300 rounded-xl  p-5 lg:p-10  shadow-lg ">
     <h1 className=" text-lg md:text-2xl font-bold text-center mb-5">
       Please Fill Item Info Blew.
     </h1>
@@ -233,7 +233,7 @@ const handleDelete =(id,name)=>{
   </div>
   }
   return (
-    <div>
+    <div className=" p-10">
       <DynamicPageTitle dynamicTitle={"Add item | Dashboard"}></DynamicPageTitle>
       {!showForm ? (
         <div>
@@ -249,7 +249,7 @@ const handleDelete =(id,name)=>{
           <div className="divider"></div>
           <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
             <div className="flex flex-col lg:w-[100%] gap-3 justify-between lg:flex-row">
-              <h1 className=" text-base lg:text-xl font-bold">
+              <h1 className=" text-base lg:text-lg font-bold">
                 Total Items: {gadgets?.length}
               </h1>
               <button
@@ -267,22 +267,22 @@ const handleDelete =(id,name)=>{
               <thead className=" text-white  bg-[#046351]">
                 <tr>
                   <th></th>
-                  <th className=" text-base lg:text-xl font-medium lg:font-bold">
+                  <th className=" text-base lg:text-lg font-medium lg:font-bold">
                     Image
                   </th>
-                  <th className=" text-base lg:text-xl font-medium lg:font-bold">
+                  <th className=" text-base lg:text-lg font-medium lg:font-bold">
                     Item Name
                   </th>
-                  <th className=" text-base lg:text-xl font-medium lg:font-bold">
+                  <th className=" text-base lg:text-lg font-medium lg:font-bold">
                     Price
                   </th>
-                  <th className=" text-base lg:text-xl font-medium lg:font-bold">
+                  <th className=" text-base lg:text-lg font-medium lg:font-bold">
                     Details
                   </th>
-                  <th className=" text-base lg:text-xl font-medium lg:font-bold">
+                  <th className=" text-base lg:text-lg font-medium lg:font-bold">
                     Edit
                   </th>
-                  <th className=" text-base lg:text-xl font-medium lg:font-bold">
+                  <th className=" text-base lg:text-lg font-medium lg:font-bold">
                     Action
                   </th>
                 </tr>
@@ -290,8 +290,8 @@ const handleDelete =(id,name)=>{
               <tbody>
                 {gadgets?.map((item, index) => (
                   <tr key={item._id}>
-                    <th>{index + 1}</th>
-                    <td>
+                    <th className="border-r border-gray-500">{index + 1}</th>
+                    <td className="border-r border-gray-500">
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="  w-16 h-16">
@@ -300,24 +300,24 @@ const handleDelete =(id,name)=>{
                         </div>
                       </div>
                     </td>
-                    <td>
-                      <span className="  text-base font-medium lg:font-bold">
+                    <td className="border-r border-gray-500">
+                      <span className="  text-sm lg:text-base font-medium">
                         {item?.product_name}
                       </span>
                     </td>
-                    <td>
-                      <span className="  text-base font-medium lg:font-bold">
+                    <td className="border-r border-gray-500">
+                      <span className="  text-sm lg:text-base font-medium">
                         {item?.price} $
                       </span>
                     </td>
-                    <th>
+                    <th className="border-r border-gray-500">
                       <Link to={`/item/${item?._id}`}>
                         <button className=" btn bg-[#046351] text-white border-l-4 border-b-4 border-[#2efed8]">
                           View Details
                         </button>
                       </Link>
                     </th>
-                    <th>
+                    <th className="border-r border-gray-500">
                       <Link to={`/dashboard/update/${item?._id}`}>
                         <button className=" btn">
                           <FaEdit></FaEdit>
@@ -339,7 +339,7 @@ const handleDelete =(id,name)=>{
           </div>
         </div>
       ) : (
-        <div className=" bg-base-200 rounded-xl  p-5 lg:p-10  shadow-lg ">
+        <div className=" bg-base-300 rounded-xl  p-5 lg:p-10  shadow-lg ">
           <div className=" flex justify-end ">
           <button 
           onClick={()=>setShowForm(!showForm)}

@@ -85,8 +85,8 @@ if(isPending){
       <div className="divider"></div>
         <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">
-         <h1 className=" text-base lg:text-xl font-bold">Total Items: {data?.length}</h1>
-          <h1 className=" text-base lg:text-xl font-bold">Total Price: {totalPrice} $</h1>
+         <h1 className=" text-base lg:text-lg font-bold">Total Items: {data?.length}</h1>
+          <h1 className=" text-base lg:text-lg font-bold">Total Price: {totalPrice} $</h1>
          </div>
        <Link to={'/dashboard/payment'}>
        <button disabled={!totalPrice} className=" btn-primary">
@@ -94,18 +94,18 @@ if(isPending){
           </button>
        </Link>
         </div>
-      <div className="text-black overflow-x-auto mx-auto my-10 rounded-md bg-gray-300">
+      <div className=" overflow-x-auto mx-auto my-10 rounded-md bg-accent bg-opacity-10">
        
         <table className="table">
           {/* head */}
           <thead className=" text-white  bg-[#046351]">
             <tr>
               <th></th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Image</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Item Name</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Price</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Details</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Action</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Image</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Item Name</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Price</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Details</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -122,12 +122,12 @@ if(isPending){
                   </div>
                 </td>
                 <td>
-                  <span className="  text-base font-medium lg:font-bold">
+                  <span className="  text-sm lg:text-base font-medium">
                     {item?.cart?.product_name}
                   </span>
                 </td>
                 <td>
-                  <span className="  text-base font-medium lg:font-bold">
+                  <span className="  text-sm lg:text-base font-medium">
                     {item?.cart?.price} $
                   </span>
                 </td>

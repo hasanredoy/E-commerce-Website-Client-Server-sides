@@ -98,7 +98,7 @@ console.log(users);
       <div className="divider"></div>
       <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">
-         <h1 className=" text-base lg:text-xl font-bold">Total Users: {count}</h1>
+         <h1 className=" text-base lg:text-lg font-bold">Total Users: {count}</h1>
           
          </div>
           
@@ -110,18 +110,18 @@ console.log(users);
           <thead className="   bg-[#046351]">
             <tr className=" text-white">
               <th></th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Image</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">User Name</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Email</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Role</th>
-              <th className=" text-base lg:text-xl font-medium lg:font-bold">Action</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Image</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">User Name</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Email</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Role</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
             {users?.map((user, index) => (
               <tr key={user._id}>
-                <th>{index + 1}</th>
-                <td>
+                <th className="border-r border-gray-500">{index + 1}</th>
+                <td className="border-r border-gray-500">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="  w-16 h-16">
@@ -130,17 +130,17 @@ console.log(users);
                     </div>
                   </div>
                 </td>
-                <td>
-                  <span className="  text-base font-medium lg:font-bold">
+                <td className="border-r border-gray-500">
+                  <span className="  text-sm lg:text-base font-medium">
                     {user?.name?user?.name:'Anonymous'}
                   </span>
                 </td>
-                <td>
-                <span className="  text-base font-medium lg:font-bold">
+                <td className="border-r border-gray-500">
+                <span className="  text-sm lg:text-base font-medium">
                     {user?.email?user?.email:'Anonymous'}
                   </span>
                 </td>
-                <th>
+                <th className="border-r border-gray-500">
                  {
                   user?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(user?._id,user?.name)} className=" btn-primary w-32 flex text-center">
                       Make Admin

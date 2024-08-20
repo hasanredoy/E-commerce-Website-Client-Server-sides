@@ -65,7 +65,7 @@ const [isAdmin] =useAdmin()
     <div className=" flex gap-10 lg:mr-20 justify-between mx-auto">
 
       {/* sidebar */}
-       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl p-1  fixed`}><TiThMenu></TiThMenu></button>
+       <button onClick={()=>setMenu(!menu)} className={`${theme==='light'?'text-black':'text-white'} z-50 lg:hidden text-2xl pt-1 pl-0.5  fixed`}><TiThMenu></TiThMenu></button>
       <div className={` ${menu?"block":'hidden'} lg:hidden absolute z-40 w-[60%] md:w-[40%] min-h-[calc(100dvh+500px)]  px-5 pt-4  bg-[#046351] `}>
        <div className=" h-full flex max-h-screen flex-col justify-evenly">
        <div className=" flex-1">
@@ -73,7 +73,7 @@ const [isAdmin] =useAdmin()
        <div
               className={` text-white flex gap-2  items-center   p-2 border-b-2 border-[#046351] mb-3 `}
             >
-              <span className="  text-base lg:text-xl ">
+              <span className="  text-base lg:text-lg ">
                 {theme === "light" && (
                   <IoSunnySharp className=""></IoSunnySharp>
                 )}
@@ -132,7 +132,7 @@ const [isAdmin] =useAdmin()
        <div
               className={` text-white flex gap-2  items-center   p-2 border-b-2 border-[#046351] mb-3 `}
             >
-              <span className="  text-base lg:text-xl ">
+              <span className="  text-base lg:text-lg ">
                 {theme === "light" && (
                   <IoSunnySharp className=""></IoSunnySharp>
                 )}
