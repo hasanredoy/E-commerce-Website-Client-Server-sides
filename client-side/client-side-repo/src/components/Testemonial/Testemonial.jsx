@@ -6,6 +6,8 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Heading from "../../reuseable/Heading";
 
+import moment from 'moment'
+
 
 const Testemonial = () => {
   const axiosHook = useFetch();
@@ -24,7 +26,7 @@ const Testemonial = () => {
     <div className=" w-full    ">
      <Heading description={'Hear what'} title={'Our client says'}></Heading>
       <div className="divider"></div>
-      <div className=" grid grid-cols-1 md:grid-cols-2  gap-5 ">
+      <div className=" grid grid-cols-1 md:grid-cols-2  gap-5 lg:gap-10 ">
         {reviews?.slice(4 - 8).map((review) => (
           <div
           data-aos="zoom-in-down" data-aos-delay="300"
@@ -44,9 +46,9 @@ const Testemonial = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-xl">{review?.name}</h4>
-                  <h4 className="font-medium">
-                    {review?.posting_time?.split("T")[0]}
-                  </h4>
+                  <h4 className="font-medium text-sm text-green-500">
+                      {moment(review?.posting_time).startOf().fromNow()}
+                    </h4>
                 </div>
               </div>
               <div className="flex items-center space-x-2 text-yellow-500">

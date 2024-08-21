@@ -144,16 +144,16 @@ const Home = () => {
         <section className=" w-[95%] lg:w-[90%] mx-auto my-20"> 
           <WhyChooseUs></WhyChooseUs>
         </section>
-
+      {/* FaQ */}
+        <section className=" bg-base-200 bg-opacity-30">
+          <FaQ></FaQ>
+        </section>
         {/*success */}
         <section className=" w-[95%] lg:w-[90%] mx-auto my-20"> 
           <OurSuccess></OurSuccess>
         </section>
 
-        {/* FaQ */}
-        <section className=" bg-base-200 bg-opacity-30">
-          <FaQ></FaQ>
-        </section>
+  
         {/* Testimonial */}
         <div className="w-[95%] lg:w-[90%] mx-auto my-20">
           <Testemonial></Testemonial>
