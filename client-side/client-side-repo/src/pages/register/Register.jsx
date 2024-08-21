@@ -35,7 +35,7 @@ const Register = () => {
       email,
       name ,
       photo ,
-      status:"user"
+      role:"user"
       
     }
     

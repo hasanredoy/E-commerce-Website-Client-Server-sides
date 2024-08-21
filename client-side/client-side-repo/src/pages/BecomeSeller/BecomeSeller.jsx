@@ -3,15 +3,44 @@ import Heading from "../../reuseable/Heading";
 import seller from "../../assets/seller-image.jpg";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useGetUserRole from "../../hooks/useGetUserRole";
+import useFetch from "../../hooks/useFetch";
+import Swal from "sweetalert2";
 
 const BecomeSeller = () => {
   // get user 
   const {user} = useAuth()
   // get use navigate hook 
   const navigate = useNavigate()
-  const handleSellerReq =(e)=>{
+  
+  // get axios hook 
+  const axiosHook = useFetch()
+  // get user role 
+  const role= useGetUserRole()
+  console.log(role); 
+
+
+  const handleSellerReq = async(e)=>{
     e.preventDefault()
   if(!user)navigate('/login')
+const sellerData = {
+  name: e.target.name.value,
+   email: e.target.email.value,
+  description: e.target.description.value,
+  status : 'pending'
+}
+console.log(sellerData);
+const {data} = await axiosHook.post("/seller",sellerData)
+console.log(data);
+if(data?.insertedId){
+  Swal.fire({
+    title:"Request has been sent",
+    text:"your request has been sent please wait until admin approves your request.",
+    icon:"success"
+    
+  })
+}
+
   }
 
   return (
@@ -32,7 +61,7 @@ const BecomeSeller = () => {
               </label>
               <input
                 type="text"
-                placeholder="Product Name"
+                placeholder="Name"
                 className="input input-bordered   focus:outline-sky-200"
                 required
                 name="name"
@@ -45,10 +74,11 @@ const BecomeSeller = () => {
               </label>
               <input
                 type="text"
-                placeholder="Product Title"
+                placeholder="Email"
                 className="input input-bordered   focus:outline-sky-200"
                 required
-                name="title"
+                name="email"
+                defaultValue={user?.email}
               />
             </div> 
        
@@ -66,7 +96,7 @@ const BecomeSeller = () => {
           </div>
 
           <div className="mt-6  w-full  col-span-2 flex justify-center">
-            <button  className="btn-primary">Send Request</button>
+            <button disabled={role!=='user'}  className="btn-primary"> {role !=='user'?'This form is only for user':' Send Request'}</button>
           </div>
         </form></div>
       </section>

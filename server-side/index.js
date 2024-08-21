@@ -67,6 +67,7 @@ async function run() {
     const userReviewCollection = client.db("Gadget-ShopDB").collection("reviews");
     const usersCollection = client.db("Gadget-ShopDB").collection("users");
     const paymentsCollection = client.db("Gadget-ShopDB").collection("payments");
+    const sellersCollection = client.db("Gadget-ShopDB").collection("sellers");
     // verify admin 
 const verifyAdmin =async (req,res,next)=>{
   const query = {role : 'admin'}
@@ -305,7 +306,9 @@ const verifyAdmin =async (req,res,next)=>{
     // get user role 
     app.get('/user-role/:email',async(req,res)=>{
       const email = req.params?.email
-      const result = usersCollection.findOne({email})
+      console.log({email});
+      const result = await usersCollection.findOne({email})
+      console.log(result);
       const role = result?.role
       console.log(role);
       res.send(role)
@@ -480,6 +483,24 @@ const verifyAdmin =async (req,res,next)=>{
       res.send(result)
     })
   
+
+  // seller apis 
+
+  // get seller status 
+  app.get('/seller/:email',async(req,res)=>{
+    const email = req.params?.email
+    const result = await sellersCollection.findOne({email})
+    const status  = result?.status
+    res.send(status)
+  })
+
+  // post seller data on mongodb 
+  app.post('/seller',async(req,res)=>{
+    const sellerData = req.body
+    const result =await sellersCollection.insertOne(sellerData)
+    res.send(result)
+  })
+
 
   } finally {
   }

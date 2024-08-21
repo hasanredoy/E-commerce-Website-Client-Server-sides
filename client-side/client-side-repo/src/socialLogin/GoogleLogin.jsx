@@ -17,7 +17,7 @@ const GoogleLogin = () => {
         name:res?.user?.displayName,
         email:res?.user?.email,
         photo:res?.user?.photoURL,
-        status:"user"
+        role:"user"
       }
       axiosCommon.post("/users",userData)
       .then(res=>{
