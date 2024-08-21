@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useGetUserRole from "../../hooks/useGetUserRole";
 import useFetch from "../../hooks/useFetch";
 import Swal from "sweetalert2";
+import useGetSellerStatus from "../../hooks/useGetSellerStatus";
 
 const BecomeSeller = () => {
   // get user 
@@ -18,6 +19,10 @@ const BecomeSeller = () => {
   // get user role 
   const role= useGetUserRole()
   console.log(role); 
+
+// get seller status 
+const status = useGetSellerStatus()
+console.log(status);
 
 
   const handleSellerReq = async(e)=>{
@@ -96,7 +101,14 @@ if(data?.insertedId){
           </div>
 
           <div className="mt-6  w-full  col-span-2 flex justify-center">
-            <button disabled={role!=='user'}  className="btn-primary"> {role !=='user'?'This form is only for user':' Send Request'}</button>
+            <button disabled={role!=='user'||status!=="rejected"}   className="btn-primary">
+              
+               {!status&&role !=='user'&&'This form is only for user'} 
+
+               {!status&&role =='user'&&'Send Request'}
+               {status=="pending"&&'Request Under Process'}
+               {status=="rejected"&&'Request Another'}
+            </button>
           </div>
         </form></div>
       </section>
