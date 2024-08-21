@@ -302,6 +302,14 @@ const verifyAdmin =async (req,res,next)=>{
       res.send(result);
     });
     
+    // get user role 
+    app.get('/user-role/:email',async(req,res)=>{
+      const email = req.params?.email
+      const result = usersCollection.findOne({email})
+      const role = result?.role
+      console.log(role);
+      res.send(role)
+    })
 
     //update user to admin
     app.patch("/users/admin/:id",verifyUser,verifyAdmin, async (req, res) => {
