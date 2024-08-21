@@ -16,11 +16,11 @@
   /* btn bg-[] text-white border-l-4 border-b-4 border-[] */
   background-color: #046351;
   color: white;
-  border: 1px solid #2efed8;
-  border-bottom: 5px solid #2efed8;
-  border-left: 4px solid #2efed8;
+  border-bottom: 5px solid  #02d1ab;
+  border-left: 4px solid #02d1ab;
   padding: 6px 15px;
   border-radius: 8px;
+  font-weight: 600;
   display: flex;
   text-align: center;
   gap: 5px;
@@ -30,17 +30,17 @@
   align-items: center;
 }
 .btn-primary:hover {
-  /* btn bg-[] text-white border-l-4 border-b-4 border-[#2efed8] */
-  background-color: #bafaee;
+  /* btn bg-[] text-white border-l-4 border-b-4 border-[ #02d1ab] */
+  background-color: white;
   color: black;
 }
 .btn-secondary {
   /* btn bg-[] text-white border-l-4 border-b-4 border-[] */
   background-color:azure;
   color:black;
-  border: 1px solid #2efed8;
-  border-top: 5px solid #2efed8;
-  border-right: 4px solid #2efed8;
+  border: 1px solid  #02d1ab;
+  border-top: 5px solid  #02d1ab;
+  border-right: 4px solid  #02d1ab;
   font-weight:600;
   padding: 6px 15px;
   border-radius: 8px;
@@ -49,7 +49,7 @@
   align-items: center;
 }
 .btn-secondary:hover {
-  /* btn bg-[] text-white border-l-4 border-b-4 border-[#2efed8] */
+  /* btn bg-[] text-white border-l-4 border-b-4 border-[ #02d1ab] */
   background-color: #cff8f8;
   color: black;
 }
