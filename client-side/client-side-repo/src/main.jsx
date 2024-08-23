@@ -28,6 +28,7 @@ import PaymentHistory from "./pages/Dashboard/User/PaymentHistory/PaymentHistory
 import PaymentInvoice from "./pages/Dashboard/User/PaymentHistory/PaymentInvoice.jsx";
 import AdminHome from "./pages/Dashboard/Admin/AdminHome/AdminHome.jsx";
 import ErrorPage from "./pages/Error/ErrorPage.jsx";
+import AllSellers from "./pages/Dashboard/Admin/AllSellers/AllSellers.jsx";
 
 const queryClient = new QueryClient();
 
@@ -139,6 +140,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "allSeller",
+        element: (
+          <AdminRoute>
+            <AllSellers></AllSellers>
           </AdminRoute>
         ),
       },

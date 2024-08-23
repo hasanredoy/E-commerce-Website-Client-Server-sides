@@ -13,6 +13,9 @@ import { MdAddShoppingCart } from "react-icons/md";
 import useAdmin from "../hooks/useAdmin";
 import useGetUserRole from "../hooks/useGetUserRole";
 
+import { FaListCheck } from "react-icons/fa6";
+
+
 
 const Dashboard = () => {
 
@@ -120,7 +123,7 @@ const [isAdmin] =useAdmin()
           role=='seller' && <>
           <NavLink to={'/dashboard/sellerHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >Seller Home</NavLink>
           <NavLink to={'/dashboard/profile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
-          <NavLink to={'/dashboard/listedItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaHistory></FaHistory>Listed Item</NavLink>
+          <NavLink to={'/dashboard/listedItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaListCheck></FaListCheck>Listed Item</NavLink>
           <NavLink to={'/dashboard/addItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <MdAddShoppingCart></MdAddShoppingCart>Add Items</NavLink>
 
           </>
@@ -174,6 +177,7 @@ const [isAdmin] =useAdmin()
           <NavLink to={'/dashboard/adminHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >Admin Home</NavLink>
           <NavLink to={'/dashboard/profile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
           <NavLink to={'/dashboard/allUsers'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaUsers></FaUsers >All Users </NavLink>
+          <NavLink to={'/dashboard/allSeller'} className={'flex items-center font-bold gap-2 my-3 text-white'}><FaUsers></FaUsers >All Seller </NavLink>
           <NavLink to={'/dashboard/allItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaList></FaList>All Items</NavLink>
           <NavLink to={'/dashboard/addItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <MdAddShoppingCart></MdAddShoppingCart>Add Items</NavLink>
           </>}
@@ -191,7 +195,7 @@ const [isAdmin] =useAdmin()
           role=='seller' && <>
           <NavLink to={'/dashboard/sellerHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >Seller Home</NavLink>
           <NavLink to={'/dashboard/profile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
-          <NavLink to={'/dashboard/listedItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaHistory></FaHistory>Listed Item</NavLink>
+          <NavLink to={'/dashboard/listedItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaListCheck></FaListCheck>Listed Item</NavLink>
           <NavLink to={'/dashboard/addItems'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <MdAddShoppingCart></MdAddShoppingCart>Add Items</NavLink>
 
           </>
