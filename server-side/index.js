@@ -509,6 +509,14 @@ const verifyAdmin =async (req,res,next)=>{
     res.send(status)
   })
   
+  // post seller data on mongodb 
+  app.post('/seller',async(req,res)=>{
+    const sellerData = req.body
+    const result =await sellersCollection.insertOne(sellerData)
+    res.send(result)
+  })
+
+
   // make seller
   
   app.patch('/make-seller/:email',async(req,res)=>{
@@ -528,10 +536,20 @@ const verifyAdmin =async (req,res,next)=>{
 
   })
   
-  // post seller data on mongodb 
-  app.post('/seller',async(req,res)=>{
-    const sellerData = req.body
-    const result =await sellersCollection.insertOne(sellerData)
+  // reject seller request 
+  app.delete('/sellers/:email',async(req,res)=>{
+   const email = req.params?.email
+   const result = await sellersCollection.updateOne({email},{
+      $set:{status:'rejected'}
+    })
+    res.send(result)
+  })
+  // reject seller request 
+  app.delete('/sellers/:email',async(req,res)=>{
+   const email = req.params?.email
+   const result = await sellersCollection.updateOne({email},{
+      $set:{status:'rejected'}
+    })
     res.send(result)
   })
 

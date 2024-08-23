@@ -55,10 +55,10 @@ const AllSellers = () => {
       }
     });
   };
-  const handleDelete = (id) => {
+  const handleRejectSellerRequest = (email,name) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You Want Remove This ${name} seller?`,
+      text: `You want to reject this ${name} seller request?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#046351",
@@ -67,14 +67,14 @@ const AllSellers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosHook
-          .delete(`/sellers/${id}`)
+          .delete(`/sellers/${email}`)
 
           .then((res) => {
-            console.log(res.data);
-            if (res.data.deletedCount > 0) {
+            console.log(res?.data);
+            if (res?.data?.modifiedCount > 0) {
               refetch();
               Swal.fire({
-                title: `${name} Removed Successfully`,
+                title: `${name}'s request rejected successfully`,
                 icon: "success",
               });
             }
@@ -134,11 +134,13 @@ const AllSellers = () => {
               <th className=" text-base lg:text-lg font-medium lg:font-bold">
                 Action
               </th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className=" max-h-[30px]">
             {sellers?.map((seller, index) => (
-              <tr key={seller._id}>
+              <tr key={seller._id} className=" w-full min-w-full max-h-[30px]">
                 <th className="border-r border-b border-gray-500">
                   {index + 1}
                 </th>
@@ -177,8 +179,8 @@ const AllSellers = () => {
                     {seller?.status ? seller?.status : "Not found"}
                   </span>
                 </th>
-                <td className=" text-center border-b border-gray-500 flex gap-5 py-7 items-center h-full">
-                  <div className="border-r border-gray-400 pr-6">
+                <td className=" text-center border-b border-gray-500 ">
+                  <div className="">
                     {" "}
                     {seller?.status === "approved" && (
                       <span className="text-sm lg:text-base font-semibold ">
@@ -201,13 +203,18 @@ const AllSellers = () => {
                       </button>
                     )}
                   </div>
-
+           
+                </td>
+                <td className=" text-center border-b border-gray-500 ">
+                  {seller?.status === "pending" &&<div className=" border-l border-gray-500 pl-6">
                   <button
-                    onClick={() => handleDelete(seller?.email, seller?.name)}
-                    className=" text-white flex gap-2 items-center  bg-red-600 rounded-lg p-3"
-                  >
-                    <FaTrash></FaTrash> Reject
-                  </button>
+                  onClick={() => handleRejectSellerRequest(seller?.email, seller?.name)}
+                  className=" text-white flex gap-2 items-center  bg-red-600 rounded-lg p-3"
+                >
+                  <FaTrash></FaTrash> Reject
+                </button>
+                  </div>}
+
                 </td>
               </tr>
             ))}

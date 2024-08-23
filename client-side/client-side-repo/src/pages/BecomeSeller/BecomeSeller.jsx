@@ -26,6 +26,11 @@ const BecomeSeller = () => {
 
   const handleSellerReq = async (e) => {
     e.preventDefault();
+    if(status=='rejected'){
+      return axiosHook.patch(`/req-again/${user?.email}`).then(res=>{
+        console.log(res?.data);
+      })
+    }
     if (!user) navigate("/login");
     const sellerData = {
       name: e.target.name.value,
@@ -104,7 +109,7 @@ const BecomeSeller = () => {
 
             <div className="mt-6  w-full  col-span-2 flex justify-center">
               <button
-                disabled={role !== "user" || status !== "rejected"}
+                disabled={role !== "user" }
                 className="btn-primary"
               >
                 {!status && role !== "user" && "This form is only for user"}
