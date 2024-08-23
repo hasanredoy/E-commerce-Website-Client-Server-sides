@@ -544,11 +544,11 @@ const verifyAdmin =async (req,res,next)=>{
     })
     res.send(result)
   })
-  // reject seller request 
-  app.delete('/sellers/:email',async(req,res)=>{
+  // route handle user second request after rejection
+  app.patch('/req-again/:email',async(req,res)=>{
    const email = req.params?.email
    const result = await sellersCollection.updateOne({email},{
-      $set:{status:'rejected'}
+      $set:{status:'pending'}
     })
     res.send(result)
   })

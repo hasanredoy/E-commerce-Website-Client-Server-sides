@@ -26,9 +26,17 @@ const BecomeSeller = () => {
 
   const handleSellerReq = async (e) => {
     e.preventDefault();
+    // check if user request was rejected then code blew will run
     if(status=='rejected'){
       return axiosHook.patch(`/req-again/${user?.email}`).then(res=>{
         console.log(res?.data);
+        if (res?.data?.modifiedCount>0) {
+          Swal.fire({
+            title: "Request has been sent",
+            text: "your request has been sent please wait until admin approves your request.",
+            icon: "success",
+          });
+        }
       })
     }
     if (!user) navigate("/login");
