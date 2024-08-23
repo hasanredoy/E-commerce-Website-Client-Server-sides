@@ -491,6 +491,11 @@ const verifyAdmin =async (req,res,next)=>{
    const result = await sellersCollection.find().toArray()
    res.send(result)
   })
+  // get all seller count
+  app.get('/sellers/count',async(req,res)=>{
+   const count = await sellersCollection.estimatedDocumentCount()
+   res.send({count})
+  })
 
 
   // get seller status 
