@@ -483,8 +483,15 @@ const verifyAdmin =async (req,res,next)=>{
       res.send(result)
     })
   
-
+  
   // seller apis 
+
+  // get all seller 
+  app.get('/sellers',async(req,res)=>{
+   const result = await sellersCollection.find().toArray()
+   res.send(result)
+  })
+
 
   // get seller status 
   app.get('/seller/:email',async(req,res)=>{

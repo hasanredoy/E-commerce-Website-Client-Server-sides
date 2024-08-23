@@ -3,22 +3,22 @@ import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAdmin from "../../../../hooks/useAdmin";
 
-import useUsers from "../../../../hooks/useUsers";
 import DynamicPageTitle from "../../../../reuseable/DynamicPageTitle";
 import Pagination from "../../../../reuseable/Pagination";
 import { useState } from "react";
 import PaginationDiv from "../../../../reuseable/PaginationDiv";
 import Heading from "../../../../reuseable/Heading";
+import useSellers from "../../../../hooks/useSellers";
 
 const AllSellers = () => {
   const axiosHook = useFetch()
   const [currentPage,setCurrentPage]=useState(0)
 
   // get pagination function 
-  const [numberOfPages , totalPage,itemsPerPage,count] =Pagination("/users",10)
+  const [numberOfPages , totalPage,itemsPerPage,count] =Pagination("/sellers",10)
  
-  const [users,refetch,isPending]=useUsers(currentPage,itemsPerPage)
-console.log(users);
+  const [sellers,refetch,isPending]=useSellers(currentPage,itemsPerPage)
+console.log(sellers);
   
   const handleAdmin=(id,name)=>{
     Swal.fire({
@@ -31,7 +31,7 @@ console.log(users);
       confirmButtonText: "Yes"
     }).then((result) => {
       if (result.isConfirmed) {
-         axiosHook.patch(`/users/admin/${id}`)
+         axiosHook.patch(`/sellers/admin/${id}`)
          .then(res=>{
           console.log(res.data);
           if(res.data.modifiedCount>0){
@@ -61,7 +61,7 @@ console.log(users);
       confirmButtonText: "Yes"
     }).then((result) => {
       if (result.isConfirmed) {
-         axiosHook.delete(`/users/${id}`)
+         axiosHook.delete(`/sellers/${id}`)
 
          .then(res=>{
           console.log(res.data);
@@ -87,18 +87,18 @@ console.log(users);
   console.log(isAdmin);
   return (
     <div>
-      <DynamicPageTitle dynamicTitle={"All Users | Dashboard"}></DynamicPageTitle>
+      <DynamicPageTitle dynamicTitle={"All sellers | Dashboard"}></DynamicPageTitle>
       {
         isPending && <div className='flex justify-center items-center h-full'>
         <span className="loading loading-infinity loading-lg "></span>
       </div>
       }
    
-      <Heading description={'Welcome Back'} title={'Here Are All Users on This Website'}/>
+      <Heading description={'Welcome Back'} title={'Here Are All sellers on This Website'}/>
       <div className="divider"></div>
       <div className=" flex justify-between items-center px-2 lg:px-10 my-7">
          <div className="flex flex-col lg:w-[80%] gap-3 justify-between lg:flex-row">
-         <h1 className=" text-base lg:text-lg font-bold">Total Users: {count}</h1>
+         <h1 className=" text-base lg:text-lg font-bold">Total sellers: {count}</h1>
           
          </div>
           
@@ -118,7 +118,7 @@ console.log(users);
             </tr>
           </thead>
           <tbody>
-            {users?.map((user, index) => (
+            {sellers?.map((user, index) => (
               <tr key={user._id}>
                 <th className="border-r border-b border-gray-500">{index + 1}</th>
                 <td className="border-r border-b border-gray-500">
