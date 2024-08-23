@@ -9,44 +9,42 @@ import Swal from "sweetalert2";
 import useGetSellerStatus from "../../hooks/useGetSellerStatus";
 
 const BecomeSeller = () => {
-  // get user 
-  const {user} = useAuth()
-  // get use navigate hook 
-  const navigate = useNavigate()
-  
-  // get axios hook 
-  const axiosHook = useFetch()
-  // get user role 
-  const role= useGetUserRole()
-  console.log(role); 
+  // get user
+  const { user } = useAuth();
+  // get use navigate hook
+  const navigate = useNavigate();
 
-// get seller status 
-const status = useGetSellerStatus()
-console.log(status);
+  // get axios hook
+  const axiosHook = useFetch();
+  // get user role
+  const role = useGetUserRole();
+  console.log(role);
 
+  // get seller status
+  const status = useGetSellerStatus();
+  console.log(status);
 
-  const handleSellerReq = async(e)=>{
-    e.preventDefault()
-  if(!user)navigate('/login')
-const sellerData = {
-  name: e.target.name.value,
-   email: e.target.email.value,
-  description: e.target.description.value,
-  status : 'pending'
-}
-console.log(sellerData);
-const {data} = await axiosHook.post("/seller",sellerData)
-console.log(data);
-if(data?.insertedId){
-  Swal.fire({
-    title:"Request has been sent",
-    text:"your request has been sent please wait until admin approves your request.",
-    icon:"success"
-    
-  })
-}
-
-  }
+  const handleSellerReq = async (e) => {
+    e.preventDefault();
+    if (!user) navigate("/login");
+    const sellerData = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      description: e.target.description.value,
+      requestData: new Date(),
+      status: "pending",
+    };
+    console.log(sellerData);
+    const { data } = await axiosHook.post("/seller", sellerData);
+    console.log(data);
+    if (data?.insertedId) {
+      Swal.fire({
+        title: "Request has been sent",
+        text: "your request has been sent please wait until admin approves your request.",
+        icon: "success",
+      });
+    }
+  };
 
   return (
     <main className="  w-[95%] lg:w-[90%] mx-auto my-20">
@@ -56,11 +54,13 @@ if(data?.insertedId){
         <div className=" flex-1">
           <img src={seller} className=" w-full h-[400px]" alt="" />
         </div>
-        <div  className="flex-1 bg-base-300 bg-opacity-50 p-5 ">
-          <h2 className=" text-xl font-bold text-center  py-3  ">Please fill out the form to start selling. </h2>
-        <form className=" " onSubmit={handleSellerReq}>
-        {/* name  */}
-        <div className="form-control mb-3">
+        <div className="flex-1 bg-base-300 bg-opacity-50 p-5 ">
+          <h2 className=" text-xl font-bold text-center  py-3  ">
+            Please fill out the form to start selling.{" "}
+          </h2>
+          <form className=" " onSubmit={handleSellerReq}>
+            {/* name  */}
+            <div className="form-control mb-3">
               <label className="label">
                 <span className=" text-base font-semibold ">Name*</span>
               </label>
@@ -85,32 +85,37 @@ if(data?.insertedId){
                 name="email"
                 defaultValue={user?.email}
               />
-            </div> 
-       
-          {/* description */}
-          <div className="form-control col-span-2">
-            <label className="label">
-              <span className=" text-base font-semibold ">Tell us about your self*</span>
-            </label>
-            <textarea
-              name="description"
-              className="  textarea"
-              placeholder="write about yourself"
-              rows={5}
-            ></textarea>
-          </div>
+            </div>
 
-          <div className="mt-6  w-full  col-span-2 flex justify-center">
-            <button disabled={role!=='user'||status!=="rejected"}   className="btn-primary">
-              
-               {!status&&role !=='user'&&'This form is only for user'} 
+            {/* description */}
+            <div className="form-control col-span-2">
+              <label className="label">
+                <span className=" text-base font-semibold ">
+                  Tell us about your self*
+                </span>
+              </label>
+              <textarea
+                name="description"
+                className="  textarea"
+                placeholder="write about yourself"
+                rows={5}
+              ></textarea>
+            </div>
 
-               {!status&&role =='user'&&'Send Request'}
-               {status=="pending"&&'Request Under Process'}
-               {status=="rejected"&&'Request Another'}
-            </button>
-          </div>
-        </form></div>
+            <div className="mt-6  w-full  col-span-2 flex justify-center">
+              <button
+                disabled={role !== "user" || status !== "rejected"}
+                className="btn-primary"
+              >
+                {!status && role !== "user" && "This form is only for user"}
+
+                {!status && role == "user" && "Send Request"}
+                {status == "pending" && "Request Under Process"}
+                {status == "rejected" && "Request Another"}
+              </button>
+            </div>
+          </form>
+        </div>
       </section>
     </main>
   );

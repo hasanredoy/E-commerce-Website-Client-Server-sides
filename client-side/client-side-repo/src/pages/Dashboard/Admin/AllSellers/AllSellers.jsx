@@ -53,7 +53,7 @@ console.log(sellers);
   const handleDelete=(id)=>{
     Swal.fire({
       title: "Are you sure?",
-      text: `You Want Remove This ${name} User?`,
+      text: `You Want Remove This ${name} seller?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#046351",
@@ -111,50 +111,58 @@ console.log(sellers);
             <tr className=" text-white">
               <th></th>
               <th className=" text-base lg:text-lg font-medium lg:font-bold">Image</th>
-              <th className=" text-base lg:text-lg font-medium lg:font-bold">User Name</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Seller Name</th>
               <th className=" text-base lg:text-lg font-medium lg:font-bold">Email</th>
-              <th className=" text-base lg:text-lg font-medium lg:font-bold">Role</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Request Date</th>
+              <th className=" text-base lg:text-lg font-medium lg:font-bold">Status</th>
               <th className=" text-base lg:text-lg font-medium lg:font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
-            {sellers?.map((user, index) => (
-              <tr key={user._id}>
+            {sellers?.map((seller, index) => (
+              <tr key={seller._id}>
                 <th className="border-r border-b border-gray-500">{index + 1}</th>
                 <td className="border-r border-b border-gray-500">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="  w-16 h-16">
-                        <img src={user?.photo} />
+                        <img src={seller?.photo} />
                       </div>
                     </div>
                   </div>
                 </td>
                 <td className="border-r border-b border-gray-500">
                   <span className="  text-sm lg:text-base font-medium">
-                    {user?.name?user?.name:'Anonymous'}
+                    {seller?.name?seller?.name:'Anonymous'}
                   </span>
                 </td>
                 <td className="border-r border-b border-gray-500">
                 <span className="  text-sm lg:text-base font-medium">
-                    {user?.email?user?.email:'Anonymous'}
+                    {seller?.email?seller?.email:'Anonymous'}
+                  </span>
+                </td>
+                <td className="border-r border-b border-gray-500">
+                <span className="  text-sm lg:text-base font-medium">
+                    {seller?.requestDate?seller?.requestDate:'Not found'}
                   </span>
                 </td>
                 <th className="border-r border-b border-gray-500">
-                 {
-                  user?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(user?._id,user?.name)} className=" btn-primary w-32 flex text-center">
+                 
+                <span className="  text-sm lg:text-base font-medium">
+                    {seller?.status?seller?.status:'Not found'}
+                  </span>   
+                </th>
+                <td className=" text-center border-b border-gray-500 flex gap-5 py-7 items-center h-full">
+
+                {
+                  seller?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(seller?._id,seller?.name)} className=" btn-primary w-32 flex text-center">
                       Make Admin
                     </button>
                  }
-                  
-                  
-                    
-                 
-                </th>
-                <td className=" text-center border-b border-gray-500">
-                  <button onClick={()=>handleDelete(user?._id,user?.cart?.product_name)} className=" text-white  bg-red-600  rounded-full p-3">
+                  <button onClick={()=>handleDelete(seller?._id,seller?.cart?.product_name)} className=" text-white  bg-red-600  rounded-full p-3">
                     <FaTrash></FaTrash>
                   </button>
+
                 </td>
               </tr>
             ))}
