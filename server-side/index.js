@@ -491,6 +491,9 @@ const verifyAdmin =async (req,res,next)=>{
    const result = await sellersCollection.find().toArray()
    res.send(result)
   })
+
+  
+  
   // get all seller count
   app.get('/sellers/count',async(req,res)=>{
    const count = await sellersCollection.estimatedDocumentCount()
@@ -505,7 +508,14 @@ const verifyAdmin =async (req,res,next)=>{
     const status  = result?.status
     res.send(status)
   })
-
+  
+  // make seller
+  
+  app.patch('make-seller/:email',async(req,res)=>{
+    const id = req.params?.email
+    
+  })
+  
   // post seller data on mongodb 
   app.post('/seller',async(req,res)=>{
     const sellerData = req.body

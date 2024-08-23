@@ -20,10 +20,10 @@ const AllSellers = () => {
   const [sellers,refetch,isPending]=useSellers(currentPage,itemsPerPage)
 console.log(sellers);
   
-  const handleAdmin=(id,name)=>{
+  const handleMakeSeller=(email,name)=>{
     Swal.fire({
       title: "Are you sure?",
-      text: `You Want To Make ${name} Admin?`,
+      text: `You Want To Make ${name} Seller?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#046351",
@@ -31,12 +31,12 @@ console.log(sellers);
       confirmButtonText: "Yes"
     }).then((result) => {
       if (result.isConfirmed) {
-         axiosHook.patch(`/sellers/admin/${id}`)
+         axiosHook.patch(`/make-seller/${email}`)
          .then(res=>{
           console.log(res.data);
           if(res.data.modifiedCount>0){
             Swal.fire({
-            title: `${name} is Now Admin`,
+            title: `${name} is Now Seller`,
             icon: "success"
           });
           }
@@ -155,12 +155,12 @@ console.log(sellers);
                 <td className=" text-center border-b border-gray-500 flex gap-5 py-7 items-center h-full">
 
                 {
-                  seller?.role==='admin'?'Admin':<button onClick={()=>handleAdmin(seller?._id,seller?.name)} className=" btn-primary w-32 flex text-center">
-                      Make Admin
+                  seller?.role==='admin'?'Admin':<button onClick={()=>handleMakeSeller(seller?.email,seller?.name)} className=" btn-primary w-32 flex text-center">
+                      Make Seller
                     </button>
                  }
-                  <button onClick={()=>handleDelete(seller?._id,seller?.cart?.product_name)} className=" text-white  bg-red-600  rounded-full p-3">
-                    <FaTrash></FaTrash>
+                  <button onClick={()=>handleDelete(seller?.email,seller?.name)} className=" text-white flex gap-2 items-center  bg-red-600 rounded-lg p-3">
+                    <FaTrash></FaTrash> Reject
                   </button>
 
                 </td>
