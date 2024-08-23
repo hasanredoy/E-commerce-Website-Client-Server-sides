@@ -37,7 +37,7 @@ const client = new MongoClient(uri, {
 // middle wears
 const verifyUser = (req, res, next) => {
   const verifyToken = req?.cookies?.token;
-  // console.log( 'token',verifyToken);
+  // //console.log( 'token',verifyToken);
   if (!verifyToken) {
     return res.status(401).send({ message: "unauthorized" });
   }
@@ -92,7 +92,7 @@ const verifyAdmin =async (req,res,next)=>{
           ],
         };
       }
-      //  console.log(filter);
+      //  //console.log(filter);
       const size = parseInt(req?.query?.size);
       const page = parseInt(req?.query?.page);
       const result = await gadgetsCollection
@@ -112,10 +112,10 @@ const verifyAdmin =async (req,res,next)=>{
     app.get("/my-gadgets",verifyUser, async (req, res) => {
       const email = req.query?.email
       const query = {seller_email:email}
-      // console.log('specific user email',query);
+      // //console.log('specific user email',query);
       
       const resul = await gadgetsCollection.find(query).toArray();
-      // console.log('specific user result',resul);
+      // //console.log('specific user result',resul);
 
       res.send(resul);
     });
@@ -182,7 +182,7 @@ const verifyAdmin =async (req,res,next)=>{
     app.get("/carts",  async (req, res) => {
 
       let query = {};
-      // console.log(req?.query?.email, req?.user?.email );
+      // //console.log(req?.query?.email, req?.user?.email );
      
       if (req.query?.email) {
         query = { userEmail: req?.query?.email };
@@ -197,7 +197,7 @@ const verifyAdmin =async (req,res,next)=>{
       const size = parseInt(req?.query?.size);
       const page = parseInt(req?.query?.page);
       let query = {};
-      // console.log("page",page,"size",size);
+      // //console.log("page",page,"size",size);
       
       if (req.query?.email) {
         query = { userEmail: req.query.email };
@@ -211,7 +211,7 @@ const verifyAdmin =async (req,res,next)=>{
     app.get("/carts/count",async (req, res) => {
       
       let query  = { userEmail: req.query?.email }
-      // console.log("page",page,"size",size);
+      // //console.log("page",page,"size",size);
    
 
       const userCart = userCraftCollection.find(query)
@@ -232,7 +232,7 @@ const verifyAdmin =async (req,res,next)=>{
     // user review apis
     app.get("/reviews", async (req, res) => {
       let query = {};
-      // console.log("review",req?.query?.email);
+      // //console.log("review",req?.query?.email);
       const size = parseInt(req?.query?.size);
       const page = parseInt(req?.query?.page);
       if (req.query?.email) {
@@ -270,7 +270,7 @@ const verifyAdmin =async (req,res,next)=>{
     });
     app.get("/users/admin/:email",  async (req, res) => {
       const email = req.params.email;
-      // console.log(email);
+      // //console.log(email);
       const filter = { email: email };
       const findAdmin = await usersCollection.findOne(filter);
 
@@ -296,21 +296,21 @@ const verifyAdmin =async (req,res,next)=>{
     app.delete("/users/:email", async (req, res) => {
       const email = req.params?.email;
  
-    //  console.log({email},'for delete users reviews');
+    //  //console.log({email},'for delete users reviews');
 
       const result = await userReviewCollection.deleteOne({email});
-      // console.log({result});
+      // //console.log({result});
       res.send(result);
     });
     
     // get user role 
     app.get('/user-role/:email',async(req,res)=>{
       const email = req.params?.email
-      console.log({email});
+      //console.log({email});
       const result = await usersCollection.findOne({email})
-      console.log(result);
+      //console.log(result);
       const role = result?.role
-      console.log(role);
+      //console.log(role);
       res.send(role)
     })
 
@@ -360,7 +360,7 @@ const verifyAdmin =async (req,res,next)=>{
       const token = jwt.sign(user, process.env.VERIFICATION_TOKEN, {
         expiresIn: "1h",
       });
-      //  console.log('user=', user, 'and token =' , token);
+      //  //console.log('user=', user, 'and token =' , token);
       res.cookie("token", token, cookieOptions).send({ success: "true" });
     });
     // clearing cookie with logout
@@ -398,7 +398,7 @@ const verifyAdmin =async (req,res,next)=>{
       const data = req.body
       const email= req.query?.email
       const result = await paymentsCollection.insertOne(data)
-      // console.log(result);
+      // //console.log(result);
       if(result?.insertedId){
         const deleteRes = await userCraftCollection.deleteMany({userEmail:email})
         res.send({result,deleteRes})
@@ -418,7 +418,7 @@ const verifyAdmin =async (req,res,next)=>{
         }
       }]).toArray()
       const totalAmount= Amount[0].totalAmount
-      // console.log(totalPaidAmount);
+      // //console.log(totalPaidAmount);
 
       //  get all customer
       const customer = await usersCollection.estimatedDocumentCount()
@@ -441,7 +441,7 @@ const verifyAdmin =async (req,res,next)=>{
         }
       }]).toArray()
       const totalPaidAmount= paidAmount[0].totalAmount
-      // console.log(totalPaidAmount);
+      // //console.log(totalPaidAmount);
 
       //  get all customer
       const customer = await usersCollection.estimatedDocumentCount()
@@ -511,9 +511,21 @@ const verifyAdmin =async (req,res,next)=>{
   
   // make seller
   
-  app.patch('make-seller/:email',async(req,res)=>{
-    const id = req.params?.email
+  app.patch('/make-seller/:email',async(req,res)=>{
+    const email = req.params?.email
     
+    // console.log({email});
+    const updateDocForUserCollection = {
+      $set:{role:'seller'}
+    }
+    const updateDocForSellersCollection = {
+      $set:{status:'approved'}
+    }
+    const patchOnUserCollection = await usersCollection.updateOne({email},updateDocForUserCollection)
+    const patchOnSellerCollection = await sellersCollection.updateOne({email},updateDocForSellersCollection)
+    res.send({patchOnSellerCollection,patchOnUserCollection})
+
+
   })
   
   // post seller data on mongodb 
