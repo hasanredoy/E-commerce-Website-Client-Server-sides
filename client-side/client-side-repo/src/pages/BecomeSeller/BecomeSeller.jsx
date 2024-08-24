@@ -18,18 +18,18 @@ const BecomeSeller = () => {
   const axiosHook = useFetch();
   // get user role
   const role = useGetUserRole();
-  console.log(role);
+  // console.log(role);
 
   // get seller status
   const status = useGetSellerStatus();
-  console.log(status);
+  // console.log(status);
 
   const handleSellerReq = async (e) => {
     e.preventDefault();
     // check if user request was rejected then code blew will run
     if(status=='rejected'){
       return axiosHook.patch(`/req-again/${user?.email}`).then(res=>{
-        console.log(res?.data);
+        // console.log(res?.data);
         if (res?.data?.modifiedCount>0) {
           Swal.fire({
             title: "Request has been sent",
@@ -47,9 +47,9 @@ const BecomeSeller = () => {
       requestData: new Date(),
       status: "pending",
     };
-    console.log(sellerData);
+    // console.log(sellerData);
     const { data } = await axiosHook.post("/seller", sellerData);
-    console.log(data);
+    // console.log(data);
     if (data?.insertedId) {
       Swal.fire({
         title: "Request has been sent",
@@ -120,9 +120,9 @@ const BecomeSeller = () => {
                 disabled={role !== "user" }
                 className="btn-primary"
               >
-                {!status && role !== "user" && "This form is only for user"}
+                {role !== "user" && "This form is only for user"}
 
-                {!status && role == "user" && "Send Request"}
+                { role == "user" && "Send Request"}
                 {status == "pending" && "Request Under Process"}
                 {status == "rejected" && "Request Another"}
               </button>

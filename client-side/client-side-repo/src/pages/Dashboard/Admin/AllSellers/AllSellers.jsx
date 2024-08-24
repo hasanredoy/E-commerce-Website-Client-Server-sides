@@ -21,7 +21,7 @@ const AllSellers = () => {
   );
 
   const [sellers, refetch, isPending] = useSellers(currentPage, itemsPerPage);
-  console.log(sellers);
+  // console.log(sellers);
 
   const handleMakeSeller = (email, name) => {
     Swal.fire({
@@ -37,7 +37,7 @@ const AllSellers = () => {
         axiosHook
           .patch(`/make-seller/${email}`)
           .then((res) => {
-            console.log(res?.data);
+            // console.log(res?.data);
             if (
               res?.data?.patchOnSellerCollection?.modifiedCount > 0 &&
               res?.data?.patchOnUserCollection?.modifiedCount > 0
@@ -70,7 +70,7 @@ const AllSellers = () => {
           .delete(`/sellers/${email}`)
 
           .then((res) => {
-            console.log(res?.data);
+            // console.log(res?.data);
             if (res?.data?.modifiedCount > 0) {
               refetch();
               Swal.fire({
@@ -86,7 +86,7 @@ const AllSellers = () => {
     });
   };
   const [isAdmin] = useAdmin();
-  console.log(isAdmin);
+  // console.log(isAdmin);
   return (
     <div>
       <DynamicPageTitle

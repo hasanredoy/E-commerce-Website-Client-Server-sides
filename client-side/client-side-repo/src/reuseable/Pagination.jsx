@@ -16,7 +16,7 @@ const axiosCommon = useFetchCommon();
     queryKey:['reviews count'],
     queryFn:async()=>{
       const res = await axiosCommon.get(`${url}/count?email=${email}`)
-    console.log(res);
+    // console.log(res);
     return res.data?.count
     }
   })

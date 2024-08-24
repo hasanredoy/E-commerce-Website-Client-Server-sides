@@ -26,7 +26,7 @@ const GoogleLogin = () => {
       })
     })
     .catch(err=>{
-      console.log(err.user);      
+      console.log(err);      
     })
   }
   return (

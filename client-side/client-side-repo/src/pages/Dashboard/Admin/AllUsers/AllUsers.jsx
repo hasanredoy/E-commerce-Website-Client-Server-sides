@@ -18,7 +18,7 @@ const AllUsers = () => {
   const [numberOfPages , totalPage,itemsPerPage,count] =Pagination("/users",10)
  
   const [users,refetch,isPending]=useUsers(currentPage,itemsPerPage)
-console.log(users);
+// console.log(users);
   
   const handleAdmin=(id,name)=>{
     Swal.fire({
@@ -33,7 +33,7 @@ console.log(users);
       if (result.isConfirmed) {
          axiosHook.patch(`/users/admin/${id}`)
          .then(res=>{
-          console.log(res.data);
+          // console.log(res.data);
           if(res.data.modifiedCount>0){
             Swal.fire({
             title: `${name} is Now Admin`,
@@ -53,7 +53,7 @@ console.log(users);
   const handleDelete=(id)=>{
     Swal.fire({
       title: "Are you sure?",
-      text: `You Want Remove This ${name} User?`,
+      text: `You want to delete this ${name} User?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#046351",
@@ -64,7 +64,7 @@ console.log(users);
          axiosHook.delete(`/users/${id}`)
 
          .then(res=>{
-          console.log(res.data);
+          // console.log(res.data);
           if(res.data.deletedCount>0){
             refetch()
             Swal.fire({
@@ -84,7 +84,7 @@ console.log(users);
 
   }
   const [isAdmin,]=useAdmin()
-  console.log(isAdmin);
+  // console.log(isAdmin);
   return (
     <div>
       <DynamicPageTitle dynamicTitle={"All Users | Dashboard"}></DynamicPageTitle>

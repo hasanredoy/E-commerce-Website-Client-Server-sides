@@ -9,11 +9,11 @@ const {user} = useAuth()
     queryKey:['seller status',user],
     queryFn:async()=>{
       const {data} = await axiosHook.get(`/seller/${user?.email}`)
-      console.log(data);
+      // console.log(data);
       return data
     }
   })
-  console.log(status);
+  // console.log(status);
   return status
 };
 

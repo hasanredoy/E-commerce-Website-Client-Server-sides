@@ -52,7 +52,7 @@ const ReviewsPage = () => {
 
   const handleDeleteUserReview = async()=>{
     const {data} = await axiosHook.delete(`/users/${user?.email}`)
-    console.log(data);
+    // console.log(data);
     if(data.deletedCount>0){
 
       Swal.fire({
@@ -67,7 +67,7 @@ const ReviewsPage = () => {
     }
   }
   
-  console.log(reviews);
+  // console.log(reviews);
   // value of rating
   const ratingChanged = (newRating) => {
     // console.log(newRating);

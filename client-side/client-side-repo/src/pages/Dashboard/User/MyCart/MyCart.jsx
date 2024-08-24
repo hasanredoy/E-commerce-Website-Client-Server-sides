@@ -16,7 +16,7 @@ const MyCart = () => {
   const [currentPage ,setCurrentPage]=useState(0)
 
   const [numberOfPages , totalPage,itemsPerPage] =Pagination("/carts",5)
-  console.log(numberOfPages);
+  // console.log(numberOfPages);
 const axiosHook = useFetch()
 const {user} = useAuth()
 // get cart for Pagination

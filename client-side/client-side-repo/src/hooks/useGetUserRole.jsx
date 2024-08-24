@@ -9,11 +9,11 @@ const {user} = useAuth()
     queryKey:['user role',user],
     queryFn:async()=>{
       const {data} = await axiosHook.get(`/user-role/${user?.email}`)
-      console.log(data);
+      // console.log(data);
       return data
     }
   })
-  console.log(role);
+  // console.log(role);
   return role
 };
 

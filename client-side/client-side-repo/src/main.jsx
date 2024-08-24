@@ -21,7 +21,6 @@ import PrivetRout from "./Routs/PrivetRout.jsx";
 import AdminRoute from "./Routs/AdminRoute.jsx";
 import UpdateItem from "./pages/Dashboard/Admin/UpdateItem/UpdateItem.jsx";
 import AllItems from "./pages/Dashboard/Admin/AllItems/AllItems.jsx";
-import AddItem from "./pages/Dashboard/Admin/AddItem/AddItem.jsx";
 import BecomeSeller from "./pages/BecomeSeller/BecomeSeller.jsx";
 import Payment from "./pages/PaymentPages/Payment.jsx";
 import PaymentHistory from "./pages/Dashboard/User/PaymentHistory/PaymentHistory.jsx";
@@ -29,6 +28,7 @@ import PaymentInvoice from "./pages/Dashboard/User/PaymentHistory/PaymentInvoice
 import AdminHome from "./pages/Dashboard/Admin/AdminHome/AdminHome.jsx";
 import ErrorPage from "./pages/Error/ErrorPage.jsx";
 import AllSellers from "./pages/Dashboard/Admin/AllSellers/AllSellers.jsx";
+import AddItem from "./pages/Dashboard/common/AddItem/AddItem.jsx";
 
 const queryClient = new QueryClient();
 
@@ -160,11 +160,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "addItems",
+        path: "addItem",
         element: (
-          <AdminRoute>
             <AddItem></AddItem>
-          </AdminRoute>
+         
         ),
       },
       {
