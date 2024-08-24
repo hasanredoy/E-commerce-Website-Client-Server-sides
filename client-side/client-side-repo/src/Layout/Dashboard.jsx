@@ -13,7 +13,6 @@ import { MdAddShoppingCart } from "react-icons/md";
 import useAdmin from "../hooks/useAdmin";
 import useGetUserRole from "../hooks/useGetUserRole";
 
-import { FaListCheck } from "react-icons/fa6";
 
 
 
@@ -123,7 +122,6 @@ const [isAdmin] =useAdmin()
           role=='seller' && <>
           <NavLink to={'/dashboard/sellerHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >Seller Home</NavLink>
           <NavLink to={'/dashboard/profile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
-          <NavLink to={'/dashboard/listedItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaListCheck></FaListCheck>Listed Item</NavLink>
           <NavLink to={'/dashboard/addItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <MdAddShoppingCart></MdAddShoppingCart>Add Item</NavLink>
 
           </>
@@ -195,7 +193,6 @@ const [isAdmin] =useAdmin()
           role=='seller' && <>
           <NavLink to={'/dashboard/sellerHome'} className={'flex items-center font-bold gap-2 text-white'}><FaHome></FaHome >Seller Home</NavLink>
           <NavLink to={'/dashboard/profile'} className={'flex items-center font-bold gap-2 text-white my-3'}><FaUser></FaUser > My Profile</NavLink>
-          <NavLink to={'/dashboard/listedItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <FaListCheck></FaListCheck>Listed Item</NavLink>
           <NavLink to={'/dashboard/addItem'} className={'flex items-center font-bold gap-2 my-3 text-white'}> <MdAddShoppingCart></MdAddShoppingCart>Add Item</NavLink>
 
           </>

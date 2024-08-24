@@ -29,6 +29,7 @@ import AdminHome from "./pages/Dashboard/Admin/AdminHome/AdminHome.jsx";
 import ErrorPage from "./pages/Error/ErrorPage.jsx";
 import AllSellers from "./pages/Dashboard/Admin/AllSellers/AllSellers.jsx";
 import AddItem from "./pages/Dashboard/common/AddItem/AddItem.jsx";
+import SellerHome from "./pages/Dashboard/Seller/sellerHome/SellerHome.jsx";
 
 const queryClient = new QueryClient();
 
@@ -134,6 +135,23 @@ const router = createBrowserRouter([
         path: "profile",
         element: <MyProfile></MyProfile>,
       },
+      {
+        path: "addItem",
+        element: (
+            <AddItem></AddItem>
+         
+        ),
+      },
+
+//  seller route 
+{
+  path: "sellerHome",
+  element: (
+      <SellerHome/>
+   
+  ),
+},
+
       // admin route
       {
         path: "allUsers",
@@ -159,13 +177,7 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      {
-        path: "addItem",
-        element: (
-            <AddItem></AddItem>
-         
-        ),
-      },
+  
       {
         path: "update/:id",
         element: (
