@@ -49,7 +49,7 @@ const resetPass = (email)=>{
   return sendPasswordResetEmail(auth ,email)
 }
 
-  const logOut =()=>{
+  const logOut = ()=>{
     setLoading(true)
     return signOut(auth)
   }
@@ -64,8 +64,8 @@ const resetPass = (email)=>{
      
       if(currentUser){
           axios.post('http://localhost:5000/jwt',loggedUser,{withCredentials:true})
-          .then(()=> {
-            // console.log(res.data);
+          .then((res)=> {
+            console.log(res?.data);
           })
       }else{
         axios.post('http://localhost:5000/logout', loggedUser ,{withCredentials:true})

@@ -12,20 +12,7 @@ const axiosHook = axios.create({
 
 const useFetch = () => {
 const logOut= useAuth()
-  // console.log(logOut);
- useEffect(()=>{
-  axiosHook.interceptors.response.use(res=>{
-    return res
-  },err=>{
-    if(err.response.status===401 || err.response.status===403){
-     logOut()
-     .then(()=>{
-       <Navigate to={'/login'}></Navigate>
-    })
-     .catch()
-    }
-  })
- },[logOut])
+
 
   return axiosHook
 };

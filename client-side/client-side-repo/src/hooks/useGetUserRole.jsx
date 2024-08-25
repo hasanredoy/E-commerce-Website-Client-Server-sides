@@ -8,7 +8,7 @@ const {user} = useAuth()
   const {data:role=''}=useQuery({
     queryKey:['user role',user],
     queryFn:async()=>{
-      const {data} = await axiosHook.get(`/user-role/${user?.email}`)
+      const {data} = await axiosHook.get(`/user-role?email=${user?.email}`,{withCredentials:true})
       // console.log(data);
       return data
     }

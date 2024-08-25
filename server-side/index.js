@@ -35,15 +35,20 @@ const client = new MongoClient(uri, {
 });
 
 // middle wears
-const verifyUser = (req, res, next) => {
-  const verifyToken = req?.cookies?.token;
-  // //console.log( 'token',verifyToken);
+const verifyUser = async (req, res, next) => {
+  const request= req
+  // console.log({request});
+  const verifyToken = req.cookies?.token;
+  console.log( 'token',verifyToken);
   if (!verifyToken) {
+    console.log('hello');
     return res.status(401).send({ message: "unauthorized" });
   }
   jwt.verify(verifyToken, process.env.VERIFICATION_TOKEN, (err, decoded) => {
+    console.log({decoded});
+    console.log({err});
     if (err) {
-      return res.status(401).send({ message: "unauthorized" });
+      return res.status(403).send({ message: "error" });
     }
 
     req.user = decoded;
@@ -55,11 +60,40 @@ const verifyUser = (req, res, next) => {
 
 
 const cookieOptions = {
-  httpOnly: true,
-  sameSite:  "none" ,
-  secure:  true ,
+  httpOnly: true,  
+  sameSite: "none",
+  secure: false,   
 };
+// const verifyUser = async (req, res, next) => {
+//   try {
+//     // Retrieve the token from the cookies
+//     const verifyToken = req.cookies?.token;
+//     console.log('Token:', verifyToken);
 
+//     // If no token is found, respond with unauthorized
+//     if (!verifyToken) {
+//       return res.status(401).json({ message: "Unauthorized: No token provided" });
+//     }
+
+//     // Verify the token
+//     jwt.verify(verifyToken, process.env.VERIFICATION_TOKEN, (err, decoded) => {
+//       if (err) {
+//         // If token verification fails, respond with unauthorized
+//         return res.status(401).json({ message: "Unauthorized: Invalid token" });
+//       }
+
+//       // Store the decoded token data (user info) in the request object
+//       req.user = decoded;
+
+//       // Proceed to the next middleware
+//       next();
+//     });
+//   } catch (error) {
+//     // Handle any unexpected errors
+//     console.error("Error verifying token:", error);
+//     return res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 async function run() {
   try {
     const gadgetsCollection = client.db("Gadget-ShopDB").collection("gadgets");
@@ -71,12 +105,37 @@ async function run() {
     // verify admin 
 const verifyAdmin =async (req,res,next)=>{
   const query = {role : 'admin'}
-  const checkAdmin = usersCollection.find(query)
+  const checkAdmin = usersCollection.findOne(query)
   if(!checkAdmin){
     res.status(403).send({message:'unauthorized'})
   }
   next()
 }
+
+
+ // auth api
+ app.post("/jwt", async (req, res) => {
+  const user = req.body;
+  console.log("user for token", user);
+  const token = jwt.sign(user, process.env.VERIFICATION_TOKEN, {
+    expiresIn: 60 * 60,
+  });
+  // console.log(token);
+
+  
+  res.cookie('token', token, cookieOptions)
+  .send({ token });
+});
+
+    // clearing cookie with logout
+    app.post("/logout", async (req, res) => {
+      res
+        .clearCookie("token", { ...cookieOptions, maxAge: 0 })
+        .send({ success: true });
+    });
+
+
+
 
     // getting all gadgets
     app.get("/gadgets", async (req, res) => {
@@ -304,8 +363,8 @@ const verifyAdmin =async (req,res,next)=>{
     });
     
     // get user role 
-    app.get('/user-role/:email',async(req,res)=>{
-      const email = req.params?.email
+    app.get('/user-role',async(req,res)=>{
+      const email = req.query?.email
       //console.log({email});
       const result = await usersCollection.findOne({email})
       //console.log(result);
@@ -352,22 +411,6 @@ const verifyAdmin =async (req,res,next)=>{
       const filter = { _id: new ObjectId(id) };
       const result = await usersCollection.deleteOne(filter);
       res.send(result);
-    });
-
-    // verification related apis
-    app.post("/jwt", async (req, res) => {
-      const user = req.body;
-      const token = jwt.sign(user, process.env.VERIFICATION_TOKEN, {
-        expiresIn: "1h",
-      });
-      //  //console.log('user=', user, 'and token =' , token);
-      res.cookie("token", token, cookieOptions).send({ success: "true" });
-    });
-    // clearing cookie with logout
-    app.post("/logout", async (req, res) => {
-      res
-        .clearCookie("token", { ...cookieOptions, maxAge: 0 })
-        .send({ success: true });
     });
 
 
@@ -507,6 +550,14 @@ const verifyAdmin =async (req,res,next)=>{
     const result = await sellersCollection.findOne({email})
     const status  = result?.status
     res.send(status)
+  })
+
+  // get seller stats 
+  app.get('/seller-stats/:email',async(req,res)=>{
+    const email =req.params?.email
+    const listedItem = await gadgetsCollection.find({seller_email:email}).toArray()
+    const price = listedItem.reduce((a, b) => a + parseInt(b?.price), 0);
+    res.send({items:listedItem.length,sell:price})
   })
   
   // post seller data on mongodb 

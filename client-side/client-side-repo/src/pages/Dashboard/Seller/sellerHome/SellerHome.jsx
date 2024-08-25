@@ -1,15 +1,28 @@
-import { MdPayment } from "react-icons/md";
 import Heading from "../../../../reuseable/Heading";
 import gadgetsLogo from "../../../../assets/wellness-gadget-technology-device-equipment-innovation-electronic-svgrepo-com.svg";
-import { FaStar, FaUser } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import useFetch from "../../../../hooks/useFetch";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../../hooks/useAuth";
 
 
 
 const SellerHome = () => {
+  const axiosHook = useFetch()
+
+  const {user}= useAuth()
+  const {data:loadSellerStats={}}=useQuery({
+    queryKey:['seller stats',user],
+    queryFn:async()=>{
+      const{data} = await axiosHook.get(`/seller-stats/${user?.email}`)
+      console.log(data);
+      return data
+    }
+  })
 
   const stats ={
-    totalListedItem:3,
-    totalSell: 60 ,
+    totalListedItem:loadSellerStats?.items,
+    totalSell: loadSellerStats?.sell,
     totalReview:3,
   }
   return (
