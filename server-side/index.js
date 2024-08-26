@@ -8,18 +8,20 @@ const stripe = require("stripe")(process.env.SK_Payment);
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 
-
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://e-commerce-shop-88710.web.app","https://e-commerce-shop-88710.firebaseapp.com"],
+    origin: [
+      "https://e-commerce-shop-88710.web.app",
+      "https://e-commerce-shop-88710.firebaseapp.com",
+      "https://e-commerce-shop-88710.web.app",
+    ],
     credentials: true,
   })
 );
-
 
 // codes of monogdb
 
@@ -34,14 +36,10 @@ const client = new MongoClient(uri, {
   },
 });
 
-
-
-
-
 const cookieOptions = {
-  httpOnly: true,  
+  httpOnly: true,
   sameSite: "none",
-  secure: true,   
+  secure: true,
 };
 //   try {
 //     // Retrieve the token from the cookies
@@ -74,64 +72,60 @@ const cookieOptions = {
 // };
 async function run() {
   try {
-
-    await client.connect();
+    // await client.connect();
 
     const gadgetsCollection = client.db("Gadget-ShopDB").collection("gadgets");
     const userCraftCollection = client.db("Gadget-ShopDB").collection("carts");
-    const userReviewCollection = client.db("Gadget-ShopDB").collection("reviews");
+    const userReviewCollection = client
+      .db("Gadget-ShopDB")
+      .collection("reviews");
     const usersCollection = client.db("Gadget-ShopDB").collection("users");
-    const paymentsCollection = client.db("Gadget-ShopDB").collection("payments");
+    const paymentsCollection = client
+      .db("Gadget-ShopDB")
+      .collection("payments");
     const sellersCollection = client.db("Gadget-ShopDB").collection("sellers");
 
+    // auth api
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      console.log("user for token", user);
+      const token = jwt.sign(user, process.env.VERIFICATION_TOKEN, {
+        expiresIn: "1h",
+      });
+
+      res.send({ token });
+    });
+
     // middle wears
-const verifyUser = (req, res, next) => {
-  const request= req
-  // console.log({request});
-  const header = req.headers.authorization
-  const verifyToken = header.split(' ')[1]
-  if (!verifyToken) {
-    return res.status(401).send({ message: "unauthorized" });
-  }
-  jwt.verify(verifyToken, process.env.VERIFICATION_TOKEN, (err, decoded) => {
-    if (err) {
-      return res.status(403).send({ message: "error" });
-    }
+    const verifyUser = (req, res, next) => {
+      const header = req.headers.authorization;
+      const verifyToken = header.split(" ")[1];
+      if (!verifyToken) {
+        return res.status(401).send({ message: "unauthorized" });
+      }
+      jwt.verify(
+        verifyToken,
+        process.env.VERIFICATION_TOKEN,
+        (err, decoded) => {
+          if (err) {
+            return res.status(403).send({ message: "error" });
+          }
 
-    req.user = decoded;
-    next();
-  });
-  // next()
-};
-    // verify admin 
-const verifyAdmin =async (req,res,next)=>{
-  const query = {role : 'admin'}
-  const checkAdmin = usersCollection.findOne(query)
-  if(!checkAdmin){
-    res.status(403).send({message:'unauthorized'})
-  }
-  next()
-}
-
-
- // auth api
- app.post("/jwt", async (req, res) => {
-  const user = req.body;
-  console.log("user for token", user);
-  const token = jwt.sign(user, process.env.VERIFICATION_TOKEN, {
-    expiresIn: 60 * 60,
-  });
-
-  
-  res
-  .send({ token });
-});
-
-    // clearing cookie with logout
-
-
-
-
+          req.user = decoded;
+          next();
+        }
+      );
+      // next()
+    };
+    // verify admin
+    const verifyAdmin = async (req, res, next) => {
+      const query = { role: "admin" };
+      const checkAdmin = usersCollection.findOne(query);
+      if (!checkAdmin) {
+        res.status(403).send({ message: "unauthorized" });
+      }
+      next();
+    };
 
     // getting all gadgets
     app.get("/gadgets", async (req, res) => {
@@ -163,12 +157,12 @@ const verifyAdmin =async (req,res,next)=>{
       const gadget = await gadgetsCollection.estimatedDocumentCount();
       res.send({ count: gadget });
     });
-    //  get all gadgets for specific user 
-    app.get("/my-gadgets",verifyUser, async (req, res) => {
-      const email = req.query?.email
-      const query = {seller_email:email}
+    //  get all gadgets for specific user
+    app.get("/my-gadgets/:email", verifyUser, async (req, res) => {
+      const email = req.params?.email;
+      const query = { seller_email: email };
       // //console.log('specific user email',query);
-      
+
       const resul = await gadgetsCollection.find(query).toArray();
       // //console.log('specific user result',resul);
 
@@ -176,7 +170,7 @@ const verifyAdmin =async (req,res,next)=>{
     });
 
     // getting single gadgets
-    app.get("/gadgets/:id", async (req, res) => {
+    app.get("/gadgets/:id", verifyUser, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
 
@@ -184,7 +178,7 @@ const verifyAdmin =async (req,res,next)=>{
       res.send(result);
     });
     //updating single gadgets
-    app.put("/gadgets/:id", verifyUser,verifyAdmin, async (req, res) => {
+    app.put("/gadgets/:id", verifyUser, async (req, res) => {
       const id = req.params.id;
 
       const data = req.body;
@@ -203,42 +197,42 @@ const verifyAdmin =async (req,res,next)=>{
           title: data.title,
         },
       };
-      const result = await gadgetsCollection.updateOne(query,updateData,options);
+      const result = await gadgetsCollection.updateOne(
+        query,
+        updateData,
+        options
+      );
       res.send(result);
     });
     //deleting single gadgets
-    app.delete("/gadgets/:id",verifyUser,verifyAdmin, async (req, res) => {
+    app.delete("/gadgets/:id", verifyUser, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
 
       const result = await gadgetsCollection.deleteOne(query);
       res.send(result);
     });
-   
+
     // post gadget
-    app.post('/add-gadgets', async(req,res)=>{
+    app.post("/add-gadgets", async (req, res) => {
       const data = req.body;
-      const result = await gadgetsCollection.insertOne(data)
-      res.send(result)
-    }) 
-
-
-
+      const result = await gadgetsCollection.insertOne(data);
+      res.send(result);
+    });
 
     // posting user carts
     app.post("/carts", async (req, res) => {
       const cartFromBody = req.body;
-    
+
       const result = await userCraftCollection.insertOne(cartFromBody);
       res.send(result);
     });
 
     //  getting users all cart and finding single users carts by email
-    app.get("/carts",  async (req, res) => {
-
+    app.get("/carts", verifyUser, async (req, res) => {
       let query = {};
       // //console.log(req?.query?.email, req?.user?.email );
-     
+
       if (req.query?.email) {
         query = { userEmail: req?.query?.email };
       }
@@ -253,29 +247,29 @@ const verifyAdmin =async (req,res,next)=>{
       const page = parseInt(req?.query?.page);
       let query = {};
       // //console.log("page",page,"size",size);
-      
+
       if (req.query?.email) {
         query = { userEmail: req.query.email };
       }
 
-      const userCart = userCraftCollection.find(query).limit(size).skip(size*page);
+      const userCart = userCraftCollection
+        .find(query)
+        .limit(size)
+        .skip(size * page);
       const result = await userCart.toArray();
       res.send(result);
     });
     //  getting user cart count
-    app.get("/carts/count",async (req, res) => {
-      
-      let query  = { userEmail: req.query?.email }
+    app.get("/carts/count", async (req, res) => {
+      let query = { userEmail: req.query?.email };
       // //console.log("page",page,"size",size);
-   
 
-      const userCart = userCraftCollection.find(query)
+      const userCart = userCraftCollection.find(query);
       const result = await userCart.toArray();
       // const result = await userCraftCollection.estimatedDocumentCount();
-      res.send({count:result.length});
+      res.send({ count: result.length });
     });
 
- 
     //  deleting user cart
     app.delete("/cart/:id", async (req, res) => {
       const id = req.params.id;
@@ -293,16 +287,21 @@ const verifyAdmin =async (req,res,next)=>{
       if (req.query?.email) {
         query = { email: req?.query?.email };
       }
-      const result = await userReviewCollection.find(query).sort({
-        posting_time:-1}).limit(size).skip(page*size).toArray();
+      const result = await userReviewCollection
+        .find(query)
+        .sort({
+          posting_time: -1,
+        })
+        .limit(size)
+        .skip(page * size)
+        .toArray();
       res.send(result);
     });
 
     // get user reviews count
     app.get("/reviews/count", async (req, res) => {
-     
-      const result = await userReviewCollection.estimatedDocumentCount()
-      res.send({count:result});
+      const result = await userReviewCollection.estimatedDocumentCount();
+      res.send({ count: result });
     });
 
     app.post("/reviews", async (req, res) => {
@@ -312,18 +311,22 @@ const verifyAdmin =async (req,res,next)=>{
     });
 
     // users apis
-    app.get("/userss", verifyUser, verifyAdmin,async (req, res) => {
+    app.get("/userss", verifyUser, verifyAdmin, async (req, res) => {
       const size = parseInt(req?.query?.size);
       const page = parseInt(req?.query?.page);
-      const result = await usersCollection.find().limit(size).skip(page*size).toArray();
+      const result = await usersCollection
+        .find()
+        .limit(size)
+        .skip(page * size)
+        .toArray();
       res.send(result);
     });
     // users apis count
-    app.get("/users/count",async (req, res) => {
+    app.get("/users/count", async (req, res) => {
       const result = await usersCollection.estimatedDocumentCount();
-      res.send({count:result});
+      res.send({ count: result });
     });
-    app.get("/users/admin/:email",  async (req, res) => {
+    app.get("/users/admin/:email", async (req, res) => {
       const email = req.params.email;
       // //console.log(email);
       const filter = { email: email };
@@ -350,27 +353,27 @@ const verifyAdmin =async (req,res,next)=>{
     });
     app.delete("/users/:email", async (req, res) => {
       const email = req.params?.email;
- 
-    //  //console.log({email},'for delete users reviews');
 
-      const result = await userReviewCollection.deleteOne({email});
+      //  //console.log({email},'for delete users reviews');
+
+      const result = await userReviewCollection.deleteOne({ email });
       // //console.log({result});
       res.send(result);
     });
-    
-    // get user role 
-    app.get('/user-role',async(req,res)=>{
-      const email = req.query?.email
+
+    // get user role
+    app.get("/user-role", async (req, res) => {
+      const email = req.query?.email;
       //console.log({email});
-      const result = await usersCollection.findOne({email})
+      const result = await usersCollection.findOne({ email });
       //console.log(result);
-      const role = result?.role
+      const role = result?.role;
       //console.log(role);
-      res.send(role)
-    })
+      res.send(role);
+    });
 
     //update user to admin
-    app.patch("/users/admin/:id",verifyUser,verifyAdmin, async (req, res) => {
+    app.patch("/users/admin/:id", verifyUser, verifyAdmin, async (req, res) => {
       const id = req.params.id;
 
       const filter = { _id: new ObjectId(id) };
@@ -386,13 +389,12 @@ const verifyAdmin =async (req,res,next)=>{
     //update user profile
     app.patch("/users/:email", async (req, res) => {
       const email = req.params.email;
-      const data = req.body
-      const filter = {email : email };
+      const data = req.body;
+      const filter = { email: email };
       const update = {
         $set: {
-          name:data.name,
-          photo:data.photo,
-          
+          name: data.name,
+          photo: data.photo,
         },
       };
 
@@ -400,8 +402,8 @@ const verifyAdmin =async (req,res,next)=>{
       res.send(result);
     });
 
-    //delete user 
-    app.delete("/users/:id",verifyUser,verifyAdmin, async (req, res) => {
+    //delete user
+    app.delete("/users/:id", verifyUser, verifyAdmin, async (req, res) => {
       const id = req.params.id;
 
       const filter = { _id: new ObjectId(id) };
@@ -409,198 +411,213 @@ const verifyAdmin =async (req,res,next)=>{
       res.send(result);
     });
 
-
-    // create payment intent  
-    app.post('/payment-intent',async(req,res)=>{
-      const {price} = req.body
-      // create payment intent 
-      const paymentIntent=await stripe.paymentIntents.create({
+    // create payment intent
+    app.post("/payment-intent", async (req, res) => {
+      const { price } = req.body;
+      // create payment intent
+      const paymentIntent = await stripe.paymentIntents.create({
         amount: parseFloat(price * 100).toFixed(0),
-        currency:"usd",
-        payment_method_types:['card']
-      })
+        currency: "usd",
+        payment_method_types: ["card"],
+      });
       res.send({
-        clientSecret:paymentIntent.client_secret
-      })
-    })
+        clientSecret: paymentIntent.client_secret,
+      });
+    });
 
-    // get payments 
-    app.get("/payments",async(req,res)=>{
-      const email= req.query?.email
-      const query = {email :email}
-      const result = await paymentsCollection.find(query).toArray()
-      res.send(result)
-    })
+    // get payments
+    app.get("/payments", verifyUser, async (req, res) => {
+      const email = req.query?.email;
+      const query = { email: email };
+      const result = await paymentsCollection.find(query).toArray();
+      res.send(result);
+    });
 
-    // post payments 
-    app.post("/payments",async(req,res)=>{
-      const data = req.body
-      const email= req.query?.email
-      const result = await paymentsCollection.insertOne(data)
+    // post payments
+    app.post("/payments", async (req, res) => {
+      const data = req.body;
+      const email = req.query?.email;
+      const result = await paymentsCollection.insertOne(data);
       // //console.log(result);
-      if(result?.insertedId){
-        const deleteRes = await userCraftCollection.deleteMany({userEmail:email})
-        res.send({result,deleteRes})
+      if (result?.insertedId) {
+        const deleteRes = await userCraftCollection.deleteMany({
+          userEmail: email,
+        });
+        res.send({ result, deleteRes });
       }
-    })
+    });
 
-    // get success stats 
-    app.get("/success-stats", async(req,res)=>{
-      // get all payments 
-      const payments = await paymentsCollection.estimatedDocumentCount()
+    // get success stats
+    app.get("/success-stats", async (req, res) => {
+      // get all payments
+      const payments = await paymentsCollection.estimatedDocumentCount();
 
-      // get total paid amount 
-      const Amount = await gadgetsCollection.aggregate([{
-        $group:{
-           _id:null,
-           totalAmount:{$sum: "$price"}
-        }
-      }]).toArray()
-      const totalAmount= Amount[0].totalAmount
+      // get total paid amount
+      const Amount = await gadgetsCollection
+        .aggregate([
+          {
+            $group: {
+              _id: null,
+              totalAmount: { $sum: "$price" },
+            },
+          },
+        ])
+        .toArray();
+      const totalAmount = Amount[0].totalAmount;
       // //console.log(totalPaidAmount);
 
       //  get all customer
-      const customer = await usersCollection.estimatedDocumentCount()
-      
-      //  get all gadgets
-      const gadgets = await gadgetsCollection.estimatedDocumentCount()
-      
-      res.send({payments,revenue:totalAmount,customer,gadgets})
-    })
-    // get admin stats 
-    app.get("/admin-stats",verifyUser,verifyAdmin, async(req,res)=>{
-      // get all payments 
-      const payments = await paymentsCollection.estimatedDocumentCount()
+      const customer = await usersCollection.estimatedDocumentCount();
 
-      // get total paid amount 
-      const paidAmount = await paymentsCollection.aggregate([{
-        $group:{
-           _id:null,
-           totalAmount:{$sum: "$totalPrice"}
-        }
-      }]).toArray()
-      const totalPaidAmount= paidAmount[0].totalAmount
+      //  get all gadgets
+      const gadgets = await gadgetsCollection.estimatedDocumentCount();
+
+      res.send({ payments, revenue: totalAmount, customer, gadgets });
+    });
+    // get admin stats
+    app.get("/admin-stats", verifyUser, verifyAdmin, async (req, res) => {
+      // get all payments
+      const payments = await paymentsCollection.estimatedDocumentCount();
+
+      // get total paid amount
+      const paidAmount = await paymentsCollection
+        .aggregate([
+          {
+            $group: {
+              _id: null,
+              totalAmount: { $sum: "$totalPrice" },
+            },
+          },
+        ])
+        .toArray();
+      const totalPaidAmount = paidAmount[0].totalAmount;
       // //console.log(totalPaidAmount);
 
       //  get all customer
-      const customer = await usersCollection.estimatedDocumentCount()
-      
+      const customer = await usersCollection.estimatedDocumentCount();
+
       //  get all gadgets
-      const gadgets = await gadgetsCollection.estimatedDocumentCount()
-      
-      res.send({payments,totalPaidAmount,customer,gadgets})
-    })
+      const gadgets = await gadgetsCollection.estimatedDocumentCount();
 
-    app.get('/order-stats',verifyUser,verifyAdmin,async(req,res)=>{
-      const result = await paymentsCollection.aggregate([
-        {
-          $unwind:"$cart"
-        },
-        {
-          $group:{
-            _id:"$cart.category",
-            quantity:{
-              $sum:1
+      res.send({ payments, totalPaidAmount, customer, gadgets });
+    });
+
+    app.get("/order-stats", verifyUser, verifyAdmin, async (req, res) => {
+      const result = await paymentsCollection
+        .aggregate([
+          {
+            $unwind: "$cart",
+          },
+          {
+            $group: {
+              _id: "$cart.category",
+              quantity: {
+                $sum: 1,
+              },
+              revenue: {
+                $sum: {
+                  $toDouble: "$cart.price",
+                },
+              },
             },
-            revenue:{
-              $sum:{
-                $toDouble: "$cart.price"
-                }
+          },
+          {
+            $project: {
+              _id: 0,
+              category: "$_id",
+              quantity: "$quantity",
+              revenue: "$revenue",
             },
-            
-          }
-        },
+          },
+        ])
+        .toArray();
+      res.send(result);
+    });
+
+    // seller apis
+
+    // get all seller
+    app.get("/sellers", verifyUser, verifyAdmin, async (req, res) => {
+      const result = await sellersCollection.find().toArray();
+      res.send(result);
+    });
+
+    // get all seller count
+    app.get("/sellers/count", async (req, res) => {
+      const count = await sellersCollection.estimatedDocumentCount();
+      res.send({ count });
+    });
+
+    // get seller status
+    app.get("/seller/:email", async (req, res) => {
+      const email = req.params?.email;
+      const result = await sellersCollection.findOne({ email });
+      const status = result?.status;
+      res.send(status);
+    });
+
+    // get seller stats
+    app.get("/seller-stats/:email", async (req, res) => {
+      const email = req.params?.email;
+      const listedItem = await gadgetsCollection
+        .find({ seller_email: email })
+        .toArray();
+      const price = listedItem.reduce((a, b) => a + parseInt(b?.price), 0);
+      res.send({ items: listedItem.length, sell: price });
+    });
+
+    // post seller data on mongodb
+    app.post("/seller", async (req, res) => {
+      const sellerData = req.body;
+      const result = await sellersCollection.insertOne(sellerData);
+      res.send(result);
+    });
+
+    // make seller
+
+    app.patch("/make-seller/:email", async (req, res) => {
+      const email = req.params?.email;
+
+      // console.log({email});
+      const updateDocForUserCollection = {
+        $set: { role: "seller" },
+      };
+      const updateDocForSellersCollection = {
+        $set: { status: "approved" },
+      };
+      const patchOnUserCollection = await usersCollection.updateOne(
+        { email },
+        updateDocForUserCollection
+      );
+      const patchOnSellerCollection = await sellersCollection.updateOne(
+        { email },
+        updateDocForSellersCollection
+      );
+      res.send({ patchOnSellerCollection, patchOnUserCollection });
+    });
+
+    // reject seller request
+    app.delete("/sellers/:email", async (req, res) => {
+      const email = req.params?.email;
+      const result = await sellersCollection.updateOne(
+        { email },
         {
-          $project:{
-            _id:0,
-            category:"$_id",
-            quantity:"$quantity",
-            revenue:"$revenue",
-          }
+          $set: { status: "rejected" },
         }
-      ]).toArray()
-      res.send(result)
-    })
-  
-  
-  // seller apis 
-
-  // get all seller 
-  app.get('/sellers',async(req,res)=>{
-   const result = await sellersCollection.find().toArray()
-   res.send(result)
-  })
-
-  
-  
-  // get all seller count
-  app.get('/sellers/count',async(req,res)=>{
-   const count = await sellersCollection.estimatedDocumentCount()
-   res.send({count})
-  })
-
-
-  // get seller status 
-  app.get('/seller/:email',async(req,res)=>{
-    const email = req.params?.email
-    const result = await sellersCollection.findOne({email})
-    const status  = result?.status
-    res.send(status)
-  })
-
-  // get seller stats 
-  app.get('/seller-stats/:email',async(req,res)=>{
-    const email =req.params?.email
-    const listedItem = await gadgetsCollection.find({seller_email:email}).toArray()
-    const price = listedItem.reduce((a, b) => a + parseInt(b?.price), 0);
-    res.send({items:listedItem.length,sell:price})
-  })
-  
-  // post seller data on mongodb 
-  app.post('/seller',async(req,res)=>{
-    const sellerData = req.body
-    const result =await sellersCollection.insertOne(sellerData)
-    res.send(result)
-  })
-
-
-  // make seller
-  
-  app.patch('/make-seller/:email',async(req,res)=>{
-    const email = req.params?.email
-    
-    // console.log({email});
-    const updateDocForUserCollection = {
-      $set:{role:'seller'}
-    }
-    const updateDocForSellersCollection = {
-      $set:{status:'approved'}
-    }
-    const patchOnUserCollection = await usersCollection.updateOne({email},updateDocForUserCollection)
-    const patchOnSellerCollection = await sellersCollection.updateOne({email},updateDocForSellersCollection)
-    res.send({patchOnSellerCollection,patchOnUserCollection})
-
-
-  })
-  
-  // reject seller request 
-  app.delete('/sellers/:email',async(req,res)=>{
-   const email = req.params?.email
-   const result = await sellersCollection.updateOne({email},{
-      $set:{status:'rejected'}
-    })
-    res.send(result)
-  })
-  // route handle user second request after rejection
-  app.patch('/req-again/:email',async(req,res)=>{
-   const email = req.params?.email
-   const result = await sellersCollection.updateOne({email},{
-      $set:{status:'pending'}
-    })
-    res.send(result)
-  })
-
-
+      );
+      res.send(result);
+    });
+    // route handle user second request after rejection
+    app.patch("/req-again/:email", async (req, res) => {
+      const email = req.params?.email;
+      const result = await sellersCollection.updateOne(
+        { email },
+        {
+          $set: { status: "pending" },
+        }
+      );
+      res.send(result);
+    });
   } finally {
   }
 }
@@ -614,21 +631,20 @@ app.listen(port, () => {
   console.log("port is running", port);
 });
 
-
 /************* Naming Conventions ************
-***********************************************
-*app.get("/gadgets")
-*
-*app.get("/gadgets/:id")
-*
-*app.get("/gadgets-item-name")
-*
-*app.post("/gadgets")
-*
-*app.put("/gadgets")
-*
-*app.patch("/gadgets")
-*
-*app.delete("/gadgets")
-*
-**/
+ ***********************************************
+ *app.get("/gadgets")
+ *
+ *app.get("/gadgets/:id")
+ *
+ *app.get("/gadgets-item-name")
+ *
+ *app.post("/gadgets")
+ *
+ *app.put("/gadgets")
+ *
+ *app.patch("/gadgets")
+ *
+ *app.delete("/gadgets")
+ *
+ **/

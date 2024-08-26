@@ -8,9 +8,9 @@ const useUserListedGadgets = () => {
    const axiosHook = useFetch()
 // get specif gadget for specific user 
   const {refetch, data=[],isPending } = useQuery({
-    queryKey: ['userListedGadgets'],
+    queryKey: ['userListedGadgets',user],
     queryFn: async () => {
-      const res = await axiosHook.get(`/my-gadgets?email=${email}`);
+      const res = await axiosHook.get(`/my-gadgets/${email}`);
       // console.log(res.data);
       return res.data;
     },
