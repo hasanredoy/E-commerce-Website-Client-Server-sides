@@ -63,15 +63,11 @@ const resetPass = (email)=>{
       setLoading(false)
      
       if(currentUser){
-          axios.post('http://localhost:5000/jwt',loggedUser,{withCredentials:true})
+          axios.post('https://server-side-lilac.vercel.app/jwt',loggedUser,{withCredentials:true})
           .then((res)=> {
             console.log(res?.data);
+            localStorage.setItem('token',res?.data?.token)
           })
-      }else{
-        axios.post('http://localhost:5000/logout', loggedUser ,{withCredentials:true})
-        .then(()=>{
-
-        })
       }
     })
     return ()=>{

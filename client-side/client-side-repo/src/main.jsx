@@ -52,7 +52,7 @@ const router = createBrowserRouter([
           </PrivetRout>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/gadgets/${params.id}`),
+          fetch(`https://server-side-lilac.vercel.app/gadgets/${params.id}`),
       },
       {
         path: "/myCart",
@@ -186,7 +186,7 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/gadgets/${params.id}`),
+          fetch(`https://server-side-lilac.vercel.app/gadgets/${params.id}`),
       },
       {
         path: "adminHome",

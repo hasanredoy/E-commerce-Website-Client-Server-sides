@@ -18,7 +18,7 @@ const AddItem = () => {
 
   // get specific gadget for users
   const [gadgets,refetch,isPending] = useUserListedGadgets();
-  // console.log(gadgets);
+  console.log(gadgets);
 
   //  function for adding gadget
   const [image, setImage] = useState([]);

@@ -1,20 +1,37 @@
 import axios from "axios";
-import { useEffect } from "react";
-// import { MainContext } from "../components/auth-provider/AuthProvider";
-import { Navigate } from "react-router-dom";
-import useAuth from "./useAuth";
+import { useNavigate } from "react-router-dom";
 
 
 const axiosHook = axios.create({
-  baseURL:'http://localhost:5000',
-  withCredentials:true,
-})
+  baseURL: 'https://server-side-lilac.vercel.app',
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+  }
+});
+
 
 const useFetch = () => {
-const logOut= useAuth()
+  const navigate = useNavigate()
 
+// Add a response interceptor
 
-  return axiosHook
+axiosHook.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401||error.response && error.response.status === 403) {
+      // Clear user data
+      localStorage.removeItem('token');
+      localStorage.removeItem('userData');
+
+      // Redirect to login page
+      navigate.push('/login');
+    }
+    return Promise.reject(error);
+  }
+);
+  return axiosHook;
 };
 
 export default useFetch;

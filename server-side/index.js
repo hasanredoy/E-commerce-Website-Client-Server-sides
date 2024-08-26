@@ -12,14 +12,14 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://e-commerce-shop-88710.web.app","https://e-commerce-shop-88710.firebaseapp.com",'http://localhost:5173'],
+    origin: ["https://e-commerce-shop-88710.web.app","https://e-commerce-shop-88710.firebaseapp.com"],
     credentials: true,
   })
 );
 
-app.use(cookieParser());
 
 // codes of monogdb
 
@@ -34,37 +34,15 @@ const client = new MongoClient(uri, {
   },
 });
 
-// middle wears
-const verifyUser = async (req, res, next) => {
-  const request= req
-  // console.log({request});
-  const verifyToken = req.cookies?.token;
-  console.log( 'token',verifyToken);
-  if (!verifyToken) {
-    console.log('hello');
-    return res.status(401).send({ message: "unauthorized" });
-  }
-  jwt.verify(verifyToken, process.env.VERIFICATION_TOKEN, (err, decoded) => {
-    console.log({decoded});
-    console.log({err});
-    if (err) {
-      return res.status(403).send({ message: "error" });
-    }
 
-    req.user = decoded;
-    next();
-  });
-  // next()
-};
 
 
 
 const cookieOptions = {
   httpOnly: true,  
   sameSite: "none",
-  secure: false,   
+  secure: true,   
 };
-// const verifyUser = async (req, res, next) => {
 //   try {
 //     // Retrieve the token from the cookies
 //     const verifyToken = req.cookies?.token;
@@ -96,12 +74,35 @@ const cookieOptions = {
 // };
 async function run() {
   try {
+
+    await client.connect();
+
     const gadgetsCollection = client.db("Gadget-ShopDB").collection("gadgets");
     const userCraftCollection = client.db("Gadget-ShopDB").collection("carts");
     const userReviewCollection = client.db("Gadget-ShopDB").collection("reviews");
     const usersCollection = client.db("Gadget-ShopDB").collection("users");
     const paymentsCollection = client.db("Gadget-ShopDB").collection("payments");
     const sellersCollection = client.db("Gadget-ShopDB").collection("sellers");
+
+    // middle wears
+const verifyUser = (req, res, next) => {
+  const request= req
+  // console.log({request});
+  const header = req.headers.authorization
+  const verifyToken = header.split(' ')[1]
+  if (!verifyToken) {
+    return res.status(401).send({ message: "unauthorized" });
+  }
+  jwt.verify(verifyToken, process.env.VERIFICATION_TOKEN, (err, decoded) => {
+    if (err) {
+      return res.status(403).send({ message: "error" });
+    }
+
+    req.user = decoded;
+    next();
+  });
+  // next()
+};
     // verify admin 
 const verifyAdmin =async (req,res,next)=>{
   const query = {role : 'admin'}
@@ -120,19 +121,14 @@ const verifyAdmin =async (req,res,next)=>{
   const token = jwt.sign(user, process.env.VERIFICATION_TOKEN, {
     expiresIn: 60 * 60,
   });
-  // console.log(token);
 
   
-  res.cookie('token', token, cookieOptions)
+  res
   .send({ token });
 });
 
     // clearing cookie with logout
-    app.post("/logout", async (req, res) => {
-      res
-        .clearCookie("token", { ...cookieOptions, maxAge: 0 })
-        .send({ success: true });
-    });
+
 
 
 
